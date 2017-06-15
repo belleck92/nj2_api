@@ -1,0 +1,45 @@
+# Eclipse
+.metadata
+local.properties
+.settings/
+.loadpath
+.project
+*.launch
+.classpath
+.buildpath
+
+# JetBrains IDEs
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Linux
+*~
+.Trash-*
+
+# OSX
+__MACOSX/
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+# Thumbnails
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+vendor
+
+test.php
