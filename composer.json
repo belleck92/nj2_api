@@ -1,0 +1,30 @@
+{
+  "name": "fr/nj2/api",
+  "description": "nj2 API",
+  "type": "library",
+  "license": "proprietary",
+  "authors": [],
+  "minimum-stability": "stable",
+  "config": {
+    "preferred-install": "dist"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/eleparquier/component_cache.git"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "Fr/Nj2/component/cache": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fr\\Nj2\\Component\\Mab\\": "src/",
+      "Fr\\Nj2\\Component\\Mab\\Test\\": "test/"
+    }
+  },
+  "optimize-autoloader": true,
+  "scripts": {
+  }
+}
