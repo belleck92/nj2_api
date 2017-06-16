@@ -3,11 +3,17 @@
 
 namespace Fr\Nj2\Api;
 
-require_once('vendor/autoload.php'); 
+use Fr\Nj2\Api\models\business\ContactBusiness;
+use Fr\Nj2\Api\models\DbHandler;
+
+require_once('vendor/autoload.php');
 
 
 try {
+    DbHandler::setConfig(['host'=>'localhost', 'user'=>'root', 'password'=>'587joLZ3', 'db'=>'nj2']);
     API::main();
+
+    //var_dump(ContactBusiness::getById(1)->getSociete());
 } catch (\Exception $e) {
     echo $e->getMessage()."\n";
     echo $e->getTraceAsString()."\n";

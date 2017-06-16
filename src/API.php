@@ -24,13 +24,13 @@ class API
         if(!class_exists($class)) throw new Exception("Class ".$class." does not exist");
         $exec = new $class;/** @var LogicalUnit $exec */
         $queryString = substr($_SERVER['REQUEST_URI'],strlen($segments[1].$segments[2]) + 3);
-        $queryString = substr($queryString,0, strpos($queryString, '?'));
+        if(strpos($queryString, '?') !== false)$queryString = substr($queryString,0, strpos($queryString, '?'));
         $parameters = $_GET;
         unset($parameters['_url']);
 
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
-                echo $exec->get($queryString, $parameters);
+                var_dump($exec->get($queryString, $parameters));
                 break;
             case 'PUT':
 

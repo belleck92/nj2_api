@@ -8,6 +8,7 @@
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
 
+use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class Contacts extends LogicalUnit
@@ -16,4 +17,9 @@ class Contacts extends LogicalUnit
      * @var string
      */
     protected $tableName = 'contact';
+
+    public function getByIds($ids)
+    {echo __LINE__;
+        return ContactBusiness::getByIds($ids);
+    }
 }

@@ -8,10 +8,9 @@
 
 namespace Fr\Nj2\Api\v1;
 
-
 use Fr\Nj2\Api\API;
 
-class LogicalUnit
+abstract class LogicalUnit
 {
     /**
      * @var string
@@ -26,8 +25,7 @@ class LogicalUnit
     public function get($queryString, $parameters)
     {
         if(preg_match('#^([0-9]+,?)+$#', $queryString)) {
-            $req = "SELECT * FROM ".$this->tableName." WHERE id".API::lowerToUpperCamelCase($this->tableName)." IN (".$queryString.");";
-            return $req;
+            return $this->getByIds($queryString);
         } else {
             $segments = explode('/', $queryString);
             if($segments[0] == 'children') {
@@ -35,4 +33,6 @@ class LogicalUnit
             }
         }
     }
+
+    public abstract function getByIds($ids);
 }
