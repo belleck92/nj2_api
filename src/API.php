@@ -6,10 +6,10 @@
  * Time: 18:57
  */
 
-namespace fr\nj2\api;
+namespace Fr\Nj2\Api;
 
 use Exception;
-use fr\nj2\api\v1\LogicalUnit;
+use Fr\Nj2\Api\v1\LogicalUnit;
 
 class API
 {

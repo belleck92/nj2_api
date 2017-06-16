@@ -6,10 +6,10 @@
  * Time: 13:28
  */
 
-namespace fr\nj2\api\v1;
+namespace Fr\Nj2\Api\v1;
 
 
-use fr\nj2\api\API;
+use Fr\Nj2\Api\API;
 
 class LogicalUnit
 {

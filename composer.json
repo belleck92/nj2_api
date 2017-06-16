@@ -20,8 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Fr\\Nj2\\Component\\Mab\\": "src/",
-      "Fr\\Nj2\\Component\\Mab\\Test\\": "test/"
+      "Fr\\Nj2\\Api\\": "src/"
     }
   },
   "optimize-autoloader": true,

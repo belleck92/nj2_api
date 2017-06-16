@@ -1,13 +1,10 @@
 <?php
 
 
-namespace fr\nj2\api;
+namespace Fr\Nj2\Api;
 
-require_once(dirname(__FILE__).'/src/API.php');
+require_once('vendor/autoload.php'); 
 
-spl_autoload_register(function ($class) {
-    require(dirname(__FILE__).'/'.str_replace('\\','/', str_replace(__NAMESPACE__,'src', $class)).'.php');
-});
 
 try {
     API::main();

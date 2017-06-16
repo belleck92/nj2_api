@@ -6,9 +6,9 @@
  * Time: 13:29
  */
 
-namespace fr\nj2\api\v1\LogicalUnits;
+namespace Fr\Nj2\Api\v1\LogicalUnits;
 
-use fr\nj2\api\v1\LogicalUnit;
+use Fr\Nj2\Api\v1\LogicalUnit;
 
 class Societes extends LogicalUnit
 {
