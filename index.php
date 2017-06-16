@@ -1,7 +1,22 @@
 <?php
 
 
-print_r($_SERVER['REQUEST_URI']);
+namespace fr\nj2\api;
+
+require_once(dirname(__FILE__).'/src/API.php');
+
+spl_autoload_register(function ($class) {
+    require(dirname(__FILE__).'/'.str_replace('\\','/', str_replace(__NAMESPACE__,'src', $class)).'.php');
+});
+
+try {
+    API::main();
+} catch (\Exception $e) {
+    echo $e->getMessage()."\n";
+    echo $e->getTraceAsString()."\n";
+}
+
+
 
 
 // version
@@ -28,7 +43,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'PUT': // update
         /*
          * Simple modification (id in url)
-         * Modification of linked children (id in url)
+         * Multi modification (with search engine)
          */
 
     case 'POST': // create
@@ -42,5 +57,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
          * Simple deletion  (id in url)
          * Deletion of linked children  (id in url)
          * Deletion of parent object  (id of children in url)
+         * Multi deletion (with search engine)
          */
 }
