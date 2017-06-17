@@ -20,7 +20,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Fr\\Nj2\\Api\\": "src/"
+      "Fr\\Nj2\\Api\\": "src/",
+      "Fr\\Nj2\\Api\\Config": "config/"
     }
   },
   "optimize-autoloader": true,
