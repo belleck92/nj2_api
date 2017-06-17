@@ -13,7 +13,25 @@ use Fr\Nj2\Api\v1\LogicalUnit;
 
 class API
 {
-    public static function main()
+    const ROLE_ADMIN = 1;
+    const ROLE_LOGGED = 2;
+    const ROLE_PLAYER = 3;
+
+    /**
+     * @var API
+     */
+    private static $instance;
+
+    /**
+     * @return API
+     */
+    public static function getInstance()
+    {
+        if(is_null(self::$instance)) self::$instance = new API();
+        return self::$instance;
+    }
+
+    public function main()
     {
         $segments = explode('/',$_SERVER['REQUEST_URI']);
         if(preg_match('#^v[0-9]+$#',$segments[1])) {
@@ -47,6 +65,19 @@ class API
 
         echo "\n";
 
+    }
+
+    /**
+     * Returns the data in the payload of the token
+     * @return array
+     */
+    public function getTokenData()
+    {
+        return [
+            'idSociete'=>2,
+            //'role'=>self::ROLE_ADMIN
+            'role'=>self::ROLE_PLAYER
+        ];
     }
 
     /**

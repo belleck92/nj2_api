@@ -12,12 +12,17 @@ require_once('vendor/autoload.php');
 
 try {
     DbHandler::setConfig(Config::DB_CREDENTIALS);
-    API::main();
-
-    //var_dump(ContactBusiness::getById(1)->getSociete());
+    API::getInstance()->main();
+    //API::main();
+    //$truc = new dede();
+    //var_dump((array) $truc);
 } catch (\Throwable $e) {
     echo $e->getMessage()."\n";
     echo $e->getTraceAsString()."\n";
+}
+class dede {
+    private $aaa = 2;
+    private $bbb = 3;
 }
 
 
@@ -30,6 +35,10 @@ try {
 // token
 
 // rights
+//Voir ou pas l'objet
+//Voir ou pas certains champs
+
+
 
 // errors
 

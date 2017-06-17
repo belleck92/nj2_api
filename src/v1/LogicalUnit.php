@@ -9,6 +9,7 @@
 namespace Fr\Nj2\Api\v1;
 
 use Fr\Nj2\Api\API;
+use Fr\Nj2\Api\models\Bean;
 
 abstract class LogicalUnit
 {
@@ -34,5 +35,16 @@ abstract class LogicalUnit
         }
     }
 
+    /**
+     * @param string $ids
+     * @return array
+     */
     public abstract function getByIds($ids);
+
+    /**
+     * Returns the fields to be displayed
+     * @param Bean $bean
+     * @return array
+     */
+    public abstract function fields(Bean $bean);
 }
