@@ -11,11 +11,9 @@ namespace Fr\Nj2\Api\Config;
 class Config
 {
     const DB_CREDENTIALS = [
-        [
-            'host'=>...,
-            'user'=>...,
-            'password'=>...,
-            'db'=>...
-        ]
+        'host'=>'...',
+        'user'=>'...',
+        'password'=>'...',
+        'db'=>'...'
     ];
 }
