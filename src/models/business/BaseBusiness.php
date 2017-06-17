@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-16
-* Time: 17:46:45
+* Date: 2017-06-17
+* Time: 17:54:25
 */
 namespace Fr\Nj2\Api\models\business;
 
