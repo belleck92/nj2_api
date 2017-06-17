@@ -17,6 +17,9 @@ class API
     const ROLE_LOGGED = 2;
     const ROLE_PLAYER = 3;
 
+    private $errorCode = 0;
+    private $error = '';
+
     /**
      * @var API
      */
@@ -46,9 +49,10 @@ class API
         $parameters = $_GET;
         unset($parameters['_url']);
 
+        $payload = [];
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
-                var_dump($exec->get($queryString, $parameters));
+                $payload = $exec->get($queryString, $parameters);
                 break;
             case 'PUT':
 
@@ -63,8 +67,51 @@ class API
                 throw new Exception("HTTP method ".$_SERVER['REQUEST_METHOD']." not handled");
         }
 
-        echo "\n";
+        return json_encode([
+            'error'=>$this->getErrorData()
+            ,'data'=>$payload
+            ,'token'=>[]
+        ]);
+    }
 
+    /**
+     * @return array
+     */
+    public function getErrorData()
+    {
+        return ['code'=>$this->errorCode, 'desc'=>$this->error];
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode()
+    {
+        return $this->errorCode;
+    }
+
+    /**
+     * @param int $errorCode
+     */
+    public function setErrorCode($errorCode)
+    {
+        $this->errorCode = $errorCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string $error
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
     }
 
     /**

@@ -12,21 +12,16 @@ require_once('vendor/autoload.php');
 
 try {
     DbHandler::setConfig(Config::DB_CREDENTIALS);
-    API::getInstance()->main();
-    //API::main();
-    //$truc = new dede();
-    //var_dump((array) $truc);
+    echo API::getInstance()->main();
 } catch (\Throwable $e) {
     echo $e->getMessage()."\n";
     echo $e->getTraceAsString()."\n";
 }
-class dede {
-    private $aaa = 2;
-    private $bbb = 3;
-}
 
 
 
+
+echo "\n";
 
 // version
 
