@@ -16,4 +16,7 @@ class Config
         'password'=>'...',
         'db'=>'...'
     ];
+    
+    const ENCRYPTION_ALGO = "...";
+    const ENCRYPTION_KEY = "...";
 }
