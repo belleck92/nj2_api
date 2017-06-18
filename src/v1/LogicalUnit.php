@@ -19,7 +19,7 @@ abstract class LogicalUnit
     protected $tableName;
 
     /**
-     * @param $queryString
+     * @param string $queryString
      * @param array $parameters
      * @return string
      */
@@ -33,6 +33,39 @@ abstract class LogicalUnit
 
             }
         }
+    }
+
+    /**
+     * @param string $queryString
+     * @param array $parameters
+     * @param array $queryBody
+     * @return string
+     */
+    public function update($queryString, $parameters, $queryBody)
+    {
+
+    }
+
+    /**
+     * @param string $queryString
+     * @param array $parameters
+     * @param array $queryBody
+     * @return string
+     */
+    public function create($queryString, $parameters, $queryBody)
+    {
+
+    }
+
+    /**
+     * @param string $queryString
+     * @param array $parameters
+     * @param array $queryBody
+     * @return string
+     */
+    public function delete($queryString, $parameters, $queryBody)
+    {
+
     }
 
     /**

@@ -49,8 +49,8 @@ class Contacts extends LogicalUnit
     public function fields(Bean $contact)
     {
         /** @var Contact $contact */
-        if(API::getInstance()->getTokenData()['role'] == API::ROLE_ADMIN) return $contact->getAsArray();
-        elseif (API::getInstance()->getTokenData()['role'] == API::ROLE_PLAYER && API::getInstance()->getTokenData()['idSociete'] == $contact->getIdSociete()) return array_intersect_key($contact->getAsArray(),array_flip([
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return $contact->getAsArray();
+        elseif (API::getInstance()->getToken()['role'] == API::ROLE_PLAYER && API::getInstance()->getToken()['idSociete'] == $contact->getIdSociete()) return array_intersect_key($contact->getAsArray(),array_flip([
             'idContact'
             ,'idSociete'
             ,'nom'

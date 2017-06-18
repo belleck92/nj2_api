@@ -9,6 +9,7 @@
 namespace Fr\Nj2\Api;
 
 use Exception;
+use Fr\Nj2\Api\Config\Config;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class API
@@ -16,9 +17,14 @@ class API
     const ROLE_ADMIN = 1;
     const ROLE_LOGGED = 2;
     const ROLE_PLAYER = 3;
+    const ROLE_UNLOGGED = 4;
 
     private $errorCode = 0;
     private $error = '';
+
+    private $token = [];
+
+    private $returnedData = [];
 
     /**
      * @var API
@@ -36,42 +42,63 @@ class API
 
     public function main()
     {
+        /*
+         * URI Parameters
+         */
         $segments = explode('/',$_SERVER['REQUEST_URI']);
         if(preg_match('#^v[0-9]+$#',$segments[1])) {
             $version = $segments[1];
         } else throw new Exception("First segment of URL must be the version");
         
         $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.self::lowerToUpperCamelCase($segments[2]);
-        if(!class_exists($class)) throw new Exception("Class ".$class." does not exist");
+        if(!class_exists($class)) $this->sendResponse(404);
         $exec = new $class;/** @var LogicalUnit $exec */
         $queryString = substr($_SERVER['REQUEST_URI'],strlen($segments[1].$segments[2]) + 3);
         if(strpos($queryString, '?') !== false)$queryString = substr($queryString,0, strpos($queryString, '?'));
         $parameters = $_GET;
         unset($parameters['_url']);
 
-        $payload = [];
+        /*
+         * Token
+         */
+        if(!isset($_SERVER['HTTP_AUTHORIZATION']))
+
+        $this->returnedData= [];
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
-                $payload = $exec->get($queryString, $parameters);
+                $this->returnedData = $exec->get($queryString, $parameters);
                 break;
             case 'PUT':
-
+                $this->returnedData = $exec->update($queryString, $parameters, json_decode(file_get_contents('php://input'), true));
                 break;
             case 'POST':
-
+                $this->returnedData = $exec->create($queryString, $parameters, json_decode(file_get_contents('php://input'), true));
                 break;
             case 'DELETE':
-
+                $this->returnedData = $exec->delete($queryString, $parameters, json_decode(file_get_contents('php://input'), true));
                 break;
             default :
                 throw new Exception("HTTP method ".$_SERVER['REQUEST_METHOD']." not handled");
         }
 
-        return json_encode([
-            'error'=>$this->getErrorData()
-            ,'data'=>$payload
-            ,'token'=>[]
-        ]);
+        $this->sendResponse();
+    }
+
+    /**
+     * Send the http response
+     * @param int $code HTTP response code
+     */
+    public function sendResponse($code = 200)
+    {
+        http_response_code($code);
+        if($code == 200) {
+            echo json_encode([
+                'error'=>$this->getErrorData()
+                ,'data'=>$this->returnedData
+                ,'token'=>$this->getJWTToken()
+            ]);
+        }
+        exit();
     }
 
     /**
@@ -118,13 +145,30 @@ class API
      * Returns the data in the payload of the token
      * @return array
      */
-    public function getTokenData()
+    public function getToken()
     {
-        return [
-            'idSociete'=>2,
-            //'role'=>self::ROLE_ADMIN
-            'role'=>self::ROLE_PLAYER
-        ];
+        if(empty($this->token)) return ['role'=>self::ROLE_UNLOGGED];
+        else return $this->token;
+    }
+
+    /**
+     * Returns
+     * @return string
+     */
+    public function getJWTToken()
+    {
+        $header = base64_encode(json_encode(["typ"=>"JWT", 'alg'=>Config::ENCRYPTION_ALGO]));
+        $payload = base64_encode(json_encode($this->getToken()));
+        $signature = hash_hmac(Config::ENCRYPTION_ALGO,$header.'.'.$payload, Config::ENCRYPTION_KEY);
+        return $header.'.'.$payload.'.'.$signature;
+    }
+
+    /**
+     * @param array $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
     }
 
     /**
