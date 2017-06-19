@@ -21,7 +21,8 @@
   "autoload": {
     "psr-4": {
       "Fr\\Nj2\\Api\\": "src/",
-      "Fr\\Nj2\\Api\\Config\\": "config/"
+      "Fr\\Nj2\\Api\\Config\\": "config/",
+      "Fr\\Nj2\\Api\\Tests\\": "tests/"
     }
   },
   "optimize-autoloader": true,
