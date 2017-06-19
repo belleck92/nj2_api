@@ -1,13 +1,14 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-17
-* Time: 17:54:25
+* Date: 2017-06-19
+* Time: 18:26:05
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\models\DbHandler;
+use Fr\Nj2\Api\models\collection\BaseCollection;
 
 abstract class BaseBusiness {
 
@@ -126,4 +127,25 @@ abstract class BaseBusiness {
     {
         return self::$table;
     }
+
+    /**
+     * @param array $filters
+     * @return BaseCollection
+     */
+    public static function getFiltered($filters)
+    {
+        $req = "SELECT * FROM `".static::$table."` ";
+        if(count($filters)) {
+            $req .= " WHERE ";
+            $first = true;
+            foreach ($filters as $field=>$val) {
+                if(!$first) $req .= " AND ";
+                $first = false;
+                $req .= " `$field`='".DbHandler::getConn()->escape_string($val)."' ";
+            }
+        }
+        $req .= ";";
+        return DbHandler::collFromQuery($req,self::underscoreToCamelCase(static::$table), self::underscoreToCamelCase(static::$table).'Collection');
+    }
+
 }

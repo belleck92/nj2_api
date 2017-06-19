@@ -1,12 +1,14 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-17
-* Time: 17:54:25
+* Date: 2017-06-19
+* Time: 18:26:05
 */
 namespace Fr\Nj2\Api\models\collection;
 
 use Fr\Nj2\Api\models\Bean;
+use Fr\Nj2\Api\models\collection\BaseCollection;
+use Fr\Nj2\Api\models\DbHandler;
 
 class BaseCollection extends \ArrayObject {
 

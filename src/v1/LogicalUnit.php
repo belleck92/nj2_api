@@ -21,12 +21,14 @@ abstract class LogicalUnit
     /**
      * @param string $queryString
      * @param array $parameters
-     * @return string
+     * @return array
      */
     public function get($queryString, $parameters)
     {
         if(preg_match('#^([0-9]+,?)+$#', $queryString)) {
             return $this->getByIds($queryString);
+        } elseif($queryString == 'filter') {
+            return $this->getFiltered($parameters);
         } else {
             $segments = explode('/', $queryString);
             if($segments[0] == 'children') {
@@ -34,6 +36,12 @@ abstract class LogicalUnit
             }
         }
     }
+
+    /**
+     * @param array $parameters
+     * @return array
+     */
+    public abstract function getFiltered($parameters);
 
     /**
      * @param string $queryString

@@ -55,7 +55,7 @@ class API
         if(!class_exists($class)) $this->sendResponse(404);
         $exec = new $class;/** @var LogicalUnit $exec */
         $queryString = substr($_SERVER['REQUEST_URI'],strlen($segments[1].$segments[2]) + 3);
-        if(strpos($queryString, '?') !== false)$queryString = substr($queryString,0, strpos($queryString, '?'));
+        if(strpos($queryString, '?') !== false) $queryString = substr($queryString,0, strpos($queryString, '?'));
         $parameters = $_GET;
         unset($parameters['_url']);
 

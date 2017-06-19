@@ -1,8 +1,8 @@
 <?php
 /**
  * Created by Manu
-* Date: 2017-06-17
-* Time: 17:54:25
+* Date: 2017-06-19
+* Time: 18:26:05
  */
 
 namespace Fr\Nj2\Api\models;
@@ -106,14 +106,6 @@ class DbHandler {
     }
 
     /**
-     * @return \mysqli
-     */
-    public static function getConn()
-    {
-        return self::$conn;
-    }
-
-    /**
      * @param array $config
      */
     public static function setConfig($config)
@@ -121,6 +113,17 @@ class DbHandler {
         self::$config = $config;
     }
 
-
+    /**
+     * @return \mysqli
+     * @throws Exception
+     */
+    public static function getConn()
+    {
+        if(is_null(self::$conn)) {
+        if(is_null(self::$config)) throw new Exception("Config parameters not initialized for connnection");
+        if(!self::connect(self::$config['host'],self::$config['db'],self::$config['user'],self::$config['password'])) throw new Exception("Connection not possible : ".self::$conn->error);
+        }
+        return self::$conn;
+    }
 
 }
