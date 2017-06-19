@@ -4,39 +4,17 @@
 namespace Fr\Nj2\Api;
 
 use Fr\Nj2\Api\Config\Config;
-use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\models\DbHandler;
 
 require_once('vendor/autoload.php');
 
-
 try {
     DbHandler::setConfig(Config::DB_CREDENTIALS);
-    echo API::getInstance()->main();
+    API::getInstance()->main();
 } catch (\Throwable $e) {
     echo $e->getMessage()."\n";
     echo $e->getTraceAsString()."\n";
 }
-
-
-
-
-echo "\n";
-
-// version
-
-// login
-
-// token
-
-// rights
-//Voir ou pas l'objet
-//Voir ou pas certains champs
-
-
-
-// errors
-
 
 
 // create SQL based on HTTP method

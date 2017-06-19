@@ -23,6 +23,7 @@ class API
     private $error = '';
 
     private $token = [];
+    private $jwtToken;
 
     private $returnedData = [];
 
@@ -59,11 +60,36 @@ class API
         unset($parameters['_url']);
 
         /*
-         * Token
+         * Token handling
          */
-        if(!isset($_SERVER['HTTP_AUTHORIZATION']))
+        if(strtolower($segments[2]) != 'authenticate') {
+            if(isset(\getallheaders()['Authorization'])) {
+                if(preg_match('#^Bearer (.*)$#', \getallheaders()['Authorization'])) {
+                    $token = preg_replace('#^Bearer (.*)$#', '$1', \getallheaders()['Authorization']);
+                    $this->jwtToken = $token;
+                    $segments = explode('.', $token);
+                    if(count($segments) == 3) {
+                        $signature = hash_hmac(Config::ENCRYPTION_ALGO,$segments[0].'.'.$segments[1], Config::ENCRYPTION_KEY);
+                        if($signature == $segments[2]) {
+                            $this->token = json_decode(base64_decode($segments[1]), true);
+                        } else {
+                            $this->sendResponse(401);
+                        }
+                    } else {
+                        $this->sendResponse(401);
+                    }
+                } else {
+                    $this->sendResponse(401);
+                }
+            } else {
+                $this->sendResponse(401);
+            }
+        }
 
-        $this->returnedData= [];
+        /*
+         * Request processing
+         */
+        $this->returnedData = [];
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 $this->returnedData = $exec->get($queryString, $parameters);
@@ -78,9 +104,8 @@ class API
                 $this->returnedData = $exec->delete($queryString, $parameters, json_decode(file_get_contents('php://input'), true));
                 break;
             default :
-                throw new Exception("HTTP method ".$_SERVER['REQUEST_METHOD']." not handled");
+                throw new Exception("HTTP method " . $_SERVER['REQUEST_METHOD'] . " not handled");
         }
-
         $this->sendResponse();
     }
 
@@ -152,15 +177,19 @@ class API
     }
 
     /**
-     * Returns
-     * @return string
+     * @param mixed $jwtToken
      */
-    public function getJWTToken()
+    public function setJwtToken($jwtToken)
     {
-        $header = base64_encode(json_encode(["typ"=>"JWT", 'alg'=>Config::ENCRYPTION_ALGO]));
-        $payload = base64_encode(json_encode($this->getToken()));
-        $signature = hash_hmac(Config::ENCRYPTION_ALGO,$header.'.'.$payload, Config::ENCRYPTION_KEY);
-        return $header.'.'.$payload.'.'.$signature;
+        $this->jwtToken = $jwtToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJwtToken()
+    {
+        return $this->jwtToken;
     }
 
     /**

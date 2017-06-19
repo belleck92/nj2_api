@@ -10,6 +10,7 @@ namespace Fr\Nj2\Api\v1\LogicalUnits;
 
 
 use Fr\Nj2\Api\API;
+use Fr\Nj2\Api\Config\Config;
 use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
@@ -37,9 +38,12 @@ class Authenticate extends LogicalUnit
 
     public function create($queryString, $parameters, $queryBody)
     {
-        // todo real password testing and real values in token
         if(isset($queryBody['user']) && $queryBody['user'] == "manu" && isset($queryBody['password']) && $queryBody['password'] == "zaza" ) {
             API::getInstance()->setToken(["role"=>API::ROLE_LOGGED, "idSociete"=>1, "exp"=>time()+7200]);
+            $header = base64_encode(json_encode(["typ"=>"JWT", 'alg'=>Config::ENCRYPTION_ALGO]));
+            $payload = base64_encode(json_encode(API::getInstance()->getToken()));
+            $signature = hash_hmac(Config::ENCRYPTION_ALGO,$header.'.'.$payload, Config::ENCRYPTION_KEY);
+            API::getInstance()->setJwtToken($header.'.'.$payload.'.'.$signature);
         } else API::getInstance()->sendResponse(401);
     }
 
