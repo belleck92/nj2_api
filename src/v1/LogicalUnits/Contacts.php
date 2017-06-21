@@ -28,11 +28,24 @@ class Contacts extends LogicalUnit
         return $this->filterCollection(ContactBusiness::getByIds($ids));
     }
 
+    public function get($queryString, $parameters)
+    {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'societes':
+                    return Societes::filterCollection(ContactBusiness::getByIds($segments[0])->getSocietes());
+            }
+        }
+        return parent::get($queryString, $parameters);
+    }
+
+
     /**
      * @param Contact $contact
      * @return bool
      */
-    public function canSee(Contact $contact)
+    public static function canSee(Contact $contact)
     {
         return true;
         //return API::getInstance()->getTokenData()['role'] == API::ROLE_ADMIN || $contact->getIdSociete() == API::getInstance()->getTokenData()['idSociete'];
@@ -43,7 +56,7 @@ class Contacts extends LogicalUnit
      * @param Bean $contact
      * @return array
      */
-    public function fields(Bean $contact)
+    public static function fields(Bean $contact)
     {
         /** @var Contact $contact */
         if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return $contact->getAsArray();
@@ -60,20 +73,20 @@ class Contacts extends LogicalUnit
         ]));
     }
 
-    public function getFiltered($parameters)
+    public static function getFiltered($parameters)
     {
-        return $this->filterCollection(ContactBusiness::getFiltered($parameters));
+        return self::filterCollection(ContactBusiness::getFiltered($parameters));
     }
 
     /**
      * @param BaseCollection $contacts
      * @return array
      */
-    public function filterCollection(BaseCollection $contacts)
+    public static function filterCollection(BaseCollection $contacts)
     {
         $ret = [];
         foreach ($contacts as $contact) {
-            if($this->canSee($contact)) $ret[] = $this->fields($contact);
+            if(self::canSee($contact)) $ret[] = self::fields($contact);
         }
         return $ret;
     }

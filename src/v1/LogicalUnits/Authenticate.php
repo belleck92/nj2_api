@@ -21,7 +21,7 @@ class Authenticate extends LogicalUnit
         API::getInstance()->sendResponse(404);
     }
 
-    public function fields(Bean $bean)
+    public static function fields(Bean $bean)
     {
         API::getInstance()->sendResponse(404);
     }
@@ -36,7 +36,7 @@ class Authenticate extends LogicalUnit
         API::getInstance()->sendResponse(404);
     }
 
-    public function getFiltered($parameters)
+    public static function getFiltered($parameters)
     {
         API::getInstance()->sendResponse(404);
     }

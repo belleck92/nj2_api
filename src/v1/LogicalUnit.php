@@ -29,19 +29,16 @@ abstract class LogicalUnit
             return $this->getByIds($queryString);
         } elseif($queryString == 'filter') {
             return $this->getFiltered($parameters);
-        } else {
-            $segments = explode('/', $queryString);
-            if($segments[0] == 'children') {
-
-            }
-        }
+        } else return[];
     }
 
     /**
      * @param array $parameters
      * @return array
      */
-    public abstract function getFiltered($parameters);
+    public static function getFiltered($parameters) {
+        return [];
+    }
 
     /**
      * @param string $queryString
@@ -87,5 +84,7 @@ abstract class LogicalUnit
      * @param Bean $bean
      * @return array
      */
-    public abstract function fields(Bean $bean);
+    public static function fields(Bean $bean){
+        return [];
+    }
 }
