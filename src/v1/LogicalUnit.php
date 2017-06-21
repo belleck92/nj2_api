@@ -84,7 +84,7 @@ abstract class LogicalUnit
      * @param Bean $bean
      * @return array
      */
-    public static function fields(Bean $bean){
+    public static function readableFields(Bean $bean){
         return [];
     }
 }

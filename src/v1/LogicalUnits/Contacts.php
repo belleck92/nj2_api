@@ -56,7 +56,7 @@ class Contacts extends LogicalUnit
      * @param Bean $contact
      * @return array
      */
-    public static function fields(Bean $contact)
+    public static function readableFields(Bean $contact)
     {
         /** @var Contact $contact */
         if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return $contact->getAsArray();
@@ -86,7 +86,7 @@ class Contacts extends LogicalUnit
     {
         $ret = [];
         foreach ($contacts as $contact) {
-            if(self::canSee($contact)) $ret[] = self::fields($contact);
+            if(self::canSee($contact)) $ret[] = self::readableFields($contact);
         }
         return $ret;
     }

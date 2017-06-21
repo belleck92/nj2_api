@@ -59,7 +59,7 @@ class Societes extends LogicalUnit
      * @param Bean $societe
      * @return array
      */
-    public static function fields(Bean $societe)
+    public static function readableFields(Bean $societe)
     {
         /** @var Societe $societe */
         return $societe->getAsArray();
@@ -79,7 +79,7 @@ class Societes extends LogicalUnit
         /** @var SocieteCollection $societes */
         $ret = [];
         foreach ($societes as $societe) {
-            if(self::canSee($societe)) $ret[] = self::fields($societe);
+            if(self::canSee($societe)) $ret[] = self::readableFields($societe);
         }
         return $ret;
     }

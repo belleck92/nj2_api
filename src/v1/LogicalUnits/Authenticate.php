@@ -21,7 +21,7 @@ class Authenticate extends LogicalUnit
         API::getInstance()->sendResponse(404);
     }
 
-    public static function fields(Bean $bean)
+    public static function readableFields(Bean $bean)
     {
         API::getInstance()->sendResponse(404);
     }
