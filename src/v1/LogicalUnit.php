@@ -70,7 +70,7 @@ abstract class LogicalUnit
      */
     public function delete($queryString, $parameters, $queryBody)
     {
-
+        
     }
 
     /**
@@ -80,11 +80,38 @@ abstract class LogicalUnit
     public abstract function getByIds($ids);
 
     /**
+     * @param Bean $bean
+     * @return bool
+     */
+    public static function canSee(Bean $bean)
+    {
+        return false;
+    }
+
+    /**
      * Returns the fields to be displayed
      * @param Bean $bean
      * @return array
      */
     public static function readableFields(Bean $bean){
+        return [];
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public static function canWrite($data)
+    {
+        return false;
+    }
+
+    /**
+     * Returns the fields that can be written
+     * @param array $data
+     * @return array
+     */
+    public static function writeableFields($data){
         return [];
     }
 }

@@ -117,7 +117,7 @@ abstract class BaseBusiness {
      */
     public static function getFields()
     {
-        return self::$fields;
+        return static::$fields;
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class BaseBusiness {
      */
     public static function getTable()
     {
-        return self::$table;
+        return static::$table;
     }
 
     /**
@@ -148,4 +148,21 @@ abstract class BaseBusiness {
         return DbHandler::collFromQuery($req,self::underscoreToCamelCase(static::$table), self::underscoreToCamelCase(static::$table).'Collection');
     }
 
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function lowerToUpperCamelCase($str)
+    {
+        return strtoupper(substr($str,0,1)).substr($str,1,strlen($str)-1);
+    }
+
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function upperToLowerCamelCase($str)
+    {
+        return strtolower(substr($str,0,1)).substr($str,1,strlen($str)-1);
+    }
 }

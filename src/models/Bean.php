@@ -33,4 +33,9 @@ interface Bean {
      * @return array
      */
     public function getAsArray();
+
+    /**
+     * @param array $data
+     */
+    public function edit($data);
 }

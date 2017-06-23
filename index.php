@@ -16,6 +16,7 @@ try {
     echo $e->getTraceAsString()."\n";
 }
 
+// Penser à gérer le cache (stores ? )
 
 // create SQL based on HTTP method
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -23,7 +24,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         /*
          * Get One (id in url)
          * Get multi (with search engine)
-         * Get linked object(s) (with search engine) (id in url)
+         * Get linked object(s) (id in url)
          */
 
     case 'PUT': // update

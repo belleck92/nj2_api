@@ -7,7 +7,7 @@
 
 namespace Fr\Nj2\Api\models;
 
-
+use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\models\store\SocieteStore;
 
@@ -47,7 +47,7 @@ class Contact implements Bean {
      */
     public function setIdContact($idContact)
     {
-        $this->idContact = $idContact;
+        if(empty($this->idContact)) $this->idContact = $idContact;
     }
     
     /**
@@ -168,5 +168,16 @@ class Contact implements Bean {
             ,'nom'=>$this->nom
             ,'salaire'=>$this->salaire
         ];
+    }
+
+    /**
+     * @param array $data
+     */
+    public function edit($data)
+    {
+        foreach (array_intersect_key($data,array_flip(ContactBusiness::getFields())) as $field=>$val) {
+            $method = 'set'.BaseBusiness::lowerToUpperCamelCase($field);
+            $this->$method($val);
+        }
     }
 }

@@ -14,6 +14,7 @@ use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\ContactCollection;
 use Fr\Nj2\Api\models\Contact;
+use Fr\Nj2\Api\models\store\ContactStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class Contacts extends LogicalUnit
@@ -40,15 +41,58 @@ class Contacts extends LogicalUnit
         return parent::get($queryString, $parameters);
     }
 
+    public function update($queryString, $parameters, $queryBody)
+    {
+        if(!is_array($queryBody)) return [];
+        $ret = new ContactCollection();
+        foreach($queryBody as $contactData) {
+            if(!isset($contactData['idContact'])) continue;
+            if($this->canWrite($contactData)) {
+                $contact = ContactStore::getById($contactData['idContact']);
+                $contact->edit($this->writeableFields($contactData));
+                $contact->save();
+                $ret->ajout($contact);
+            }
+        }
+        return $this->filterCollection($ret);
+    }
+
+    public function create($queryString, $parameters, $queryBody)
+    {
+        if(!is_array($queryBody)) return [];
+        $ret = new ContactCollection();
+        foreach($queryBody as $contactData) {
+            if(isset($contactData['idContact'])) continue;
+            if(!isset($contactData['idSociete'])) continue;
+            if($this->canWrite($contactData)) {
+                $contact = new Contact();
+                $contact->edit($this->writeableFields($contactData));
+                $contact->save();
+                $ret->ajout($contact);
+            }
+        }
+        return $this->filterCollection($ret);
+    }
+
+    public function delete($queryString, $parameters, $queryBody)
+    {
+        if(preg_match('#^([0-9]+,?)+$#', $queryString)) $ret = ContactBusiness::getByIds($queryString);
+        elseif($queryString == 'filter') $ret = ContactBusiness::getFiltered($parameters);
+        else $ret = new ContactCollection();
+        foreach($ret as $contact) {
+            if(self::canDelete($contact)) $contact->delete();
+        }
+        return $this->filterCollection($ret);
+    }
 
     /**
-     * @param Contact $contact
+     * @param Bean $contact
      * @return bool
      */
-    public static function canSee(Contact $contact)
+    public static function canSee(Bean $contact)
     {
+        /** @var Contact $contact */
         return true;
-        //return API::getInstance()->getTokenData()['role'] == API::ROLE_ADMIN || $contact->getIdSociete() == API::getInstance()->getTokenData()['idSociete'];
     }
 
     /**
@@ -73,6 +117,47 @@ class Contacts extends LogicalUnit
         ]));
     }
 
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public static function canWrite($data)
+    {
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return true;
+        if(isset($data['idSociete']) && $data['idSociete'] != API::getInstance()->getToken()['idSociete']) return false;
+        return true;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public static function writeableFields($data)
+    {
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN || (isset($data['idSociete']) && $data['idSociete'] == API::getInstance()->getToken()['idSociete'])) return array_intersect_key($data,array_flip(ContactBusiness::getFields()));
+        elseif(!isset($data['idSociete']) && isset($data['idContact'])) {
+            $contact = ContactStore::getById($data['idContact']);
+            if(API::getInstance()->getToken()['idSociete'] == $contact->getIdSociete()) return array_intersect_key($data,array_flip(ContactBusiness::getFields()));
+            else return [];
+        }
+        else return [];
+    }
+
+    /**
+     * @param Contact $contact
+     * @return bool
+     */
+    public static function canDelete($contact)
+    {
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return true;
+        if($contact->getIdSociete() != API::getInstance()->getToken()['idSociete']) return false;
+        return true;
+    }
+
+    /**
+     * @param array $parameters
+     * @return array
+     */
     public static function getFiltered($parameters)
     {
         return self::filterCollection(ContactBusiness::getFiltered($parameters));

@@ -45,12 +45,15 @@ class Societes extends LogicalUnit
     }
 
 
+
+
     /**
-     * @param Societe $contact
+     * @param Bean $societe
      * @return bool
      */
-    public static function canSee(Societe $contact)
+    public static function canSee(Bean $societe)
     {
+        /** @var Societe $societe */
         return true;
     }
 

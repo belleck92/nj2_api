@@ -10,6 +10,7 @@ namespace Fr\Nj2\Api;
 
 use Exception;
 use Fr\Nj2\Api\Config\Config;
+use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class API
@@ -51,7 +52,7 @@ class API
             $version = $segments[1];
         } else throw new Exception("First segment of URL must be the version");
         
-        $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.self::lowerToUpperCamelCase($segments[2]);
+        $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.BaseBusiness::lowerToUpperCamelCase($segments[2]);
         if(!class_exists($class)) $this->sendResponse(404);
         $exec = new $class;/** @var LogicalUnit $exec */
         $queryString = substr($_SERVER['REQUEST_URI'],strlen($segments[1].$segments[2]) + 3);
@@ -198,23 +199,5 @@ class API
     public function setToken($token)
     {
         $this->token = $token;
-    }
-
-    /**
-     * @param string $str
-     * @return string
-     */
-    public static function lowerToUpperCamelCase($str)
-    {
-        return strtoupper(substr($str,0,1)).substr($str,1,strlen($str)-1);
-    }
-    
-    /**
-     * @param string $str
-     * @return string
-     */
-    public static function upperToLowerCamelCase($str)
-    {
-        return strtolower(substr($str,0,1)).substr($str,1,strlen($str)-1);
     }
 }

@@ -8,6 +8,7 @@
 namespace Fr\Nj2\Api\models;
 
 
+use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\SocieteBusiness;
 use Fr\Nj2\Api\models\collection\ContactCollection;
 use Fr\Nj2\Api\models\business\ContactBusiness;
@@ -43,7 +44,7 @@ class Societe implements Bean {
      */
     public function setIdSociete($idSociete)
     {
-        $this->idSociete = $idSociete;
+        if(empty($this->idSociete)) $this->idSociete = $idSociete;
     }
     
     /**
@@ -142,5 +143,16 @@ class Societe implements Bean {
             'idSociete'=>$this->idSociete
             ,'nom'=>$this->nom
         ];
+    }
+
+    /**
+     * @param array $data
+     */
+    public function edit($data)
+    {
+        foreach (array_intersect_key($data,array_flip(SocieteBusiness::getFields())) as $field=>$val) {
+            $method = 'set'.BaseBusiness::lowerToUpperCamelCase($field);
+            $this->$method($val);
+        }
     }
 }
