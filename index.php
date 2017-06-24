@@ -43,7 +43,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         /*
          * Simple deletion  (id in url)
          * Deletion of linked children  (id in url)
-         * Deletion of parent object  (id of children in url)
          * Multi deletion (with search engine)
          */
 }

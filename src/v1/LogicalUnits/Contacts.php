@@ -59,19 +59,28 @@ class Contacts extends LogicalUnit
 
     public function create($queryString, $parameters, $queryBody)
     {
-        if(!is_array($queryBody)) return [];
-        $ret = new ContactCollection();
-        foreach($queryBody as $contactData) {
-            if(isset($contactData['idContact'])) continue;
-            if(!isset($contactData['idSociete'])) continue;
-            if($this->canWrite($contactData)) {
-                $contact = new Contact();
-                $contact->edit($this->writeableFields($contactData));
-                $contact->save();
-                $ret->ajout($contact);
+        $segments = explode('/', $queryString);
+        var_dump($segments);
+        if(empty($segments[0])) {
+            if (!is_array($queryBody)) return [];
+            $ret = new ContactCollection();
+            foreach ($queryBody as $contactData) {
+                if (isset($contactData['idContact'])) continue;
+                if (!isset($contactData['idSociete'])) continue;
+                if ($this->canWrite($contactData)) {
+                    $contact = new Contact();
+                    $contact->edit($this->writeableFields($contactData));
+                    $contact->save();
+                    $ret->ajout($contact);
+                }
+            }
+            return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-1]+$#', $segments[0])) {
+            if($segments[1] == "societes") {
+                $unit = new Societes();
+                $unit->create('', $parameters, $queryBody);
             }
         }
-        return $this->filterCollection($ret);
     }
 
     public function delete($queryString, $parameters, $queryBody)

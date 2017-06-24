@@ -45,7 +45,63 @@ class Societes extends LogicalUnit
     }
 
 
+    public function create($queryString, $parameters, $queryBody)
+    {
+        $segments = explode('/', $queryString);
+        if(empty($segments[0])) {
+            if (!is_array($queryBody)) return [];
+            $ret = new SocieteCollection();
+            foreach ($queryBody as $societeData) {
+                if (isset($societeData['idSociete'])) continue;
+                if ($this->canWrite($societeData)) {
+                    $societe = new Societe();
+                    $societe->edit($this->writeableFields($societeData));
+                    $societe->save();
+                    $ret->ajout($societe);
+                }
+            }
+            return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "contacts") {
+                foreach ($queryBody as &$contact) {
+                    $contact['idSociete'] = $segments[0];
+                }
+                $unit = new Contacts();
+                return $unit->create('', $parameters, $queryBody);
+            }
+        }
+        return [];
+    }
 
+    public function delete($queryString, $parameters, $queryBody)
+    {
+        $segments = explode('/', $queryString);
+        if(preg_match('#^([0-9]+,?)+$#', $segments[0])) {
+            $ret = SocieteBusiness::getByIds($segments[0]);
+            if($segments[1] == "contacts") {
+                $ret = $ret->getContacts();
+                $unit = new Contacts();
+                return $unit->delete($ret->getIdsStr(), $parameters, $queryBody);
+            }
+        }
+        elseif($queryString == 'filter') $ret = SocieteBusiness::getFiltered($parameters);
+        else $ret = new SocieteCollection();
+        foreach($ret as $societe) {
+            if(self::canDelete($societe)) $societe->delete();
+        }
+        return $this->filterCollection($ret);
+    }
+
+    /**
+     * @param Societe $societe
+     * @return bool
+     */
+    public static function canDelete($societe)
+    {
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return true;
+        if($societe->getIdSociete() != API::getInstance()->getToken()['idSociete']) return false;
+        return true;
+    }
 
     /**
      * @param Bean $societe
