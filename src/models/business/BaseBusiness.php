@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-19
-* Time: 18:26:05
+* Date: 2017-06-24
+* Time: 14:27:39
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -148,6 +148,7 @@ abstract class BaseBusiness {
         return DbHandler::collFromQuery($req,self::underscoreToCamelCase(static::$table), self::underscoreToCamelCase(static::$table).'Collection');
     }
 
+
     /**
      * @param string $str
      * @return string
@@ -165,4 +166,5 @@ abstract class BaseBusiness {
     {
         return strtolower(substr($str,0,1)).substr($str,1,strlen($str)-1);
     }
+
 }

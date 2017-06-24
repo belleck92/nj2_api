@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-19
-* Time: 18:26:05
+* Date: 2017-06-24
+* Time: 14:27:39
 */
 namespace Fr\Nj2\Api\models\collection;
 
