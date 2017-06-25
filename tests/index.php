@@ -67,4 +67,16 @@ echo "\n";
 
 
 
+$ch = curl_init("http://api.nj2.gruik.fr/v1/societes/1/contacts");
+curl_setopt($ch,CURLOPT_HTTPHEADER,[
+    "Authorization: Bearer ".$token
+]);
+curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+$ret = curl_exec($ch);
+$info = curl_getinfo($ch);
+echo "\n";
+echo $ret;
+echo "\n";
+
 
