@@ -1,11 +1,13 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-24
-* Time: 14:27:39
+* Date: 2017-06-25
+* Time: 10:15:22
 */
 namespace Fr\Nj2\Api\models\store;
 
+use Exception;
+use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\ContactBusiness;
@@ -27,6 +29,34 @@ abstract class BaseStore {
             self::$stock[static::$table][$id] = $business::getById($id);
         }
         return self::$stock[static::$table][$id];
+    }
+
+    /**
+     * @param string $ids Ids des objets à renvoyer, séparés par des virgules
+     * @return Bean
+     * @throws Exception
+     */
+    public static function getByIds($ids){
+        $class = 'Fr\\Nj2\\Api\\models\\business\\'.BaseBusiness::underscoreToCamelCase(static::$table).'Collection';
+        $business = 'Fr\\Nj2\\Api\\models\\business\\' . BaseBusiness::underscoreToCamelCase(static::$table) . 'Business';
+        $ret = new $class; /** @var BaseCollection $ret */
+        if(!preg_match('"^([0-9],?)+$"', $ids)) throw new Exception("Bad format for ids");
+        $ids = explode(',', $ids);
+        $idsToQuery = '';
+        foreach($ids as $id) {
+            if (self::exists($id)) $ret->append(self::$stock[static::$table][$id]);
+            else {
+                if(!empty($idsToQuery)) $idsToQuery .= ',';
+                $idsToQuery .= $id;
+            }
+        }
+        if(!empty($idsToQuery)) {
+            foreach ($business::getByIds($idsToQuery) as $bean) {
+                static::store($bean);
+                $ret->append($bean);
+            }
+        }
+        return $ret;
     }
 
     /**

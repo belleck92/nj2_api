@@ -26,7 +26,7 @@ class Contacts extends LogicalUnit
 
     public function getByIds($ids)
     {
-        return $this->filterCollection(ContactBusiness::getByIds($ids));
+        return $this->filterCollection(ContactStore::getByIds($ids));
     }
 
     public function get($queryString, $parameters)
@@ -35,7 +35,7 @@ class Contacts extends LogicalUnit
         if(count($segments) > 1) {
             switch ($segments[1]) {
                 case 'societes':
-                    return Societes::filterCollection(ContactBusiness::getByIds($segments[0])->getSocietes());
+                    return Societes::filterCollection(ContactStore::getByIds($segments[0])->getSocietes());
             }
         }
         return parent::get($queryString, $parameters);
@@ -60,7 +60,6 @@ class Contacts extends LogicalUnit
     public function create($queryString, $parameters, $queryBody)
     {
         $segments = explode('/', $queryString);
-        var_dump($segments);
         if(empty($segments[0])) {
             if (!is_array($queryBody)) return [];
             $ret = new ContactCollection();
@@ -81,12 +80,16 @@ class Contacts extends LogicalUnit
                 $unit->create('', $parameters, $queryBody);
             }
         }
+        return [];
     }
 
     public function delete($queryString, $parameters, $queryBody)
     {
-        if(preg_match('#^([0-9]+,?)+$#', $queryString)) $ret = ContactBusiness::getByIds($queryString);
-        elseif($queryString == 'filter') $ret = ContactBusiness::getFiltered($parameters);
+        if(preg_match('#^([0-9]+,?)+$#', $queryString)) $ret = ContactStore::getByIds($queryString);
+        elseif($queryString == 'filter') {
+            $ret = ContactBusiness::getFiltered($parameters);
+            $ret->store();
+        }
         else $ret = new ContactCollection();
         foreach($ret as $contact) {
             if(self::canDelete($contact)) $contact->delete();

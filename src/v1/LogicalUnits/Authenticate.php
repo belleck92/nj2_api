@@ -50,6 +50,7 @@ class Authenticate extends LogicalUnit
             $signature = hash_hmac(Config::ENCRYPTION_ALGO,$header.'.'.$payload, Config::ENCRYPTION_KEY);
             API::getInstance()->setJwtToken($header.'.'.$payload.'.'.$signature);
         } else API::getInstance()->sendResponse(401);
+        return [];
     }
 
     public function delete($queryString, $parameters, $queryBody)
