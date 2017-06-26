@@ -8,7 +8,6 @@
 
 namespace Fr\Nj2\Api\v1;
 
-use Fr\Nj2\Api\API;
 use Fr\Nj2\Api\models\Bean;
 
 abstract class LogicalUnit
