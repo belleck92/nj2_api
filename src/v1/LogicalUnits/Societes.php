@@ -1,27 +1,23 @@
 <?php
-use Fr\Nj2\Api\models\collection\SocieteCollection;
-
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 16/06/17
- * Time: 13:29
+ * Date: 2017-06-29
+ * Time: 14:02:12
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
 
-use Fr\Nj2\Api\API;
-use Fr\Nj2\Api\models\Bean;
-use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\models\business\SocieteBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\SocieteCollection;
 use Fr\Nj2\Api\models\Societe;
+use Fr\Nj2\Api\models\store\SocieteStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
+use Fr\Nj2\Api\v1\Rights\Societes as Right;
 
 class Societes extends LogicalUnit
 {
-
     /**
      * @var string
      */
@@ -29,7 +25,7 @@ class Societes extends LogicalUnit
 
     public function getByIds($ids)
     {
-        return $this->filterCollection(SocieteBusiness::getByIds($ids));
+        return $this->filterCollection(SocieteStore::getByIds($ids));
     }
 
     public function get($queryString, $parameters)
@@ -38,12 +34,27 @@ class Societes extends LogicalUnit
         if(count($segments) > 1) {
             switch ($segments[1]) {
                 case 'contacts':
-                    return Contacts::filterCollection(SocieteBusiness::getByIds($segments[0])->getContacts());
+                return Contacts::filterCollection(SocieteStore::getByIds($segments[0])->getContacts());
             }
         }
         return parent::get($queryString, $parameters);
     }
 
+    public function update($queryString, $parameters, $queryBody)
+    {
+        if(!is_array($queryBody)) return [];
+        $ret = new SocieteCollection();
+        foreach($queryBody as $societeData) {
+            if(!isset($societeData['idSociete'])) continue;
+            if(Right::canWrite($societeData)) {
+                $societe = SocieteStore::getById($societeData['idSociete']);
+                $societe->edit(Right::writeableFields($societeData));
+                $societe->save();
+                $ret->ajout($societe);
+            }
+        }
+        return $this->filterCollection($ret);
+    }
 
     public function create($queryString, $parameters, $queryBody)
     {
@@ -53,15 +64,17 @@ class Societes extends LogicalUnit
             $ret = new SocieteCollection();
             foreach ($queryBody as $societeData) {
                 if (isset($societeData['idSociete'])) continue;
-                if ($this->canWrite($societeData)) {
+                
+                if (Right::canWrite($societeData)) {
                     $societe = new Societe();
-                    $societe->edit($this->writeableFields($societeData));
+                    $societe->edit(Right::writeableFields($societeData));
                     $societe->save();
                     $ret->ajout($societe);
                 }
             }
             return $this->filterCollection($ret);
         } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            
             if($segments[1] == "contacts") {
                 foreach ($queryBody as &$contact) {
                     $contact['idSociete'] = $segments[0];
@@ -69,61 +82,30 @@ class Societes extends LogicalUnit
                 $unit = new Contacts();
                 return $unit->create('', $parameters, $queryBody);
             }
+
+            
         }
         return [];
     }
 
     public function delete($queryString, $parameters, $queryBody)
     {
-        $segments = explode('/', $queryString);
-        if(preg_match('#^([0-9]+,?)+$#', $segments[0])) {
-            $ret = SocieteBusiness::getByIds($segments[0]);
-            if($segments[1] == "contacts") {
-                $ret = $ret->getContacts();
-                $unit = new Contacts();
-                return $unit->delete($ret->getIdsStr(), $parameters, $queryBody);
-            }
+        if(preg_match('#^([0-9]+,?)+$#', $queryString)) $ret = SocieteStore::getByIds($queryString);
+        elseif($queryString == 'filter') {
+            $ret = SocieteBusiness::getFiltered($parameters);
+            $ret->store();
         }
-        elseif($queryString == 'filter') $ret = SocieteBusiness::getFiltered($parameters);
         else $ret = new SocieteCollection();
         foreach($ret as $societe) {
-            if(self::canDelete($societe)) $societe->delete();
+            if(Right::canDelete($societe)) $societe->delete();
         }
         return $this->filterCollection($ret);
     }
 
     /**
-     * @param Societe $societe
-     * @return bool
-     */
-    public static function canDelete($societe)
-    {
-        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) return true;
-        if($societe->getIdSociete() != API::getInstance()->getToken()['idSociete']) return false;
-        return true;
-    }
-
-    /**
-     * @param Bean $societe
-     * @return bool
-     */
-    public static function canSee(Bean $societe)
-    {
-        /** @var Societe $societe */
-        return true;
-    }
-
-    /**
-     * Returns the fields to be displayed
-     * @param Bean $societe
+     * @param array $parameters
      * @return array
      */
-    public static function readableFields(Bean $societe)
-    {
-        /** @var Societe $societe */
-        return $societe->getAsArray();
-    }
-
     public static function getFiltered($parameters)
     {
         return self::filterCollection(SocieteBusiness::getFiltered($parameters));
@@ -135,11 +117,12 @@ class Societes extends LogicalUnit
      */
     public static function filterCollection(BaseCollection $societes)
     {
-        /** @var SocieteCollection $societes */
         $ret = [];
         foreach ($societes as $societe) {
-            if(self::canSee($societe)) $ret[] = self::readableFields($societe);
+            if(Right::canSee($societe)) $ret[] = Right::readableFields($societe);
         }
         return $ret;
     }
+
+
 }

@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 16/06/17
- * Time: 13:28
+ * Date: 2017-06-29
+ * Time: 14:02:12
  */
 
 namespace Fr\Nj2\Api\v1;
@@ -69,7 +69,7 @@ abstract class LogicalUnit
      */
     public function delete($queryString, $parameters, $queryBody)
     {
-        
+       
     }
 
     /**

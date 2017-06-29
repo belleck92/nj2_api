@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-27
-* Time: 13:43:14
+* Date: 2017-06-29
+* Time: 14:02:30
 */
 namespace Fr\Nj2\Api\models\store;
 
@@ -37,7 +37,7 @@ abstract class BaseStore {
      * @throws Exception
      */
     public static function getByIds($ids){
-        $class = 'Fr\\Nj2\\Api\\models\\business\\'.BaseBusiness::underscoreToCamelCase(static::$table).'Collection';
+        $class = 'Fr\\Nj2\\Api\\models\\collection\\'.BaseBusiness::underscoreToCamelCase(static::$table).'Collection';
         $business = 'Fr\\Nj2\\Api\\models\\business\\' . BaseBusiness::underscoreToCamelCase(static::$table) . 'Business';
         $ret = new $class; /** @var BaseCollection $ret */
         if(!preg_match('"^([0-9],?)+$"', $ids)) throw new Exception("Bad format for ids");

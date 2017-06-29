@@ -2,13 +2,12 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 16/06/17
- * Time: 13:29
+ * Date: 2017-06-29
+ * Time: 14:02:12
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
 
-use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\models\business\ContactBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\ContactCollection;
@@ -36,8 +35,8 @@ class Contacts extends LogicalUnit
             switch ($segments[1]) {
                 case 'societes':
                     return Societes::filterCollection(ContactStore::getByIds($segments[0])->getSocietes());
+                }
             }
-        }
         return parent::get($queryString, $parameters);
     }
 
@@ -74,7 +73,7 @@ class Contacts extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
-        } elseif (preg_match('#^[0-1]+$#', $segments[0])) {
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
             if($segments[1] == "societes") {
                 $unit = new Societes();
                 $unit->create('', $parameters, $queryBody);
@@ -98,16 +97,6 @@ class Contacts extends LogicalUnit
     }
 
     /**
-     * @param Bean $contact
-     * @return bool
-     */
-    public static function canSee(Bean $contact)
-    {
-        /** @var Contact $contact */
-        return true;
-    }
-
-    /**
      * @param array $parameters
      * @return array
      */
@@ -124,7 +113,7 @@ class Contacts extends LogicalUnit
     {
         $ret = [];
         foreach ($contacts as $contact) {
-            if(self::canSee($contact)) $ret[] = self::readableFields($contact);
+            if(Right::canSee($contact)) $ret[] = Right::readableFields($contact);
         }
         return $ret;
     }
