@@ -38,7 +38,7 @@ CREATE TABLE hexa
   ,X INT(11) DEFAULT 0 COMMENT ''
   ,Y INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,population INT(11) DEFAULT 0 COMMENT ''
+  ,population INT(11) DEFAULT 0 COMMENT 'Population * 1000 (for decimals)'
 ) ENGINE='InnoDB';
 CREATE INDEX hexa_idGame ON hexa (idGame);
 CREATE INDEX hexa_idPlayer ON hexa (idPlayer);
@@ -57,18 +57,27 @@ CREATE TABLE resource
 (
   idResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
-  ,type INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
-CREATE INDEX resource_idHexa ON hexa (idGame);
+CREATE INDEX resource_idHexa ON resource (idHexa);
+CREATE INDEX resource_idTypeResource ON resource (idTypeResource);
+
+CREATE TABLE typeResource
+(
+   idTypeResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+) ENGINE='InnoDB';
 
 CREATE TABLE stock
 (
   idStock INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
-  ,idResource INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,quantity INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
-CREATE INDEX stock_idResource_pk ON stock (idResource);
+CREATE INDEX stock_idTypeResource_pk ON stock (idTypeResource);
 CREATE INDEX stock_idHexa_pk ON stock (idHexa);
 
 CREATE TABLE river
@@ -112,7 +121,7 @@ CREATE TABLE typeBuilding
   ,needsPopulation INT(1) DEFAULT 0 COMMENT 'Tells if the building needs some population units to work'
   ,investmentCapacity INT(11) DEFAULT 0 COMMENT 'Gold to be invested in building role, ex : units production'
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT 'Bonus permitted by the building'
-  ,BonusValue INT(11) DEFAULT 0 COMMENT 'If bonus set, value of the bonus'
+  ,BonusValue INT(11) DEFAULT 0 COMMENT 'If bonus set, value of the bonus, per level'
 ) ENGINE='InnoDB';
 CREATE INDEX typeBuilding_idTypeBonus ON typeBuilding (idTypeBonus);
 
