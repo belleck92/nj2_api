@@ -116,12 +116,13 @@ CREATE TABLE typeBuilding
   ,price INT(11) DEFAULT 0 COMMENT 'Price of the level 1'
   ,buildingTime INT(11) DEFAULT 0 COMMENT 'Time of building for 1 level'
   ,maxLevel INT(11) DEFAULT 0 COMMENT 'Max level, 0 for infinite'
-  ,priceCoef INT(11) DEFAULT 0 COMMENT 'level 2 is (1+(priceCoef/100)) times more expensive than level 1 and so on'
+  ,priceCoef INT(11) DEFAULT 0 COMMENT 'level 2 is (1+(priceCoef/100))than level 1 and so on'
   ,maintenancePriceRatio INT(11) DEFAULT 0 COMMENT 'Cost of the building each turn : (maintenancePriceRatio/100)*Total contruction price'
   ,needsPopulation INT(1) DEFAULT 0 COMMENT 'Tells if the building needs some population units to work'
   ,investmentCapacity INT(11) DEFAULT 0 COMMENT 'Gold to be invested in building role, ex : units production'
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT 'Bonus permitted by the building'
   ,BonusValue INT(11) DEFAULT 0 COMMENT 'If bonus set, value of the bonus, per level'
+  ,priorityLevel  INT(11) DEFAULT 0 COMMENT 'When not enough population in the city, '
 ) ENGINE='InnoDB';
 CREATE INDEX typeBuilding_idTypeBonus ON typeBuilding (idTypeBonus);
 
@@ -131,3 +132,43 @@ CREATE TABLE typeBonus
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
+
+CREATE TABLE hq
+(
+   idHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idHexa INT(11) DEFAULT 0 COMMENT ''
+  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Id of the mission'
+  ,idTypeHq INT(11) DEFAULT 0 COMMENT 'Type of hq (terrestrial, aerial, naval)'
+  ,idTarget INT(11) DEFAULT 0 COMMENT 'Id of the target of the mission'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,level INT(11) DEFAULT 0 COMMENT 'Current level of the hq'
+  ,xp INT(11) DEFAULT 0 COMMENT 'Cumulated XP to the next level'
+  ,capop INT(11) DEFAULT 0 COMMENT ''
+) ENGINE='InnoDB';
+CREATE INDEX hq_idHexa_pk ON hq (idHexa);
+CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
+
+CREATE TABLE typeHq
+(
+  idTypeHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+) ENGINE='InnoDB';
+
+CREATE TABLE typeMission
+(
+   idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+) ENGINE='InnoDB';
+
+
+CREATE TABLE unit
+(
+  idUnit INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeUnit INT(11) DEFAULT 0 COMMENT 'Type of unit'
+  ,idHq INT(11) DEFAULT 0 COMMENT ''
+
+) ENGINE='InnoDB';
+CREATE INDEX unit_idHq_pk ON unit (idHq);
