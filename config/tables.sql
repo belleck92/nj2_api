@@ -13,6 +13,7 @@ CREATE TABLE game
   ,currentTurn INT(11) DEFAULT 0 COMMENT ''
   ,maxTurns INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,started INT(1) DEFAULT 0 COMMENT 'If the game is started, no one can create a new player on it'
 ) ENGINE='InnoDB';
 
 CREATE TABLE player
@@ -75,7 +76,7 @@ CREATE TABLE stock
   idStock INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
-  ,quantity INT(11) DEFAULT 0 COMMENT ''
+  ,qty INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX stock_idTypeResource_pk ON stock (idTypeResource);
 CREATE INDEX stock_idHexa_pk ON stock (idHexa);
@@ -142,11 +143,11 @@ CREATE TABLE hq
   ,idTypeHq INT(11) DEFAULT 0 COMMENT 'Type of hq (terrestrial, aerial, naval)'
   ,idTarget INT(11) DEFAULT 0 COMMENT 'Id of the target of the mission'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,level INT(11) DEFAULT 0 COMMENT 'Current level of the hq'
-  ,xp INT(11) DEFAULT 0 COMMENT 'Cumulated XP to the next level'
+  ,level INT(11) DEFAULT 0 COMMENT 'Level of the hq'
   ,capop INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX hq_idHexa_pk ON hq (idHexa);
+CREATE INDEX hq_idPlayer_pk ON hq (idPlayer);
 CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
 
 CREATE TABLE typeHq
@@ -163,12 +164,77 @@ CREATE TABLE typeMission
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
-
 CREATE TABLE unit
 (
   idUnit INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeUnit INT(11) DEFAULT 0 COMMENT 'Type of unit'
   ,idHq INT(11) DEFAULT 0 COMMENT ''
-
+  ,idHexa INT(11) DEFAULT 0 COMMENT 'The hexa where the unit is being produced'
+  ,buildingTurnsLeft INT(11) DEFAULT 0 COMMENT 'When not on 0 the unit is currently in construction'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,morale VARCHAR(255) DEFAULT '' COMMENT ''
+  ,xp INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX unit_idHq_pk ON unit (idHq);
+
+CREATE TABLE typeUnit
+(
+   idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeHq INT(11) DEFAULT 0 COMMENT 'Type of hq (terrestrial, aerial, naval)'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+  ,assault INT(11) DEFAULT 0 COMMENT ''
+  ,resistance INT(11) DEFAULT 0 COMMENT ''
+  ,mvt INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeBuilding INT(11) DEFAULT 0 COMMENT 'The building necessary to build the unit'
+  ,zIndex INT(11) DEFAULT 0 COMMENT 'Priority for displaying in a unit stack. Much is better'
+  ,mecanized INT(1) DEFAULT 0 COMMENT ''
+  ,motorized INT(1) DEFAULT 0 COMMENT ''
+  ,visionRange INT(11) DEFAULT 0 COMMENT ''
+  ,price INT(11) DEFAULT 0 COMMENT ''
+  ,buildingTime INT(11) DEFAULT 0 COMMENT ''
+) ENGINE='InnoDB';
+CREATE INDEX typeUnit_idTypeHq_pk ON typeUnit (idTypeHq);
+
+CREATE TABLE typeUnitMission
+(
+  idTypeUnitMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeUnit INT(11) DEFAULT 0 COMMENT 'Type of unit'
+  ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Type of mission'
+) ENGINE='InnoDB' COMMENT 'Types of missions possibles by unit';
+CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
+CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
+
+CREATE TABLE trajectory
+(
+  idTrajectory INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idHq INT(11) DEFAULT 0 COMMENT ''
+  ,idSpy INT(11) DEFAULT 0 COMMENT ''
+  ,idCaravan INT(11) DEFAULT 0 COMMENT ''
+) ENGINE='InnoDB';
+CREATE INDEX trajectory_idHq_pk ON trajectory (idHq);
+CREATE INDEX trajectory_idSpy_pk ON trajectory (idSpy);
+CREATE INDEX trajectory_idCaravan_pk ON trajectory (idCaravan);
+
+CREATE TABLE trajectoryHexa
+(
+  idTrajectoryHexa INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTrajectory INT(11) DEFAULT 0 COMMENT ''
+  ,idHexa INT(11) DEFAULT 0 COMMENT ''
+  ,rank INT(11) DEFAULT 0 COMMENT 'Rank of the hexa in the trajectory'
+) ENGINE='InnoDB';
+CREATE INDEX trajectoryHexa_idTrajectory_pk ON trajectoryHexa (idTrajectory);
+CREATE INDEX trajectoryHexa_idHexa_pk ON trajectoryHexa (idHexa);
+
+CREATE TABLE caravan
+(
+  idCaravan INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeRessource  INT(11) DEFAULT 0 COMMENT ''
+  ,qty  INT(11) DEFAULT 0 COMMENT ''
+  ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
+) ENGINE='InnoDB';
+CREATE INDEX caravan_idPlayer_pk ON caravan (idPlayer);
+CREATE INDEX caravan_idTypeRessource_pk ON caravan (idTypeRessource);
+

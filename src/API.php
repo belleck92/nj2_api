@@ -63,7 +63,7 @@ class API
         /*
          * Token handling
          */
-        if(strtolower($segments[2]) != 'authenticate') {
+        if(strtolower($segments[2]) != 'authenticate' && !$exec->isCanWorkWithoutToken()) {
             if(isset(\getallheaders()['Authorization'])) {
                 if(preg_match('#^Bearer (.*)$#', \getallheaders()['Authorization'])) {
                     $token = preg_replace('#^Bearer (.*)$#', '$1', \getallheaders()['Authorization']);
@@ -121,7 +121,7 @@ class API
             echo json_encode([
                 'error'=>$this->getErrorData()
                 ,'data'=>$this->returnedData
-                ,'token'=>$this->getJWTToken()
+                ,'token'=>$this->getJwtToken()
             ]);
         }
         exit();

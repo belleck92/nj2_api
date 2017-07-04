@@ -18,6 +18,11 @@ abstract class LogicalUnit
     protected $tableName;
 
     /**
+     * @var bool
+     */
+    protected static $canWorkWithoutToken = false;
+
+    /**
      * @param string $queryString
      * @param array $parameters
      * @return array
@@ -112,5 +117,13 @@ abstract class LogicalUnit
      */
     public static function writeableFields($data){
         return [];
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function isCanWorkWithoutToken()
+    {
+        return static::$canWorkWithoutToken;
     }
 }
