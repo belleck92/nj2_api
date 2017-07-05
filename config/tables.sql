@@ -260,7 +260,7 @@ CREATE TABLE expert
 (
    idExpert INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idPlayer INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeBonus  INT(11) DEFAULT 0 COMMENT ''
+  ,idBonus  INT(11) DEFAULT 0 COMMENT ''
   ,idTypeUnit  INT(11) DEFAULT 0 COMMENT ''
   ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT 'The city where the expert works (destination)'
@@ -268,6 +268,25 @@ CREATE TABLE expert
   ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
 ) ENGINE='InnoDB';
 CREATE INDEX expert_idPlayer_pk ON expert (idPlayer);
-CREATE INDEX expert_idTypeBonus_pk ON expert (idTypeBonus);
+CREATE INDEX expert_idBonus_pk ON expert (idBonus);
+CREATE INDEX expert_idTypeUnit_pk ON expert (idTypeUnit);
 CREATE INDEX expert_idTypeBuilding_pk ON expert (idTypeBuilding);
 CREATE INDEX expert_idHexa_pk ON expert (idHexa);
+
+CREATE TABLE typeBonus
+(
+  idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+) ENGINE='InnoDB';
+
+CREATE TABLE bonus
+(
+  idBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeBonus INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeTech  INT(11) DEFAULT 0 COMMENT ''
+  ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent'
+) ENGINE='InnoDB';
+CREATE INDEX bonus_idTypeBonus_pk ON bonus (idTypeBonus);
+CREATE INDEX bonus_idTypeTech_pk ON bonus (idTypeTech);
