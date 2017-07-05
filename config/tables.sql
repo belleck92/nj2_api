@@ -139,7 +139,7 @@ CREATE TABLE hq
    idHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,idPlayer INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Id of the mission'
+  ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Id of the mission type'
   ,idTypeHq INT(11) DEFAULT 0 COMMENT 'Type of hq (terrestrial, aerial, naval)'
   ,idTarget INT(11) DEFAULT 0 COMMENT 'Id of the target of the mission'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
@@ -160,9 +160,11 @@ CREATE TABLE typeHq
 CREATE TABLE typeMission
 (
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,unitOrSpy  INT(11) DEFAULT 0 COMMENT '1 : military mission, 2 : Spy mission'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
+CREATE INDEX typeMission_unitOrSpy_pk ON typeMission (unitOrSpy);
 
 CREATE TABLE unit
 (
@@ -212,10 +214,12 @@ CREATE TABLE trajectory
   ,idHq INT(11) DEFAULT 0 COMMENT ''
   ,idSpy INT(11) DEFAULT 0 COMMENT ''
   ,idCaravan INT(11) DEFAULT 0 COMMENT ''
+  ,idExpert INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX trajectory_idHq_pk ON trajectory (idHq);
 CREATE INDEX trajectory_idSpy_pk ON trajectory (idSpy);
 CREATE INDEX trajectory_idCaravan_pk ON trajectory (idCaravan);
+CREATE INDEX trajectory_idExpert_pk ON trajectory (idExpert);
 
 CREATE TABLE trajectoryHexa
 (
@@ -238,3 +242,32 @@ CREATE TABLE caravan
 CREATE INDEX caravan_idPlayer_pk ON caravan (idPlayer);
 CREATE INDEX caravan_idTypeRessource_pk ON caravan (idTypeRessource);
 
+CREATE TABLE spy
+(
+   idSpy INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,idHexa INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Id of the mission type'
+  ,idTarget INT(11) DEFAULT 0 COMMENT 'Id of the target of the mission'
+  ,infiltrated INT(1) DEFAULT 0 COMMENT 'Tells if the spy is infiltrated in the city where he has a mission'
+  ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
+) ENGINE='InnoDB';
+CREATE INDEX spy_idPlayer_pk ON spy (idPlayer);
+CREATE INDEX spy_idHexa_pk ON spy (idHexa);
+CREATE INDEX spy_idTypeMission_pk ON spy (idTypeMission);
+
+CREATE TABLE expert
+(
+   idExpert INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeBonus  INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT ''
+  ,idHexa INT(11) DEFAULT 0 COMMENT 'The city where the expert works (destination)'
+  ,itemsLeft  INT(11) DEFAULT 0 COMMENT 'Number of items left, depending on the role'
+  ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
+) ENGINE='InnoDB';
+CREATE INDEX expert_idPlayer_pk ON expert (idPlayer);
+CREATE INDEX expert_idTypeBonus_pk ON expert (idTypeBonus);
+CREATE INDEX expert_idTypeBuilding_pk ON expert (idTypeBuilding);
+CREATE INDEX expert_idHexa_pk ON expert (idHexa);
