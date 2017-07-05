@@ -21,6 +21,7 @@ CREATE TABLE player
    idPlayer INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idUser INT(11) DEFAULT 0 COMMENT ''
   ,idGame INT(11) DEFAULT 0 COMMENT ''
+  ,idAlliance INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,treasure INT(11) DEFAULT 0 COMMENT ''
   ,color VARCHAR(20) DEFAULT '' COMMENT ''
@@ -28,6 +29,7 @@ CREATE TABLE player
 ) ENGINE='InnoDB';
 CREATE INDEX player_idUser ON player (idUser);
 CREATE INDEX player_idGame ON player (idGame);
+CREATE INDEX player_idAlliance ON player (idAlliance);
 
 CREATE TABLE hexa
 (
@@ -40,6 +42,7 @@ CREATE TABLE hexa
   ,Y INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,population INT(11) DEFAULT 0 COMMENT 'Population * 1000 (for decimals)'
+  ,malusConquest INT(11) DEFAULT 0 COMMENT 'In percent. Malus on production, growth, science, etc... of the city due to recent conquest. Decreases by the time'
 ) ENGINE='InnoDB';
 CREATE INDEX hexa_idGame ON hexa (idGame);
 CREATE INDEX hexa_idPlayer ON hexa (idPlayer);
@@ -301,7 +304,41 @@ CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
 CREATE TABLE typeTech
 (
   idTypeTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTechCategory INT(11) DEFAULT 0 COMMENT ''
+  ,idEra INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+  ,idTechCategoryNeeded  INT(11) DEFAULT 0 COMMENT 'Level technology needed to research the tech'
+) ENGINE='InnoDB';
+CREATE INDEX typeTech_idTechCategoryBonus_pk ON typeTech (idTechCategory);
+CREATE INDEX typeTech_idEraBonus_pk ON typeTech (idEra);
+CREATE INDEX typeTech_idTechCategoryNeeded_pk ON typeTech (idTechCategoryNeeded);
+
+CREATE TABLE alliance (
+  idAlliance INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,idLeader INT(11) DEFAULT 0 COMMENT 'Id of the leader player'
+) ENGINE='InnoDB';
+CREATE INDEX alliance_idLeader_pk ON alliance (idLeader);
+
+CREATE TABLE treaty
+(
+  idTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+) ENGINE='InnoDB';
+
+
+# pas fini
+CREATE TABLE sale
+(
+  idSale INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idSeller INT(11) DEFAULT 0 COMMENT 'Player at the origin of the sale'
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
+  ,idHexa INT(11) DEFAULT 0 COMMENT 'Origin Hexa of the sale'
+  ,qty INT(11) DEFAULT 0 COMMENT 'Qty, in case of a resource'
+  ,idBonus  INT(11) DEFAULT 0 COMMENT 'For experts sales'
+  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'For experts and units sales'
+  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT 'For experts sales'
+  ,idTypeTech  INT(11) DEFAULT 0 COMMENT 'For tech sales'
+
 ) ENGINE='InnoDB';
