@@ -49,6 +49,7 @@ CREATE TABLE typeClimate
 (
   idTypeClimate INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,food INT(11) DEFAULT 0 COMMENT ''
   ,defenseBonus INT(11) DEFAULT 0 COMMENT ''
@@ -67,8 +68,9 @@ CREATE INDEX resource_idTypeResource ON resource (idTypeResource);
 CREATE TABLE typeResource
 (
    idTypeResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
-  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
 CREATE TABLE stock
@@ -114,6 +116,9 @@ CREATE INDEX palaceBonus_idTypeBonus ON palaceBonus (idTypeBonus);
 CREATE TABLE typeBuilding
 (
   idTypeBuilding INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,price INT(11) DEFAULT 0 COMMENT 'Price of the level 1'
   ,buildingTime INT(11) DEFAULT 0 COMMENT 'Time of building for 1 level'
   ,maxLevel INT(11) DEFAULT 0 COMMENT 'Max level, 0 for infinite'
@@ -121,16 +126,14 @@ CREATE TABLE typeBuilding
   ,maintenancePriceRatio INT(11) DEFAULT 0 COMMENT 'Cost of the building each turn : (maintenancePriceRatio/100)*Total contruction price'
   ,needsPopulation INT(1) DEFAULT 0 COMMENT 'Tells if the building needs some population units to work'
   ,investmentCapacity INT(11) DEFAULT 0 COMMENT 'Gold to be invested in building role, ex : units production'
-  ,idTypeBonus INT(11) DEFAULT 0 COMMENT 'Bonus permitted by the building'
-  ,BonusValue INT(11) DEFAULT 0 COMMENT 'If bonus set, value of the bonus, per level'
-  ,priorityLevel  INT(11) DEFAULT 0 COMMENT 'When not enough population in the city, '
+  ,priorityLevel  INT(11) DEFAULT 0 COMMENT 'When not enough population in the city, priority to get population in slots'
 ) ENGINE='InnoDB';
-CREATE INDEX typeBuilding_idTypeBonus ON typeBuilding (idTypeBonus);
 
 CREATE TABLE typeBonus
 (
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -154,6 +157,7 @@ CREATE TABLE typeHq
 (
   idTypeHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -162,6 +166,7 @@ CREATE TABLE typeMission
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,unitOrSpy  INT(11) DEFAULT 0 COMMENT '1 : military mission, 2 : Spy mission'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX typeMission_unitOrSpy_pk ON typeMission (unitOrSpy);
@@ -278,7 +283,6 @@ CREATE TABLE typeBonus
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT DEFAULT '' COMMENT ''
-  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
 CREATE TABLE bonus
@@ -286,7 +290,18 @@ CREATE TABLE bonus
   idBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT ''
   ,idTypeTech  INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent'
 ) ENGINE='InnoDB';
 CREATE INDEX bonus_idTypeBonus_pk ON bonus (idTypeBonus);
 CREATE INDEX bonus_idTypeTech_pk ON bonus (idTypeTech);
+CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
+
+CREATE TABLE typeTech
+(
+  idTypeTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+) ENGINE='InnoDB';
