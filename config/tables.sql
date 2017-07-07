@@ -26,6 +26,7 @@ CREATE TABLE player
   ,treasure INT(11) DEFAULT 0 COMMENT ''
   ,color VARCHAR(20) DEFAULT '' COMMENT ''
   ,capitalCity INT(11) DEFAULT 0 COMMENT ''
+  ,lastResolutionEvents TEXT DEFAULT '' COMMENT 'A JSON describing the last turn events the player can see'
 ) ENGINE='InnoDB';
 CREATE INDEX player_idUser ON player (idUser);
 CREATE INDEX player_idGame ON player (idGame);
@@ -41,7 +42,7 @@ CREATE TABLE hexa
   ,X INT(11) DEFAULT 0 COMMENT ''
   ,Y INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,population INT(11) DEFAULT 0 COMMENT 'Population * 1000 (for decimals)'
+  ,population INT(11) DEFAULT 0 COMMENT 'The exact number of inhabitants in the city. The size of the city come from a formula using this field.'
   ,malusConquest INT(11) DEFAULT 0 COMMENT 'In percent. Malus on production, growth, science, etc... of the city due to recent conquest. Decreases by the time'
 ) ENGINE='InnoDB';
 CREATE INDEX hexa_idGame ON hexa (idGame);
