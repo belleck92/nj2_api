@@ -267,18 +267,14 @@ CREATE INDEX spy_idTypeMission_pk ON spy (idTypeMission);
 CREATE TABLE expert
 (
    idExpert INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
-  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,idPlayer INT(11) DEFAULT 0 COMMENT 'If 0 : on sale'
   ,idBonus  INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT ''
-  ,idHexa INT(11) DEFAULT 0 COMMENT 'The city where the expert works (destination)'
-  ,itemsLeft  INT(11) DEFAULT 0 COMMENT 'Number of items left, depending on the role'
-  ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
+  ,idHexa INT(11) DEFAULT 0 COMMENT 'The city where the expert works (destination). If 0 : on sale'
+  ,itemsLeft  INT(11) DEFAULT 0 COMMENT 'Number of items left, depending on the role.'
+  ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution.'
 ) ENGINE='InnoDB';
 CREATE INDEX expert_idPlayer_pk ON expert (idPlayer);
 CREATE INDEX expert_idBonus_pk ON expert (idBonus);
-CREATE INDEX expert_idTypeUnit_pk ON expert (idTypeUnit);
-CREATE INDEX expert_idTypeBuilding_pk ON expert (idTypeBuilding);
 CREATE INDEX expert_idHexa_pk ON expert (idHexa);
 
 CREATE TABLE typeBonus
@@ -286,20 +282,32 @@ CREATE TABLE typeBonus
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
 CREATE TABLE bonus
 (
   idBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeTech  INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT ''
-  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-  ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent'
+  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT 'The building permitted by this bonus'
+  ,buildingEra  INT(11) DEFAULT 0 COMMENT 'The era of the building, permitted by this bonus'
+  ,idTypeResource  INT(11) DEFAULT 0 COMMENT 'The resource permitted by this bonus'
+  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'The unit permitted by this bonus'
+  ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent, if its not a bonus that permits to use an entity'
 ) ENGINE='InnoDB';
 CREATE INDEX bonus_idTypeBonus_pk ON bonus (idTypeBonus);
-CREATE INDEX bonus_idTypeTech_pk ON bonus (idTypeTech);
 CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
+CREATE INDEX bonus_idTypeResource_pk ON bonus (idTypeResource);
+CREATE INDEX bonus_idTypeUnit_pk ON bonus (idTypeUnit);
+
+CREATE TABLE techTypeBonus
+(
+  idTechBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeTech INT(11) DEFAULT 0 COMMENT ''
+  ,idBonus INT(11) DEFAULT 0 COMMENT ''
+) ENGINE='InnoDB';
+CREATE INDEX techTypeBonus_idBonus_pk ON techTypeBonus (idBonus);
+CREATE INDEX techTypeBonus_idTypeTech_pk ON techTypeBonus (idTypeTech);
 
 CREATE TABLE typeTech
 (
@@ -315,6 +323,15 @@ CREATE INDEX typeTech_idTechCategoryBonus_pk ON typeTech (idTechCategory);
 CREATE INDEX typeTech_idEraBonus_pk ON typeTech (idEra);
 CREATE INDEX typeTech_idTechCategoryNeeded_pk ON typeTech (idTechCategoryNeeded);
 
+CREATE TABLE tech
+(
+  idTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idPlayer INT(11) DEFAULT 0 COMMENT ''
+  ,totalCost  INT(11) DEFAULT 0 COMMENT ''
+  ,alreadyInvested  INT(11) DEFAULT 0 COMMENT 'Id this filed is equal to totalCost, the tech is active'
+) ENGINE='InnoDB';
+CREATE INDEX tech_idPlayer_pk ON tech (idPlayer);
+
 CREATE TABLE alliance (
   idAlliance INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
@@ -325,6 +342,26 @@ CREATE INDEX alliance_idLeader_pk ON alliance (idLeader);
 CREATE TABLE treaty
 (
   idTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeTreaty INT(11) DEFAULT 0 COMMENT ''
+  ,idPlayer1 INT(11) DEFAULT 0 COMMENT 'The player who asks for the treaty'
+  ,idPlayer2 INT(11) DEFAULT 0 COMMENT 'The alliance who asks for the treaty'
+  ,idAlliance1 INT(11) DEFAULT 0 COMMENT 'The player who answer to the demand of treaty'
+  ,idAlliance2 INT(11) DEFAULT 0 COMMENT 'The alliance who answer to the demand of treaty'
+  ,state INT(1) DEFAULT 0 COMMENT '0 : currently not accepted (proposed). 1 : accepted'
+  ,startingTurn INT(11) DEFAULT 0 COMMENT 'The turn from when the treaty is active'
+) ENGINE='InnoDB';
+CREATE INDEX treaty_idTypeTreaty_pk ON treaty (idTypeTreaty);
+CREATE INDEX treaty_idPlayer1_pk ON treaty (idPlayer1);
+CREATE INDEX treaty_idPlayer2_pk ON treaty (idPlayer2);
+CREATE INDEX treaty_idAlliance1_pk ON treaty (idAlliance1);
+CREATE INDEX treaty_idAlliance2_pk ON treaty (idAlliance2);
+
+CREATE TABLE typeTreaty
+(
+  idTypeTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,name VARCHAR(255) DEFAULT '' COMMENT ''
+  ,description TEXT DEFAULT '' COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
 
