@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-06-29
- * Time: 14:02:12
+ * Date: 2017-07-07
+ * Time: 17:53:41
  */
 
 namespace Fr\Nj2\Api\v1;
@@ -16,11 +16,6 @@ abstract class LogicalUnit
      * @var string
      */
     protected $tableName;
-
-    /**
-     * @var bool
-     */
-    protected static $canWorkWithoutToken = false;
 
     /**
      * @param string $queryString
@@ -117,13 +112,5 @@ abstract class LogicalUnit
      */
     public static function writeableFields($data){
         return [];
-    }
-
-    /**
-     * @return boolean
-     */
-    public static function isCanWorkWithoutToken()
-    {
-        return static::$canWorkWithoutToken;
     }
 }

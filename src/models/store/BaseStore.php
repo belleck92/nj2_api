@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-06-29
-* Time: 14:02:30
+* Date: 2017-07-07
+* Time: 17:53:40
 */
 namespace Fr\Nj2\Api\models\store;
 
@@ -10,8 +10,38 @@ use Exception;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\models\business\BaseBusiness;
-use Fr\Nj2\Api\models\business\ContactBusiness;
-use Fr\Nj2\Api\models\business\SocieteBusiness;
+use Fr\Nj2\Api\models\business\AllianceBusiness;
+use Fr\Nj2\Api\models\business\BonusBusiness;
+use Fr\Nj2\Api\models\business\BuildingBusiness;
+use Fr\Nj2\Api\models\business\CaravanBusiness;
+use Fr\Nj2\Api\models\business\ExpertBusiness;
+use Fr\Nj2\Api\models\business\GameBusiness;
+use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\business\HqBusiness;
+use Fr\Nj2\Api\models\business\PalaceBonusBusiness;
+use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\business\ResourceBusiness;
+use Fr\Nj2\Api\models\business\RiverBusiness;
+use Fr\Nj2\Api\models\business\SaleBusiness;
+use Fr\Nj2\Api\models\business\SpyBusiness;
+use Fr\Nj2\Api\models\business\StockBusiness;
+use Fr\Nj2\Api\models\business\TechBusiness;
+use Fr\Nj2\Api\models\business\TrajectoryBusiness;
+use Fr\Nj2\Api\models\business\TrajectoryHexaBusiness;
+use Fr\Nj2\Api\models\business\TypeBonusBusiness;
+use Fr\Nj2\Api\models\business\TypeBuildingBusiness;
+use Fr\Nj2\Api\models\business\TypeClimateBusiness;
+use Fr\Nj2\Api\models\business\TypeHqBusiness;
+use Fr\Nj2\Api\models\business\TypeMissionBusiness;
+use Fr\Nj2\Api\models\business\TypeResourceBusiness;
+use Fr\Nj2\Api\models\business\TypeResourceBonusBusiness;
+use Fr\Nj2\Api\models\business\TypeTechBusiness;
+use Fr\Nj2\Api\models\business\TypeTechBonusBusiness;
+use Fr\Nj2\Api\models\business\TypeTreatyBusiness;
+use Fr\Nj2\Api\models\business\TypeUnitBusiness;
+use Fr\Nj2\Api\models\business\TypeUnitMissionBusiness;
+use Fr\Nj2\Api\models\business\UnitBusiness;
+use Fr\Nj2\Api\models\business\UserBusiness;
 
 abstract class BaseStore {
 
