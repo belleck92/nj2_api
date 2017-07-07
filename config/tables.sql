@@ -85,6 +85,17 @@ CREATE TABLE typeResource
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS typeResourceBonus;
+CREATE TABLE typeResourceBonus
+(
+   idTypeResourceBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
+  ,idBonus INT(11) DEFAULT 0 COMMENT ''
+  ,era INT(11) DEFAULT 0 COMMENT 'The era the bonus is active'
+) ENGINE='InnoDB';
+CREATE INDEX typeResourceBonus_idBonus_pk ON typeResourceBonus (idBonus);
+CREATE INDEX typeResourceBonus_idTypeResource_pk ON typeResourceBonus (idTypeResource);
+
 DROP TABLE IF EXISTS stock;
 CREATE TABLE stock
 (
@@ -318,10 +329,10 @@ CREATE TABLE bonus
 (
   idBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT ''
-  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT 'The building permitted by this bonus'
-  ,buildingEra  INT(11) DEFAULT 0 COMMENT 'The era of the building, permitted by this bonus'
+  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT 'The building permitted by this bonus or the building type concerned by the investment bonus'
+  ,era  INT(11) DEFAULT 0 COMMENT 'The era of the building if the bonus permits a building. The era of the bonus if it\'s a resource bonus'
   ,idTypeResource  INT(11) DEFAULT 0 COMMENT 'The resource permitted by this bonus'
-  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'The unit permitted by this bonus'
+  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'The unit permitted by this bonus or the unit type concerned by the investment bonus'
   ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent, if its not a bonus that permits to use an entity'
 ) ENGINE='InnoDB';
 CREATE INDEX bonus_idTypeBonus_pk ON bonus (idTypeBonus);
@@ -329,15 +340,15 @@ CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
 CREATE INDEX bonus_idTypeResource_pk ON bonus (idTypeResource);
 CREATE INDEX bonus_idTypeUnit_pk ON bonus (idTypeUnit);
 
-DROP TABLE IF EXISTS techTypeBonus;
-CREATE TABLE techTypeBonus
+DROP TABLE IF EXISTS typeTechBonus;
+CREATE TABLE typeTechBonus
 (
   idTechBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeTech INT(11) DEFAULT 0 COMMENT ''
   ,idBonus INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
-CREATE INDEX techTypeBonus_idBonus_pk ON techTypeBonus (idBonus);
-CREATE INDEX techTypeBonus_idTypeTech_pk ON techTypeBonus (idTypeTech);
+CREATE INDEX typeTechBonus_idBonus_pk ON typeTechBonus (idBonus);
+CREATE INDEX typeTechBonus_idTypeTech_pk ON typeTechBonus (idTypeTech);
 
 DROP TABLE IF EXISTS typeTech;
 CREATE TABLE typeTech
