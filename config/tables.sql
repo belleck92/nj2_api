@@ -394,6 +394,8 @@ CREATE TABLE treaty
   ,idAlliance2 INT(11) DEFAULT 0 COMMENT 'The alliance who answer to the demand of treaty'
   ,state INT(1) DEFAULT 0 COMMENT '0 : currently not accepted (proposed). 1 : accepted'
   ,startingTurn INT(11) DEFAULT 0 COMMENT 'The turn from when the treaty is active'
+  ,amount INT(11) DEFAULT '' COMMENT 'In case of a tribute, amount by turn. The player 2 pays to player one'
+  ,turnsLeft INT(11) DEFAULT '' COMMENT 'Number of turns left for the tribute'
 ) ENGINE='InnoDB';
 CREATE INDEX treaty_idTypeTreaty_pk ON treaty (idTypeTreaty);
 CREATE INDEX treaty_idPlayer1_pk ON treaty (idPlayer1);
@@ -410,19 +412,17 @@ CREATE TABLE typeTreaty
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
-
-# pas fini
 DROP TABLE IF EXISTS sale;
 CREATE TABLE sale
 (
   idSale INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
-  ,idSeller INT(11) DEFAULT 0 COMMENT 'Player at the origin of the sale'
-  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT 'Origin Hexa of the sale'
+  ,price INT(11) DEFAULT 0 COMMENT 'Sale price'
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,qty INT(11) DEFAULT 0 COMMENT 'Qty, in case of a resource'
-  ,idBonus  INT(11) DEFAULT 0 COMMENT 'For experts sales'
-  ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'For experts and units sales'
-  ,idTypeBuilding  INT(11) DEFAULT 0 COMMENT 'For experts sales'
+  ,idExpert  INT(11) DEFAULT 0 COMMENT 'For experts sales'
   ,idTypeTech  INT(11) DEFAULT 0 COMMENT 'For tech sales'
-
+  ,citySale  INT(1) DEFAULT 0 COMMENT 'For city sales'
+  ,idUnit  INT(11) DEFAULT 0 COMMENT 'For unit sales'
+  ,idSpy  INT(11) DEFAULT 0 COMMENT 'For prisonners'
 ) ENGINE='InnoDB';
