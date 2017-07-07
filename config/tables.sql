@@ -1,3 +1,5 @@
+use nj2;
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
@@ -29,7 +31,7 @@ CREATE TABLE player
   ,treasure INT(11) DEFAULT 0 COMMENT ''
   ,color VARCHAR(20) DEFAULT '' COMMENT ''
   ,capitalCity INT(11) DEFAULT 0 COMMENT ''
-  ,lastResolutionEvents TEXT DEFAULT '' COMMENT 'A JSON describing the last turn events the player can see'
+  ,lastResolutionEvents TEXT COMMENT 'A JSON describing the last turn events the player can see'
   ,taxRate INT(11) DEFAULT 0 COMMENT 'Percentage, from 0 to 100'
 ) ENGINE='InnoDB';
 CREATE INDEX player_idUser ON player (idUser);
@@ -59,7 +61,7 @@ CREATE TABLE typeClimate
 (
   idTypeClimate INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,food INT(11) DEFAULT 0 COMMENT ''
   ,defenseBonus INT(11) DEFAULT 0 COMMENT ''
@@ -81,7 +83,7 @@ CREATE TABLE typeResource
 (
    idTypeResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -145,7 +147,7 @@ CREATE TABLE typeBuilding
 (
   idTypeBuilding INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,price INT(11) DEFAULT 0 COMMENT 'Price of the level 1'
   ,buildingTime INT(11) DEFAULT 0 COMMENT 'Time of building for 1 level'
@@ -162,7 +164,7 @@ CREATE TABLE typeBonus
 (
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -182,14 +184,13 @@ CREATE TABLE hq
 ) ENGINE='InnoDB';
 CREATE INDEX hq_idHexa_pk ON hq (idHexa);
 CREATE INDEX hq_idPlayer_pk ON hq (idPlayer);
-CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
 
 DROP TABLE IF EXISTS typeHq;
 CREATE TABLE typeHq
 (
   idTypeHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -199,7 +200,7 @@ CREATE TABLE typeMission
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,unitOrSpy  INT(11) DEFAULT 0 COMMENT '1 : military mission, 2 : Spy mission'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 CREATE INDEX typeMission_unitOrSpy_pk ON typeMission (unitOrSpy);
@@ -224,7 +225,7 @@ CREATE TABLE typeUnit
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeHq INT(11) DEFAULT 0 COMMENT 'Type of hq (terrestrial, aerial, naval)'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,assault INT(11) DEFAULT 0 COMMENT ''
   ,resistance INT(11) DEFAULT 0 COMMENT ''
@@ -247,7 +248,7 @@ CREATE TABLE typeUnitMission
   ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Type of mission'
 ) ENGINE='InnoDB' COMMENT 'Types of missions possibles by unit';
 CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
-CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
+CREATE INDEX typeUnitMission_idTypeMission_pk ON typeUnitMission (idTypeMission);
 
 DROP TABLE IF EXISTS trajectory;
 CREATE TABLE trajectory
@@ -320,7 +321,7 @@ CREATE TABLE typeBonus
 (
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
@@ -357,7 +358,7 @@ CREATE TABLE typeTech
   ,idTechCategory INT(11) DEFAULT 0 COMMENT ''
   ,idEra INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,idTechCategoryNeeded  INT(11) DEFAULT 0 COMMENT 'Level technology needed to research the tech'
 ) ENGINE='InnoDB';
@@ -394,7 +395,7 @@ CREATE TABLE treaty
   ,idAlliance2 INT(11) DEFAULT 0 COMMENT 'The alliance who answer to the demand of treaty'
   ,state INT(1) DEFAULT 0 COMMENT '0 : currently not accepted (proposed). 1 : accepted'
   ,startingTurn INT(11) DEFAULT 0 COMMENT 'The turn from when the treaty is active'
-  ,amount INT(11) DEFAULT '' COMMENT 'In case of a tribute, amount by turn. The player 2 pays to player one'
+  ,amount INT(11) DEFAULT 0 COMMENT 'In case of a tribute, amount by turn. The player 2 pays to player one'
   ,turnsLeft INT(11) DEFAULT '' COMMENT 'Number of turns left for the tribute'
 ) ENGINE='InnoDB';
 CREATE INDEX treaty_idTypeTreaty_pk ON treaty (idTypeTreaty);
@@ -408,7 +409,7 @@ CREATE TABLE typeTreaty
 (
   idTypeTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
-  ,description TEXT DEFAULT '' COMMENT ''
+  ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
