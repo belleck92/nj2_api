@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
   idUser INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -7,6 +8,7 @@ CREATE TABLE user
 ) ENGINE='InnoDB';
 CREATE UNIQUE INDEX user_email_password_pk ON user (email, password);
 
+DROP TABLE IF EXISTS game;
 CREATE TABLE game
 (
   idGame INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -16,6 +18,7 @@ CREATE TABLE game
   ,started INT(1) DEFAULT 0 COMMENT 'If the game is started, no one can create a new player on it'
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS player;
 CREATE TABLE player
 (
    idPlayer INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -27,11 +30,13 @@ CREATE TABLE player
   ,color VARCHAR(20) DEFAULT '' COMMENT ''
   ,capitalCity INT(11) DEFAULT 0 COMMENT ''
   ,lastResolutionEvents TEXT DEFAULT '' COMMENT 'A JSON describing the last turn events the player can see'
+  ,taxRate INT(11) DEFAULT 0 COMMENT 'Percentage, from 0 to 100'
 ) ENGINE='InnoDB';
 CREATE INDEX player_idUser ON player (idUser);
 CREATE INDEX player_idGame ON player (idGame);
 CREATE INDEX player_idAlliance ON player (idAlliance);
 
+DROP TABLE IF EXISTS hexa;
 CREATE TABLE hexa
 (
   idHexa INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -49,6 +54,7 @@ CREATE INDEX hexa_idGame ON hexa (idGame);
 CREATE INDEX hexa_idPlayer ON hexa (idPlayer);
 CREATE INDEX hexa_idTypeClimate ON hexa (idTypeClimate);
 
+DROP TABLE IF EXISTS typeClimate;
 CREATE TABLE typeClimate
 (
   idTypeClimate INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -59,6 +65,7 @@ CREATE TABLE typeClimate
   ,defenseBonus INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS resource;
 CREATE TABLE resource
 (
   idResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -69,6 +76,7 @@ CREATE TABLE resource
 CREATE INDEX resource_idHexa ON resource (idHexa);
 CREATE INDEX resource_idTypeResource ON resource (idTypeResource);
 
+DROP TABLE IF EXISTS typeResource;
 CREATE TABLE typeResource
 (
    idTypeResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -77,6 +85,7 @@ CREATE TABLE typeResource
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS stock;
 CREATE TABLE stock
 (
   idStock INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -87,6 +96,7 @@ CREATE TABLE stock
 CREATE INDEX stock_idTypeResource_pk ON stock (idTypeResource);
 CREATE INDEX stock_idHexa_pk ON stock (idHexa);
 
+DROP TABLE IF EXISTS river;
 CREATE TABLE river
 (
   idRiver INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -96,6 +106,7 @@ CREATE TABLE river
 ) ENGINE='InnoDB';
 CREATE INDEX river_idHexa_pk ON river (idHexa);
 
+DROP TABLE IF EXISTS building;
 CREATE TABLE building
 (
   idBuilding INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -108,6 +119,7 @@ CREATE TABLE building
 CREATE INDEX building_idHexa_pk ON building (idHexa);
 CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
 
+DROP TABLE IF EXISTS palaceBonus;
 CREATE TABLE palaceBonus
 (
   idPalaceBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -117,6 +129,7 @@ CREATE TABLE palaceBonus
 CREATE INDEX palaceBonus_idPlayer ON palaceBonus (idPlayer);
 CREATE INDEX palaceBonus_idTypeBonus ON palaceBonus (idTypeBonus);
 
+DROP TABLE IF EXISTS typeBuilding;
 CREATE TABLE typeBuilding
 (
   idTypeBuilding INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -133,6 +146,7 @@ CREATE TABLE typeBuilding
   ,priorityLevel  INT(11) DEFAULT 0 COMMENT 'When not enough population in the city, priority to get population in slots'
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS typeBonus;
 CREATE TABLE typeBonus
 (
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -141,6 +155,7 @@ CREATE TABLE typeBonus
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS hq;
 CREATE TABLE hq
 (
    idHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -152,11 +167,13 @@ CREATE TABLE hq
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,level INT(11) DEFAULT 0 COMMENT 'Level of the hq'
   ,capop INT(11) DEFAULT 0 COMMENT ''
+  ,isPalaceBonus INT(1) DEFAULT 0 COMMENT 'Bonus usable by the palace'
 ) ENGINE='InnoDB';
 CREATE INDEX hq_idHexa_pk ON hq (idHexa);
 CREATE INDEX hq_idPlayer_pk ON hq (idPlayer);
 CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
 
+DROP TABLE IF EXISTS typeHq;
 CREATE TABLE typeHq
 (
   idTypeHq INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -165,6 +182,7 @@ CREATE TABLE typeHq
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS typeMission;
 CREATE TABLE typeMission
 (
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -175,6 +193,7 @@ CREATE TABLE typeMission
 ) ENGINE='InnoDB';
 CREATE INDEX typeMission_unitOrSpy_pk ON typeMission (unitOrSpy);
 
+DROP TABLE IF EXISTS unit;
 CREATE TABLE unit
 (
   idUnit INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -188,6 +207,7 @@ CREATE TABLE unit
 ) ENGINE='InnoDB';
 CREATE INDEX unit_idHq_pk ON unit (idHq);
 
+DROP TABLE IF EXISTS typeUnit;
 CREATE TABLE typeUnit
 (
    idTypeMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -208,6 +228,7 @@ CREATE TABLE typeUnit
 ) ENGINE='InnoDB';
 CREATE INDEX typeUnit_idTypeHq_pk ON typeUnit (idTypeHq);
 
+DROP TABLE IF EXISTS typeUnitMission;
 CREATE TABLE typeUnitMission
 (
   idTypeUnitMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -217,6 +238,7 @@ CREATE TABLE typeUnitMission
 CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
 CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
 
+DROP TABLE IF EXISTS trajectory;
 CREATE TABLE trajectory
 (
   idTrajectory INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -230,6 +252,7 @@ CREATE INDEX trajectory_idSpy_pk ON trajectory (idSpy);
 CREATE INDEX trajectory_idCaravan_pk ON trajectory (idCaravan);
 CREATE INDEX trajectory_idExpert_pk ON trajectory (idExpert);
 
+DROP TABLE IF EXISTS trajectoryHexa;
 CREATE TABLE trajectoryHexa
 (
   idTrajectoryHexa INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -240,6 +263,7 @@ CREATE TABLE trajectoryHexa
 CREATE INDEX trajectoryHexa_idTrajectory_pk ON trajectoryHexa (idTrajectory);
 CREATE INDEX trajectoryHexa_idHexa_pk ON trajectoryHexa (idHexa);
 
+DROP TABLE IF EXISTS caravan;
 CREATE TABLE caravan
 (
   idCaravan INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -251,6 +275,7 @@ CREATE TABLE caravan
 CREATE INDEX caravan_idPlayer_pk ON caravan (idPlayer);
 CREATE INDEX caravan_idTypeRessource_pk ON caravan (idTypeRessource);
 
+DROP TABLE IF EXISTS spy;
 CREATE TABLE spy
 (
    idSpy INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -265,6 +290,7 @@ CREATE INDEX spy_idPlayer_pk ON spy (idPlayer);
 CREATE INDEX spy_idHexa_pk ON spy (idHexa);
 CREATE INDEX spy_idTypeMission_pk ON spy (idTypeMission);
 
+DROP TABLE IF EXISTS expert;
 CREATE TABLE expert
 (
    idExpert INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -278,6 +304,7 @@ CREATE INDEX expert_idPlayer_pk ON expert (idPlayer);
 CREATE INDEX expert_idBonus_pk ON expert (idBonus);
 CREATE INDEX expert_idHexa_pk ON expert (idHexa);
 
+DROP TABLE IF EXISTS typeBonus;
 CREATE TABLE typeBonus
 (
   idTypeBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -286,6 +313,7 @@ CREATE TABLE typeBonus
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 ) ENGINE='InnoDB';
 
+DROP TABLE IF EXISTS bonus;
 CREATE TABLE bonus
 (
   idBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -301,6 +329,7 @@ CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
 CREATE INDEX bonus_idTypeResource_pk ON bonus (idTypeResource);
 CREATE INDEX bonus_idTypeUnit_pk ON bonus (idTypeUnit);
 
+DROP TABLE IF EXISTS techTypeBonus;
 CREATE TABLE techTypeBonus
 (
   idTechBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -310,6 +339,7 @@ CREATE TABLE techTypeBonus
 CREATE INDEX techTypeBonus_idBonus_pk ON techTypeBonus (idBonus);
 CREATE INDEX techTypeBonus_idTypeTech_pk ON techTypeBonus (idTypeTech);
 
+DROP TABLE IF EXISTS typeTech;
 CREATE TABLE typeTech
 (
   idTypeTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -324,6 +354,7 @@ CREATE INDEX typeTech_idTechCategoryBonus_pk ON typeTech (idTechCategory);
 CREATE INDEX typeTech_idEraBonus_pk ON typeTech (idEra);
 CREATE INDEX typeTech_idTechCategoryNeeded_pk ON typeTech (idTechCategoryNeeded);
 
+DROP TABLE IF EXISTS tech;
 CREATE TABLE tech
 (
   idTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -333,6 +364,7 @@ CREATE TABLE tech
 ) ENGINE='InnoDB';
 CREATE INDEX tech_idPlayer_pk ON tech (idPlayer);
 
+DROP TABLE IF EXISTS alliance;
 CREATE TABLE alliance (
   idAlliance INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
@@ -340,6 +372,7 @@ CREATE TABLE alliance (
 ) ENGINE='InnoDB';
 CREATE INDEX alliance_idLeader_pk ON alliance (idLeader);
 
+DROP TABLE IF EXISTS treaty;
 CREATE TABLE treaty
 (
   idTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -357,6 +390,7 @@ CREATE INDEX treaty_idPlayer2_pk ON treaty (idPlayer2);
 CREATE INDEX treaty_idAlliance1_pk ON treaty (idAlliance1);
 CREATE INDEX treaty_idAlliance2_pk ON treaty (idAlliance2);
 
+DROP TABLE IF EXISTS typeTreaty;
 CREATE TABLE typeTreaty
 (
   idTypeTreaty INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
@@ -367,6 +401,7 @@ CREATE TABLE typeTreaty
 
 
 # pas fini
+DROP TABLE IF EXISTS sale;
 CREATE TABLE sale
 (
   idSale INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
