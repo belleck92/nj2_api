@@ -8,6 +8,8 @@
 
 namespace Fr\Nj2\Api\mapGeneration;
 
+use Fr\Nj2\Api\models\extended\Hexa;
+
 class GermeForet
 {
     /**

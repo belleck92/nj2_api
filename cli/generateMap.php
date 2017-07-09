@@ -4,12 +4,12 @@
 namespace Fr\Nj2\Api\Cli;
 
 use Fr\Nj2\Api\Config\Config;
-use Fr\Nj2\Api\mapGeneration\Game;
 use Fr\Nj2\Api\models\DbHandler;
+use Fr\Nj2\Api\models\extended\Game;
 
 if(php_sapi_name() !== 'cli') exit();
 
-require_once('../vendor/autoload.php');
+require_once(dirname(__FILE__).'/../vendor/autoload.php');
 
 try {
     DbHandler::setConfig(Config::DB_CREDENTIALS);

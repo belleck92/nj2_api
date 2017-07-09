@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 16:56:52
+* Time: 17:30:18
 */
 
 namespace Fr\Nj2\Api\models;
@@ -230,10 +230,10 @@ class Game implements Bean {
 
     /**
      * Crée un hexa lié à ce Game
-     * @return Hexa
+     * @return extended\Hexa
      */
     public function createHexa(){
-        $hexa = new Hexa();
+        $hexa = new extended\Hexa();
         $hexa->setIdGame($this->getIdGame());
         return $hexa;
     }

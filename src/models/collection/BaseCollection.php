@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 16:56:53
+* Time: 17:30:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -32,5 +32,18 @@ class BaseCollection extends \ArrayObject {
      */
     public function store() {
 
+    }
+
+    /**
+     * Dit si l'objet existe dans la collection
+     * @param Bean $bean
+     * @return bool
+    */
+    public function exists(Bean $bean)
+    {
+        foreach($this as $obj) {/** @var Bean $obj */
+            if($obj->getId() == $bean->getId()) return true;
+        }
+        return false;
     }
 }
