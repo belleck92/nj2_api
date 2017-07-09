@@ -113,13 +113,10 @@ class Game extends \Fr\Nj2\Api\models\Game
         $this->genererHexasVierges();
         $this->genererGermes();
         $this->cotesEnDentelle();
-        //$this->erosionMontagnes();
-        //$this->genererTemperatures();
+        $this->erosionMontagnes();
+        $this->genererTemperatures();
         //$this->creerRivieres();
-        //$this->genererVegetation();
-        //$this->lisserTemperatures();
-        //$this->lisserAltitudes();
-        //$this->lisserVegetation();
+        $this->genererVegetation();
         foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
             HexaBusiness::insert($hexa);
         }
@@ -206,21 +203,11 @@ class Game extends \Fr\Nj2\Api\models\Game
         }
 
         // Influence des rivières sur la végétation
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
-            if($hexa->getRivieres()->count() > 0) {
+        /*foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+            /*if($hexa->getRivieres()->count() > 0) {
                 $hexa->setVegetation(min(15,$hexa->getVegetation() + 1.5));
             }
-        }
-    }
-
-    /**
-     * Passe les altitudes d'une échelle de 0 à 15 à une échelle de 0 à 3
-     */
-    public function lisserAltitudes()
-    {
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
-            $hexa->setAltitude(min(3,max(0,floor($hexa->getAltitude()/4))));
-        }
+        }*/
     }
 
     /**
@@ -295,26 +282,6 @@ class Game extends \Fr\Nj2\Api\models\Game
             if(mt_rand(1,10) == 1) {
                 $hexa->setTemperature(max(min($hexa->getTemperature() + (mt_rand(1,2)*2) - 3,15),0));
             }
-        }
-    }
-
-    /**
-     * Ramène les températures à des valeurs entre 0 et 3
-     */
-    public function lisserTemperatures()
-    {
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
-            $hexa->setTemperature(max(0,floor($hexa->getTemperature()/4)));
-        }
-    }
-
-    /**
-     * Ramène la végétation à des valeurs entre 0 et 3
-     */
-    public function lisserVegetation()
-    {
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
-            $hexa->setVegetation(max(0,floor($hexa->getVegetation()/4)));
         }
     }
 
