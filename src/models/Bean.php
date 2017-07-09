@@ -2,7 +2,7 @@
 /**
  * Created by Manu
 * Date: 2017-07-09
-* Time: 17:30:19
+* Time: 18:24:10
  */
 namespace Fr\Nj2\Api\models;
 

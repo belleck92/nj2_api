@@ -68,6 +68,16 @@ CREATE TABLE typeClimate
   ,food INT(11) DEFAULT 0 COMMENT ''
   ,defenseBonus INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Mer', '', 'TYPE_SEA', 1, 0);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Banquise', '', 'TYPE_FLOE', 1, 0);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Arctique', '', 'TYPE_ARCTIC', 0, 20);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Desert', '', 'TYPE_DESERT', 0, 20);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Plaine', '', 'TYPE_PLAIN', 1, 0);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Prairie', '', 'TYPE_MEADOW', 2, 0);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Forêt', '', 'TYPE_FOREST', 1, 50);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Colline', '', 'TYPE_HILL', 1, 50);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Colline Boisée', '', 'TYPE_FOREST_HILL', 1, 100);
+INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Montagne', '', 'TYPE_MOUNTAIN', 0, 100);
 
 DROP TABLE IF EXISTS resource;
 CREATE TABLE resource

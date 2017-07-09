@@ -13,14 +13,22 @@ use Fr\Nj2\Api\models\collection\HexaCollection;
 class Hexa extends \Fr\Nj2\Api\models\Hexa
 {
     /**
+     * Between 0 and 15
      * @var int
      */
     private $vegetation = 0;
 
     /**
+     * Between 0 and 15
      * @var int
      */
     private $altitude = 0;
+
+    /**
+     * Between 0 and 15
+     * @var int
+     */
+    private $temperature = 0;
 
     /**
      * @return int
@@ -36,6 +44,7 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     public function setVegetation($vegetation)
     {
         $this->vegetation = $vegetation;
+        $this->defineTypeClimate();
     }
 
     /**
@@ -52,6 +61,44 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     public function setAltitude($altitude)
     {
         $this->altitude = $altitude;
+        $this->defineTypeClimate();
+    }
+
+    /**
+     * @return int
+     */
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    /**
+     * @param int $temperature
+     */
+    public function setTemperature($temperature)
+    {
+        $this->temperature = $temperature;
+        $this->defineTypeClimate();
+    }
+
+    /**
+     * Defines the climate type from altitude, temperature and vegetation
+     */
+    public function defineTypeClimate()
+    {
+        if($this->getAltitude() < 4) {
+            if($this->getTemperature() >= 4) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_SEA)->getId());
+            else $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_FLOE)->getId());
+        } elseif ($this->getAltitude() >= 4 && $this->getAltitude() < 8) {
+            if($this->getTemperature() < 4) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_ARCTIC)->getId());
+            elseif($this->getVegetation() < 3) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_DESERT)->getId());
+            elseif($this->getVegetation()  >= 3 && $this->getVegetation() < 6) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_PLAIN)->getId());
+            elseif($this->getVegetation()  >= 6 && $this->getVegetation() < 9) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_MEADOW)->getId());
+            elseif($this->getVegetation()  >= 10) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_FOREST)->getId());
+        } elseif ($this->getAltitude() >= 8 && $this->getAltitude() < 12) {
+            if($this->getVegetation() < 8) $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_HILL)->getId());
+            else $this->setIdTypeClimate(TypeClimate::getByFctId(TypeClimate::TYPE_FOREST_HILL)->getId());
+        } else TypeClimate::getByFctId(TypeClimate::TYPE_MOUNTAIN)->getId();
     }
 
     /**

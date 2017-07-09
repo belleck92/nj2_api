@@ -2,7 +2,7 @@
 /**
  * Created by Manu
 * Date: 2017-07-09
-* Time: 17:30:19
+* Time: 18:24:10
  */
 
 namespace Fr\Nj2\Api\models;
@@ -45,7 +45,7 @@ class DbHandler {
         $res = self::query($req);
         $coll =  'Fr\\Nj2\\Api\\models\\collection\\'.$coll;
         $ret = new $coll;
-        while($obj = $res->fetch_object(__NAMESPACE__.'\\'.$class)) {
+        while($obj = $res->fetch_object(__NAMESPACE__.'\\extended\\'.$class)) {
             $ret->append($obj);
         }
         return $ret;
@@ -60,7 +60,7 @@ class DbHandler {
     public static function objFromQuery($req,$class){
         $res = self::query($req);
         $ret = null;
-        while($obj = $res->fetch_object(__NAMESPACE__.'\\'.$class)) {
+        while($obj = $res->fetch_object(__NAMESPACE__.'\\extended\\'.$class)) {
             $ret = $obj;
         }
         return $ret;
