@@ -1,14 +1,15 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:39
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\store\GameStore;
 
 
 class Hexa implements Bean {
@@ -287,6 +288,16 @@ class Hexa implements Bean {
         $this->setMalusConquest($this->getMalusConquest() + $increment);
     }
     
+
+    /**
+     * Renvoie le game lié
+     * @return Game
+     */
+    public function getGame()
+    {
+        return GameStore::getById($this->getIdGame());
+    }
+
     /**
      * @return void
      */

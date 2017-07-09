@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:40
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 namespace Fr\Nj2\Api\models\store;
 
@@ -28,6 +28,7 @@ use Fr\Nj2\Api\models\business\StockBusiness;
 use Fr\Nj2\Api\models\business\TechBusiness;
 use Fr\Nj2\Api\models\business\TrajectoryBusiness;
 use Fr\Nj2\Api\models\business\TrajectoryHexaBusiness;
+use Fr\Nj2\Api\models\business\TreatyBusiness;
 use Fr\Nj2\Api\models\business\TypeBonusBusiness;
 use Fr\Nj2\Api\models\business\TypeBuildingBusiness;
 use Fr\Nj2\Api\models\business\TypeClimateBusiness;

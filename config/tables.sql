@@ -18,6 +18,8 @@ CREATE TABLE game
   ,maxTurns INT(11) DEFAULT 0 COMMENT ''
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,started INT(1) DEFAULT 0 COMMENT 'If the game is started, no one can create a new player on it'
+  ,width INT(11) DEFAULT 0 COMMENT ''
+  ,height INT(11) DEFAULT 0 COMMENT ''
 ) ENGINE='InnoDB';
 
 DROP TABLE IF EXISTS player;
@@ -396,7 +398,7 @@ CREATE TABLE treaty
   ,state INT(1) DEFAULT 0 COMMENT '0 : currently not accepted (proposed). 1 : accepted'
   ,startingTurn INT(11) DEFAULT 0 COMMENT 'The turn from when the treaty is active'
   ,amount INT(11) DEFAULT 0 COMMENT 'In case of a tribute, amount by turn. The player 2 pays to player one'
-  ,turnsLeft INT(11) DEFAULT '' COMMENT 'Number of turns left for the tribute'
+  ,turnsLeft INT(11) DEFAULT 0 COMMENT 'Number of turns left for the tribute'
 ) ENGINE='InnoDB';
 CREATE INDEX treaty_idTypeTreaty_pk ON treaty (idTypeTreaty);
 CREATE INDEX treaty_idPlayer1_pk ON treaty (idPlayer1);

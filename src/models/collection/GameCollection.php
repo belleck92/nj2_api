@@ -1,16 +1,22 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:40
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 namespace Fr\Nj2\Api\models\collection;
 
 use Fr\Nj2\Api\models\Game;
 use Fr\Nj2\Api\models\store\GameStore;
+use Fr\Nj2\Api\models\Hexa;
+use Fr\Nj2\Api\models\business\HexaBusiness;
 
 class GameCollection extends BaseCollection {
 
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    private $cacheHexas = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -34,6 +40,52 @@ class GameCollection extends BaseCollection {
         unset($offset);
         foreach($replaces as $offset=>$game) {
             $this->offsetSet($offset, GameStore::getById($game->getId()));
+        }
+    }
+    
+    /**
+     * Renvoie les Hexas liés aux Games de cette collection
+     * @return HexaCollection|Hexa[]
+     */
+    public function getHexas() {
+        if(is_null($this->cacheHexas)) {
+            $this->cacheHexas = HexaBusiness::getFromGames($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+
+    /**
+    * Force la collection de hexas de this
+    * @param HexaCollection $hexas
+    */
+    public function setHexas(HexaCollection $hexas)
+    {
+        $this->cacheHexas = $hexas;
+    }
+
+    /**
+    * Remet à null le cache des hexas liés à this
+    */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+    * Distribue les Hexas fournis en paramètre à chaque Game de la collection si le Hexa correspond.
+    * @param HexaCollection $hexas
+    */
+    public function fillHexas(HexaCollection $hexas)
+    {
+        foreach($this as $game) {/** @var Game $game */
+            $game->resetCacheHexas();
+            $coll = new HexaCollection();
+            $game->setHexas($coll);
+            foreach($hexas as $hexa) {
+                if($hexa->getIdGame() == $game->getIdGame()) {
+                    $coll->ajout($hexa);
+                }
+            }
         }
     }
     

@@ -1,14 +1,16 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:39
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\GameBusiness;
+use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\business\HexaBusiness;
 
 
 class Game implements Bean {
@@ -37,6 +39,21 @@ class Game implements Bean {
      * @var bool
      */
     private $started = false;
+
+    /**
+     * @var int
+     */
+    private $width = 0;
+
+    /**
+     * @var int
+     */
+    private $height = 0;
+
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    private $cacheHexas = null;
 
     /**
      * @return int
@@ -135,6 +152,92 @@ class Game implements Bean {
     }
     
     /**
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param int $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
+    
+    /**
+     * Incremente $this->width de $increment
+     * @param int $increment
+     */
+    public function incrWidth($increment) {
+        $this->setWidth($this->getWidth() + $increment);
+    }
+    
+    /**
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $height
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+    }
+    
+    /**
+     * Incremente $this->height de $increment
+     * @param int $increment
+     */
+    public function incrHeight($increment) {
+        $this->setHeight($this->getHeight() + $increment);
+    }
+    
+    /**
+     * Remet à null le cache des hexas liés à this
+     */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+    * Force la collection de hexas de this
+    * @param HexaCollection $hexas
+    */
+    public function setHexas(HexaCollection $hexas)
+    {
+        $this->cacheHexas = $hexas;
+    }
+
+    /**
+     * Renvoie les hexas liés à ce Game
+     * @return HexaCollection|Hexa[]
+     */
+    public function getHexas() {
+        if(is_null($this->cacheHexas)) {
+            $this->cacheHexas = HexaBusiness::getByGame($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+
+    /**
+     * Crée un hexa lié à ce Game
+     * @return Hexa
+     */
+    public function createHexa(){
+        $hexa = new Hexa();
+        $hexa->setIdGame($this->getIdGame());
+        return $hexa;
+    }
+
+    /**
      * @return void
      */
     public function save()
@@ -178,6 +281,8 @@ class Game implements Bean {
             ,'maxTurns'=>$this->maxTurns
             ,'name'=>$this->name
             ,'started'=>$this->started
+            ,'width'=>$this->width
+            ,'height'=>$this->height
         ];
     }
 

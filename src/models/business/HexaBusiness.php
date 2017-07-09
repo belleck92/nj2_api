@@ -1,14 +1,16 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:40
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\Hexa;
 use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\collection\GameCollection;
+use Fr\Nj2\Api\models\Game;
 
 
 class HexaBusiness extends BaseBusiness {
@@ -46,6 +48,28 @@ class HexaBusiness extends BaseBusiness {
         return parent::getByIds($ids);
     }
 
+    
+    /**
+     * Renvoie les Hexas liés aux Games de la collection fournie en paramètre
+     * @param GameCollection $games
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromGames(GameCollection $games){
+        $ids = $games->getIdsStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idGame IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+
+    /**
+     * Renvoie les Hexas liés à un Game
+     * @param Game $game
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getByGame(Game $game){
+        $req = "SELECT * FROM hexa WHERE idGame = '".$game->getId()."';";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
     
      /**
      * Supprime le Hexa en DB

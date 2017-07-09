@@ -1,14 +1,15 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-07
-* Time: 17:53:40
+* Date: 2017-07-09
+* Time: 15:09:50
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\Game;
 use Fr\Nj2\Api\models\collection\GameCollection;
+use Fr\Nj2\Api\models\collection\HexaCollection;
 
 
 class GameBusiness extends BaseBusiness {
@@ -19,6 +20,8 @@ class GameBusiness extends BaseBusiness {
         ,'maxTurns'
         ,'name'
         ,'started'
+        ,'width'
+        ,'height'
     );
 
     protected static $table = 'game';
@@ -42,7 +45,19 @@ class GameBusiness extends BaseBusiness {
     }
 
     
-     /**
+    
+    /**
+     * Renvoie les Games liés à une collection de Hexas
+     * @param HexaCollection $hexas
+     * @return GameCollection|Game[]
+     */
+    public static function getFromHexas(HexaCollection $hexas){
+        $ids = $hexas->getIdGameStr();
+        if(!$ids) return new GameCollection();
+        $req = "SELECT * FROM game WHERE idGame IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Game', 'GameCollection');
+    }
+ /**
      * Supprime le Game en DB
      * @param Game $game
      */
