@@ -2,15 +2,15 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
-use Fr\Nj2\Api\models\Hexa;
+use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\collection\GameCollection;
-use Fr\Nj2\Api\models\Game;
+use Fr\Nj2\Api\models\extended\Game;
 
 
 class HexaBusiness extends BaseBusiness {

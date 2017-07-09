@@ -2,12 +2,12 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:53
 */
 namespace Fr\Nj2\Api\models\collection;
 
-use Fr\Nj2\Api\models\Trajectory;
 use Fr\Nj2\Api\models\store\TrajectoryStore;
+use Fr\Nj2\Api\models\extended\Trajectory;
 
 class TrajectoryCollection extends BaseCollection {
 

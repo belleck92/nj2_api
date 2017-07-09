@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-07
- * Time: 17:53:41
+ * Date: 2017-07-09
+ * Time: 16:55:27
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -11,7 +11,7 @@ namespace Fr\Nj2\Api\v1\LogicalUnits;
 use Fr\Nj2\Api\models\business\TrajectoryHexaBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\TrajectoryHexaCollection;
-use Fr\Nj2\Api\models\TrajectoryHexa;
+use Fr\Nj2\Api\models\extended\TrajectoryHexa;
 use Fr\Nj2\Api\models\store\TrajectoryHexaStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\TrajectoryHexas as Right;

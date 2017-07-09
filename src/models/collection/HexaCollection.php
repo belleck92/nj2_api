@@ -2,14 +2,14 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:53
 */
 namespace Fr\Nj2\Api\models\collection;
 
-use Fr\Nj2\Api\models\Hexa;
 use Fr\Nj2\Api\models\store\HexaStore;
+use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\business\GameBusiness;
-use Fr\Nj2\Api\models\Game;
+use Fr\Nj2\Api\models\extended\Game;
 
 class HexaCollection extends BaseCollection {
 

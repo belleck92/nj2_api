@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,22 +16,22 @@ class Stock implements Bean {
     /**
      * @var int
      */
-    private $idStock;
+    protected $idStock;
 
     /**
      * @var int
      */
-    private $idTypeResource = 0;
+    protected $idTypeResource = 0;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $qty = 0;
+    protected $qty = 0;
 
     /**
      * @return int

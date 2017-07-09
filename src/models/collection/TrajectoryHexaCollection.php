@@ -2,12 +2,12 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:53
 */
 namespace Fr\Nj2\Api\models\collection;
 
-use Fr\Nj2\Api\models\TrajectoryHexa;
 use Fr\Nj2\Api\models\store\TrajectoryHexaStore;
+use Fr\Nj2\Api\models\extended\TrajectoryHexa;
 
 class TrajectoryHexaCollection extends BaseCollection {
 

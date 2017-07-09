@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,27 +16,27 @@ class Trajectory implements Bean {
     /**
      * @var int
      */
-    private $idTrajectory;
+    protected $idTrajectory;
 
     /**
      * @var int
      */
-    private $idHq = 0;
+    protected $idHq = 0;
 
     /**
      * @var int
      */
-    private $idSpy = 0;
+    protected $idSpy = 0;
 
     /**
      * @var int
      */
-    private $idCaravan = 0;
+    protected $idCaravan = 0;
 
     /**
      * @var int
      */
-    private $idExpert = 0;
+    protected $idExpert = 0;
 
     /**
      * @return int

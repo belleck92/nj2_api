@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,37 +16,37 @@ class Spy implements Bean {
     /**
      * @var int
      */
-    private $idSpy;
+    protected $idSpy;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $idTypeMission = 0;
+    protected $idTypeMission = 0;
 
     /**
      * @var int
      */
-    private $idTarget = 0;
+    protected $idTarget = 0;
 
     /**
      * @var bool
      */
-    private $infiltrated = false;
+    protected $infiltrated = false;
 
     /**
      * @var int
      */
-    private $turnsLeft = 0;
+    protected $turnsLeft = 0;
 
     /**
      * @return int

@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,27 +16,27 @@ class TypeMission implements Bean {
     /**
      * @var int
      */
-    private $idTypeMission;
+    protected $idTypeMission;
 
     /**
      * @var int
      */
-    private $unitOrSpy = 0;
+    protected $unitOrSpy = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    private $description = '';
+    protected $description = '';
 
     /**
      * @var string
      */
-    private $fctId = '';
+    protected $fctId = '';
 
     /**
      * @return int

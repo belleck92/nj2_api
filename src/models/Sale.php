@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,52 +16,52 @@ class Sale implements Bean {
     /**
      * @var int
      */
-    private $idSale;
+    protected $idSale;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @var int
      */
-    private $idTypeResource = 0;
+    protected $idTypeResource = 0;
 
     /**
      * @var int
      */
-    private $qty = 0;
+    protected $qty = 0;
 
     /**
      * @var int
      */
-    private $idExpert = 0;
+    protected $idExpert = 0;
 
     /**
      * @var int
      */
-    private $idTypeTech = 0;
+    protected $idTypeTech = 0;
 
     /**
      * @var bool
      */
-    private $citySale = false;
+    protected $citySale = false;
 
     /**
      * @var int
      */
-    private $idUnit = 0;
+    protected $idUnit = 0;
 
     /**
      * @var int
      */
-    private $idSpy = 0;
+    protected $idSpy = 0;
 
     /**
      * @return int

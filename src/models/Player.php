@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,52 +16,52 @@ class Player implements Bean {
     /**
      * @var int
      */
-    private $idPlayer;
+    protected $idPlayer;
 
     /**
      * @var int
      */
-    private $idUser = 0;
+    protected $idUser = 0;
 
     /**
      * @var int
      */
-    private $idGame = 0;
+    protected $idGame = 0;
 
     /**
      * @var int
      */
-    private $idAlliance = 0;
+    protected $idAlliance = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var int
      */
-    private $treasure = 0;
+    protected $treasure = 0;
 
     /**
      * @var string
      */
-    private $color = '';
+    protected $color = '';
 
     /**
      * @var int
      */
-    private $capitalCity = 0;
+    protected $capitalCity = 0;
 
     /**
      * @var string
      */
-    private $lastResolutionEvents = '';
+    protected $lastResolutionEvents = '';
 
     /**
      * @var int
      */
-    private $taxRate = 0;
+    protected $taxRate = 0;
 
     /**
      * @return int

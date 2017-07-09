@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,77 +16,77 @@ class TypeUnit implements Bean {
     /**
      * @var int
      */
-    private $idTypeMission;
+    protected $idTypeMission;
 
     /**
      * @var int
      */
-    private $idTypeHq = 0;
+    protected $idTypeHq = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    private $description = '';
+    protected $description = '';
 
     /**
      * @var string
      */
-    private $fctId = '';
+    protected $fctId = '';
 
     /**
      * @var int
      */
-    private $assault = 0;
+    protected $assault = 0;
 
     /**
      * @var int
      */
-    private $resistance = 0;
+    protected $resistance = 0;
 
     /**
      * @var int
      */
-    private $mvt = 0;
+    protected $mvt = 0;
 
     /**
      * @var int
      */
-    private $idTypeBuilding = 0;
+    protected $idTypeBuilding = 0;
 
     /**
      * @var int
      */
-    private $zIndex = 0;
+    protected $zIndex = 0;
 
     /**
      * @var bool
      */
-    private $mecanized = false;
+    protected $mecanized = false;
 
     /**
      * @var bool
      */
-    private $motorized = false;
+    protected $motorized = false;
 
     /**
      * @var int
      */
-    private $visionRange = 0;
+    protected $visionRange = 0;
 
     /**
      * @var int
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @var int
      */
-    private $buildingTime = 0;
+    protected $buildingTime = 0;
 
     /**
      * @return int

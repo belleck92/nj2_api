@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,27 +16,27 @@ class Caravan implements Bean {
     /**
      * @var int
      */
-    private $idCaravan;
+    protected $idCaravan;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idTypeRessource = 0;
+    protected $idTypeRessource = 0;
 
     /**
      * @var int
      */
-    private $qty = 0;
+    protected $qty = 0;
 
     /**
      * @var int
      */
-    private $turnsLeft = 0;
+    protected $turnsLeft = 0;
 
     /**
      * @return int

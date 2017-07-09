@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,22 +16,22 @@ class Tech implements Bean {
     /**
      * @var int
      */
-    private $idTech;
+    protected $idTech;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $totalCost = 0;
+    protected $totalCost = 0;
 
     /**
      * @var int
      */
-    private $alreadyInvested = 0;
+    protected $alreadyInvested = 0;
 
     /**
      * @return int

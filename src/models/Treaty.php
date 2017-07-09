@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,52 +16,52 @@ class Treaty implements Bean {
     /**
      * @var int
      */
-    private $idTreaty;
+    protected $idTreaty;
 
     /**
      * @var int
      */
-    private $idTypeTreaty = 0;
+    protected $idTypeTreaty = 0;
 
     /**
      * @var int
      */
-    private $idPlayer1 = 0;
+    protected $idPlayer1 = 0;
 
     /**
      * @var int
      */
-    private $idPlayer2 = 0;
+    protected $idPlayer2 = 0;
 
     /**
      * @var int
      */
-    private $idAlliance1 = 0;
+    protected $idAlliance1 = 0;
 
     /**
      * @var int
      */
-    private $idAlliance2 = 0;
+    protected $idAlliance2 = 0;
 
     /**
      * @var bool
      */
-    private $state = false;
+    protected $state = false;
 
     /**
      * @var int
      */
-    private $startingTurn = 0;
+    protected $startingTurn = 0;
 
     /**
      * @var int
      */
-    private $amount = 0;
+    protected $amount = 0;
 
     /**
      * @var int
      */
-    private $turnsLeft = 0;
+    protected $turnsLeft = 0;
 
     /**
      * @return int

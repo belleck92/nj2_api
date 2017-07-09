@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-07
- * Time: 17:53:41
+ * Date: 2017-07-09
+ * Time: 16:55:27
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -11,7 +11,7 @@ namespace Fr\Nj2\Api\v1\LogicalUnits;
 use Fr\Nj2\Api\models\business\ExpertBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\ExpertCollection;
-use Fr\Nj2\Api\models\Expert;
+use Fr\Nj2\Api\models\extended\Expert;
 use Fr\Nj2\Api\models\store\ExpertStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Experts as Right;

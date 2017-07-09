@@ -2,12 +2,12 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
-use Fr\Nj2\Api\models\TypeClimate;
+use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 
 

@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,42 +16,42 @@ class Unit implements Bean {
     /**
      * @var int
      */
-    private $idUnit;
+    protected $idUnit;
 
     /**
      * @var int
      */
-    private $idTypeUnit = 0;
+    protected $idTypeUnit = 0;
 
     /**
      * @var int
      */
-    private $idHq = 0;
+    protected $idHq = 0;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $buildingTurnsLeft = 0;
+    protected $buildingTurnsLeft = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    private $morale = '';
+    protected $morale = '';
 
     /**
      * @var int
      */
-    private $xp = 0;
+    protected $xp = 0;
 
     /**
      * @return int

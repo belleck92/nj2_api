@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,22 +16,22 @@ class River implements Bean {
     /**
      * @var int
      */
-    private $idRiver;
+    protected $idRiver;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $side = 0;
+    protected $side = 0;
 
     /**
      * @var bool
      */
-    private $ford = false;
+    protected $ford = false;
 
     /**
      * @return int

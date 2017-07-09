@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -17,52 +17,52 @@ class Hexa implements Bean {
     /**
      * @var int
      */
-    private $idHexa;
+    protected $idHexa;
 
     /**
      * @var int
      */
-    private $idGame = 0;
+    protected $idGame = 0;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idTerritory = 0;
+    protected $idTerritory = 0;
 
     /**
      * @var int
      */
-    private $idTypeClimate = 0;
+    protected $idTypeClimate = 0;
 
     /**
      * @var int
      */
-    private $X = 0;
+    protected $X = 0;
 
     /**
      * @var int
      */
-    private $Y = 0;
+    protected $Y = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var int
      */
-    private $population = 0;
+    protected $population = 0;
 
     /**
      * @var int
      */
-    private $malusConquest = 0;
+    protected $malusConquest = 0;
 
     /**
      * @return int

@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,37 +16,37 @@ class Bonus implements Bean {
     /**
      * @var int
      */
-    private $idBonus;
+    protected $idBonus;
 
     /**
      * @var int
      */
-    private $idTypeBonus = 0;
+    protected $idTypeBonus = 0;
 
     /**
      * @var int
      */
-    private $idTypeBuilding = 0;
+    protected $idTypeBuilding = 0;
 
     /**
      * @var int
      */
-    private $era = 0;
+    protected $era = 0;
 
     /**
      * @var int
      */
-    private $idTypeResource = 0;
+    protected $idTypeResource = 0;
 
     /**
      * @var int
      */
-    private $idTypeUnit = 0;
+    protected $idTypeUnit = 0;
 
     /**
      * @var int
      */
-    private $value = 0;
+    protected $value = 0;
 
     /**
      * @return int

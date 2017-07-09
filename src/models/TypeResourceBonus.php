@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,22 +16,22 @@ class TypeResourceBonus implements Bean {
     /**
      * @var int
      */
-    private $idTypeResourceBonus;
+    protected $idTypeResourceBonus;
 
     /**
      * @var int
      */
-    private $idTypeResource = 0;
+    protected $idTypeResource = 0;
 
     /**
      * @var int
      */
-    private $idBonus = 0;
+    protected $idBonus = 0;
 
     /**
      * @var int
      */
-    private $era = 0;
+    protected $era = 0;
 
     /**
      * @return int

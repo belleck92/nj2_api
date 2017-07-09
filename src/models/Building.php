@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,32 +16,32 @@ class Building implements Bean {
     /**
      * @var int
      */
-    private $idBuilding;
+    protected $idBuilding;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $idTypeBuilding = 0;
+    protected $idTypeBuilding = 0;
 
     /**
      * @var int
      */
-    private $actualLevel = 0;
+    protected $actualLevel = 0;
 
     /**
      * @var int
      */
-    private $buildingTurnsLeft = 0;
+    protected $buildingTurnsLeft = 0;
 
     /**
      * @var int
      */
-    private $populationWorking = 0;
+    protected $populationWorking = 0;
 
     /**
      * @return int

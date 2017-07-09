@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,52 +16,52 @@ class Hq implements Bean {
     /**
      * @var int
      */
-    private $idHq;
+    protected $idHq;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idTypeMission = 0;
+    protected $idTypeMission = 0;
 
     /**
      * @var int
      */
-    private $idTypeHq = 0;
+    protected $idTypeHq = 0;
 
     /**
      * @var int
      */
-    private $idTarget = 0;
+    protected $idTarget = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var int
      */
-    private $level = 0;
+    protected $level = 0;
 
     /**
      * @var int
      */
-    private $capop = 0;
+    protected $capop = 0;
 
     /**
      * @var bool
      */
-    private $isPalaceBonus = false;
+    protected $isPalaceBonus = false;
 
     /**
      * @return int

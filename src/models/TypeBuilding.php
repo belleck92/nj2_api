@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,62 +16,62 @@ class TypeBuilding implements Bean {
     /**
      * @var int
      */
-    private $idTypeBuilding;
+    protected $idTypeBuilding;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    private $description = '';
+    protected $description = '';
 
     /**
      * @var string
      */
-    private $fctId = '';
+    protected $fctId = '';
 
     /**
      * @var int
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @var int
      */
-    private $buildingTime = 0;
+    protected $buildingTime = 0;
 
     /**
      * @var int
      */
-    private $maxLevel = 0;
+    protected $maxLevel = 0;
 
     /**
      * @var int
      */
-    private $priceCoef = 0;
+    protected $priceCoef = 0;
 
     /**
      * @var int
      */
-    private $maintenancePriceRatio = 0;
+    protected $maintenancePriceRatio = 0;
 
     /**
      * @var bool
      */
-    private $needsPopulation = false;
+    protected $needsPopulation = false;
 
     /**
      * @var int
      */
-    private $investmentCapacity = 0;
+    protected $investmentCapacity = 0;
 
     /**
      * @var int
      */
-    private $priorityLevel = 0;
+    protected $priorityLevel = 0;
 
     /**
      * @return int

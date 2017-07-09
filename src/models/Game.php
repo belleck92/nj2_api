@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -11,6 +11,7 @@ use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\Hexa;
 
 
 class Game implements Bean {
@@ -18,42 +19,42 @@ class Game implements Bean {
     /**
      * @var int
      */
-    private $idGame;
+    protected $idGame;
 
     /**
      * @var int
      */
-    private $currentTurn = 0;
+    protected $currentTurn = 0;
 
     /**
      * @var int
      */
-    private $maxTurns = 0;
+    protected $maxTurns = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var bool
      */
-    private $started = false;
+    protected $started = false;
 
     /**
      * @var int
      */
-    private $width = 0;
+    protected $width = 0;
 
     /**
      * @var int
      */
-    private $height = 0;
+    protected $height = 0;
 
     /**
      * @var HexaCollection|Hexa[]
      */
-    private $cacheHexas = null;
+    protected $cacheHexas = null;
 
     /**
      * @return int

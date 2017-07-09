@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,17 +16,17 @@ class TypeTechBonus implements Bean {
     /**
      * @var int
      */
-    private $idTechBonus;
+    protected $idTechBonus;
 
     /**
      * @var int
      */
-    private $idTypeTech = 0;
+    protected $idTypeTech = 0;
 
     /**
      * @var int
      */
-    private $idBonus = 0;
+    protected $idBonus = 0;
 
     /**
      * @return int

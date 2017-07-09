@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,22 +16,22 @@ class User implements Bean {
     /**
      * @var int
      */
-    private $idUser;
+    protected $idUser;
 
     /**
      * @var string
      */
-    private $email = '';
+    protected $email = '';
 
     /**
      * @var string
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * @var int
      */
-    private $role = 0;
+    protected $role = 0;
 
     /**
      * @return int

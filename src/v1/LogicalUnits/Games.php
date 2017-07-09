@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-07
- * Time: 17:53:41
+ * Date: 2017-07-09
+ * Time: 16:55:27
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -11,7 +11,7 @@ namespace Fr\Nj2\Api\v1\LogicalUnits;
 use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\GameCollection;
-use Fr\Nj2\Api\models\Game;
+use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Games as Right;
@@ -30,6 +30,13 @@ class Games extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'hexas':
+                return Hexas::filterCollection(GameStore::getByIds($segments[0])->getHexas());
+            }
+        }
         return parent::get($queryString, $parameters);
     }
 
@@ -66,6 +73,17 @@ class Games extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            
+            if($segments[1] == "hexas") {
+                foreach ($queryBody as &$hexa) {
+                    $hexa['idGame'] = $segments[0];
+                }
+                $unit = new Hexas();
+                return $unit->create('', $parameters, $queryBody);
+            }
+
+            
         }
         return [];
     }

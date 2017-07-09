@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,32 +16,32 @@ class Expert implements Bean {
     /**
      * @var int
      */
-    private $idExpert;
+    protected $idExpert;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idBonus = 0;
+    protected $idBonus = 0;
 
     /**
      * @var int
      */
-    private $idHexa = 0;
+    protected $idHexa = 0;
 
     /**
      * @var int
      */
-    private $itemsLeft = 0;
+    protected $itemsLeft = 0;
 
     /**
      * @var int
      */
-    private $turnsLeft = 0;
+    protected $turnsLeft = 0;
 
     /**
      * @return int

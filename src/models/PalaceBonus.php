@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-09
-* Time: 15:09:50
+* Time: 16:56:52
 */
 
 namespace Fr\Nj2\Api\models;
@@ -16,17 +16,17 @@ class PalaceBonus implements Bean {
     /**
      * @var int
      */
-    private $idPalaceBonus;
+    protected $idPalaceBonus;
 
     /**
      * @var int
      */
-    private $idPlayer = 0;
+    protected $idPlayer = 0;
 
     /**
      * @var int
      */
-    private $idTypeBonus = 0;
+    protected $idTypeBonus = 0;
 
     /**
      * @return int

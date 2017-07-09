@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-07
- * Time: 17:53:41
+ * Date: 2017-07-09
+ * Time: 16:55:27
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -11,7 +11,7 @@ namespace Fr\Nj2\Api\v1\LogicalUnits;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\collection\BaseCollection;
 use Fr\Nj2\Api\models\collection\HexaCollection;
-use Fr\Nj2\Api\models\Hexa;
+use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\store\HexaStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Hexas as Right;
@@ -30,6 +30,13 @@ class Hexas extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'games':
+                    return Games::filterCollection(HexaStore::getByIds($segments[0])->getGames());
+                }
+            }
         return parent::get($queryString, $parameters);
     }
 
@@ -57,7 +64,7 @@ class Hexas extends LogicalUnit
             $ret = new HexaCollection();
             foreach ($queryBody as $hexaData) {
                 if (isset($hexaData['idHexa'])) continue;
-                
+                if (!isset($hexaData['idGame'])) continue;
                 if (Right::canWrite($hexaData)) {
                     $hexa = new Hexa();
                     $hexa->edit(Right::writeableFields($hexaData));
@@ -66,6 +73,11 @@ class Hexas extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "games") {
+                $unit = new Games();
+                $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }
