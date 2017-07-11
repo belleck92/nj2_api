@@ -116,6 +116,100 @@ INSERT INTO typeResource(name, description, fctId) VALUES('Diamants', '', 'TYPE_
 INSERT INTO typeResource(name, description, fctId) VALUES('Uranium', '', 'TYPE_U');
 INSERT INTO typeResource(name, description, fctId) VALUES('Houblon', '', 'TYPE_HOP');
 
+DROP TABLE IF EXISTS probaResourceClimate;
+CREATE TABLE probaResourceClimate
+(
+   idProbaResourceClimate INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
+  ,idTypeClimate INT(11) DEFAULT 0 COMMENT ''
+  ,proba INT(11) DEFAULT 0 COMMENT 'Probability, by million, to have the resource on the type of climate'
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
+CREATE INDEX probaResourceClimate_idTypeResource_pk ON probaResourceClimate (idTypeResource);
+CREATE INDEX probaResourceClimate_idTypeClimate_pk ON probaResourceClimate (idTypeClimate);
+
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_ARCTIC';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_SPICES' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_DESERT';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 4000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_SPICES' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HORSES' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 4000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HOP' AND typeClimate.fctId = 'TYPE_PLAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 1500 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 2000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_SPICES' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 12000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HORSES' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 1000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 2000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HOP' AND typeClimate.fctId = 'TYPE_MEADOW';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 4000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_FOREST';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 5000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_SPICES' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 4000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HORSES' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 4000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_HOP' AND typeClimate.fctId = 'TYPE_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 8000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_FOREST_HILL';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_COAL' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 3000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_AL' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_K' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_LI' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_CU' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 12000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+
 DROP TABLE IF EXISTS typeResourceBonus;
 CREATE TABLE typeResourceBonus
 (
