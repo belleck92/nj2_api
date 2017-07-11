@@ -44,7 +44,7 @@ class Authenticate extends LogicalUnit
     public function create($queryString, $parameters, $queryBody)
     {
         if(isset($queryBody['user']) && $queryBody['user'] == "manu" && isset($queryBody['password']) && $queryBody['password'] == "zaza" ) {
-            API::getInstance()->setToken(["role"=>API::ROLE_PLAYER, "idSociete"=>2, "exp"=>time()+7200]);
+            API::getInstance()->setToken(["role"=>API::ROLE_PLAYER, "idGame"=>1, "exp"=>time()+7200]);
             $header = base64_encode(json_encode(["typ"=>"JWT", 'alg'=>Config::ENCRYPTION_ALGO]));
             $payload = base64_encode(json_encode(API::getInstance()->getToken()));
             $signature = hash_hmac(Config::ENCRYPTION_ALGO,$header.'.'.$payload, Config::ENCRYPTION_KEY);

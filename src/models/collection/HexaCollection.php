@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -10,6 +10,8 @@ use Fr\Nj2\Api\models\store\HexaStore;
 use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\extended\Game;
+use Fr\Nj2\Api\models\business\TypeClimateBusiness;
+use Fr\Nj2\Api\models\extended\TypeClimate;
 
 class HexaCollection extends BaseCollection {
 
@@ -18,6 +20,11 @@ class HexaCollection extends BaseCollection {
      * @var GameCollection|Game[]
      */
     private $cacheGames = null;
+    
+    /**
+     * @var TypeClimateCollection|TypeClimate[]
+     */
+    private $cacheTypeClimates = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -74,6 +81,40 @@ class HexaCollection extends BaseCollection {
             if(!$prem) $ret .=',';
             $prem = false;
             $ret .= $hexa->getIdGame();
+        }
+        return $ret;
+    }
+    
+    /**
+     * Remet à null le cache des TypeClimates liés à la collection
+     */
+    public function resetCacheTypeClimates() {
+        $this->cacheTypeClimates = null;
+    }
+
+    /**
+     * Renvoie les TypeClimates liés aux Hexas de cette collection
+     * @return TypeClimateCollection|TypeClimate[]
+     */
+    public function getTypeClimates(){
+        if(is_null($this->cacheTypeClimates)) {
+        $this->cacheTypeClimates = TypeClimateBusiness::getFromHexas($this);
+            $this->cacheTypeClimates->store();
+        }
+        return $this->cacheTypeClimates;
+    }
+       
+    /**
+     * Renvoie une chaîne d'idTypeClimate de la collection
+     * @return string
+     */  
+    public function getIdTypeClimateStr() {
+        $ret = '';
+        $prem = true;
+        foreach($this as $hexa) {
+            if(!$prem) $ret .=',';
+            $prem = false;
+            $ret .= $hexa->getIdTypeClimate();
         }
         return $ret;
     }

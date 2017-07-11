@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -164,6 +164,14 @@ abstract class BaseBusiness {
     public static function upperToLowerCamelCase($str)
     {
         return strtolower(substr($str,0,1)).substr($str,1,strlen($str)-1);
+    }
+
+    /**
+     * Returns all of the objects of the table
+     */
+    public static function getAll()
+    {
+        return DbHandler::collFromQuery("SELECT * FROM `".static::$table."`;",self::underscoreToCamelCase(static::$table), self::underscoreToCamelCase(static::$table).'Collection');
     }
 
 }

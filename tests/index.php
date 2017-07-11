@@ -51,7 +51,7 @@ echo $ret;
 echo "\n";*/
 
 
-$ch = curl_init("http://api.nj2.gruik.fr/v1/societes/2/contacts");
+/*$ch = curl_init("http://api.nj2.gruik.fr/v1/societes/2/contacts");
 curl_setopt($ch,CURLOPT_HTTPHEADER,[
     "Authorization: Bearer ".$token
 ]);
@@ -63,11 +63,11 @@ $info = curl_getinfo($ch);
 echo "\n";
 echo $ret;
 echo "\n";
+*/
 
 
 
-
-$ch = curl_init("http://api.nj2.gruik.fr/v1/societes/1/contacts");
+$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=1&width=5&height=5");
 curl_setopt($ch,CURLOPT_HTTPHEADER,[
     "Authorization: Bearer ".$token
 ]);

@@ -51,9 +51,14 @@ class API
         if(preg_match('#^v[0-9]+$#',$segments[1])) {
             $version = $segments[1];
         } else throw new Exception("First segment of URL must be the version");
-        
-        $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.BaseBusiness::lowerToUpperCamelCase($segments[2]);
-        if(!class_exists($class)) $this->sendResponse(404);
+
+        $seg2 = explode('?', $segments[2]);
+        $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.BaseBusiness::lowerToUpperCamelCase($seg2[0]);
+        if(!class_exists($class)) {
+            $this->errorCode=1;
+            $this->error='API function not found';
+            $this->sendResponse(404);
+        }
         $exec = new $class;/** @var LogicalUnit $exec */
         $queryString = substr($_SERVER['REQUEST_URI'],strlen($segments[1].$segments[2]) + 3);
         if(strpos($queryString, '?') !== false) $queryString = substr($queryString,0, strpos($queryString, '?'));
@@ -63,7 +68,7 @@ class API
         /*
          * Token handling
          */
-        if(strtolower($segments[2]) != 'authenticate' && !$exec->isCanWorkWithoutToken()) {
+        if(strtolower($segments[2]) != 'authenticate' && !$exec->canWorkWithoutToken()) {
             if(isset(\getallheaders()['Authorization'])) {
                 if(preg_match('#^Bearer (.*)$#', \getallheaders()['Authorization'])) {
                     $token = preg_replace('#^Bearer (.*)$#', '$1', \getallheaders()['Authorization']);
@@ -117,12 +122,12 @@ class API
     public function sendResponse($code = 200)
     {
         http_response_code($code);
-        if($code == 200) {
+        if(substr($code, 0,1) != '5') {
             echo json_encode([
                 'error'=>$this->getErrorData()
                 ,'data'=>$this->returnedData
                 ,'token'=>$this->getJwtToken()
-            ]);
+            ], JSON_UNESCAPED_UNICODE);
         }
         exit();
     }

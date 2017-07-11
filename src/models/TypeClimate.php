@@ -1,14 +1,17 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\TypeClimateBusiness;
+use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\Hexa;
 
 
 class TypeClimate implements Bean {
@@ -42,6 +45,11 @@ class TypeClimate implements Bean {
      * @var int
      */
     protected $defenseBonus = 0;
+
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    protected $cacheHexas = null;
 
     /**
      * @return int
@@ -155,6 +163,44 @@ class TypeClimate implements Bean {
         $this->setDefenseBonus($this->getDefenseBonus() + $increment);
     }
     
+    /**
+     * Remet à null le cache des hexas liés à this
+     */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+    * Force la collection de hexas de this
+    * @param HexaCollection $hexas
+    */
+    public function setHexas(HexaCollection $hexas)
+    {
+        $this->cacheHexas = $hexas;
+    }
+
+    /**
+     * Renvoie les hexas liés à ce TypeClimate
+     * @return HexaCollection|Hexa[]
+     */
+    public function getHexas() {
+        if(is_null($this->cacheHexas)) {
+            $this->cacheHexas = HexaBusiness::getByTypeClimate($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+
+    /**
+     * Crée un hexa lié à ce TypeClimate
+     * @return extended\Hexa
+     */
+    public function createHexa(){
+        $hexa = new extended\Hexa();
+        $hexa->setIdTypeClimate($this->getIdTypeClimate());
+        return $hexa;
+    }
+
     /**
      * @return void
      */

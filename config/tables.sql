@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS nj2;
+CREATE DATABASE nj2
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
+
 use nj2;
 
 DROP TABLE IF EXISTS user;
@@ -7,7 +12,7 @@ CREATE TABLE user
   ,email VARCHAR(255) COMMENT ''
   ,password VARCHAR(60) COMMENT ''
   ,role INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE UNIQUE INDEX user_email_password_pk ON user (email, password);
 
 DROP TABLE IF EXISTS game;
@@ -20,7 +25,7 @@ CREATE TABLE game
   ,started INT(1) DEFAULT 0 COMMENT 'If the game is started, no one can create a new player on it'
   ,width INT(11) DEFAULT 0 COMMENT ''
   ,height INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS player;
 CREATE TABLE player
@@ -35,7 +40,7 @@ CREATE TABLE player
   ,capitalCity INT(11) DEFAULT 0 COMMENT ''
   ,lastResolutionEvents TEXT COMMENT 'A JSON describing the last turn events the player can see'
   ,taxRate INT(11) DEFAULT 0 COMMENT 'Percentage, from 0 to 100'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX player_idUser ON player (idUser);
 CREATE INDEX player_idGame ON player (idGame);
 CREATE INDEX player_idAlliance ON player (idAlliance);
@@ -53,7 +58,7 @@ CREATE TABLE hexa
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,population INT(11) DEFAULT 0 COMMENT 'The exact number of inhabitants in the city. The size of the city come from a formula using this field.'
   ,malusConquest INT(11) DEFAULT 0 COMMENT 'In percent. Malus on production, growth, science, etc... of the city due to recent conquest. Decreases by the time'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX hexa_idGame ON hexa (idGame);
 CREATE INDEX hexa_idPlayer ON hexa (idPlayer);
 CREATE INDEX hexa_idTypeClimate ON hexa (idTypeClimate);
@@ -67,7 +72,7 @@ CREATE TABLE typeClimate
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,food INT(11) DEFAULT 0 COMMENT ''
   ,defenseBonus INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Mer', '', 'TYPE_SEA', 1, 0);
 INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Banquise', '', 'TYPE_FLOE', 1, 0);
 INSERT INTO typeClimate(name, description, fctId, food, defenseBonus) VALUES ('Arctique', '', 'TYPE_ARCTIC', 0, 20);
@@ -86,7 +91,7 @@ CREATE TABLE resource
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX resource_idHexa ON resource (idHexa);
 CREATE INDEX resource_idTypeResource ON resource (idTypeResource);
 
@@ -97,7 +102,7 @@ CREATE TABLE typeResource
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS typeResourceBonus;
 CREATE TABLE typeResourceBonus
@@ -106,7 +111,7 @@ CREATE TABLE typeResourceBonus
   ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,idBonus INT(11) DEFAULT 0 COMMENT ''
   ,era INT(11) DEFAULT 0 COMMENT 'The era the bonus is active'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX typeResourceBonus_idBonus_pk ON typeResourceBonus (idBonus);
 CREATE INDEX typeResourceBonus_idTypeResource_pk ON typeResourceBonus (idTypeResource);
 
@@ -117,7 +122,7 @@ CREATE TABLE stock
   ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,qty INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX stock_idTypeResource_pk ON stock (idTypeResource);
 CREATE INDEX stock_idHexa_pk ON stock (idHexa);
 
@@ -128,7 +133,7 @@ CREATE TABLE river
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,side INT(11) DEFAULT 0 COMMENT ''
   ,ford INT(1) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX river_idHexa_pk ON river (idHexa);
 
 DROP TABLE IF EXISTS building;
@@ -140,7 +145,7 @@ CREATE TABLE building
   ,actualLevel INT(11) DEFAULT 0 COMMENT ''
   ,buildingTurnsLeft INT(11) DEFAULT 0 COMMENT 'When not on 0 the building is currently in construction to the actualLevel+1'
   ,populationWorking  INT(11) DEFAULT 0 COMMENT 'Number of population working in the building'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX building_idHexa_pk ON building (idHexa);
 CREATE INDEX building_idTypeBuilding_pk ON building (idTypeBuilding);
 
@@ -150,7 +155,7 @@ CREATE TABLE palaceBonus
   idPalaceBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idPlayer INT(11) DEFAULT 0 COMMENT ''
   ,idTypeBonus INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX palaceBonus_idPlayer ON palaceBonus (idPlayer);
 CREATE INDEX palaceBonus_idTypeBonus ON palaceBonus (idTypeBonus);
 
@@ -169,7 +174,7 @@ CREATE TABLE typeBuilding
   ,needsPopulation INT(1) DEFAULT 0 COMMENT 'Tells if the building needs some population units to work'
   ,investmentCapacity INT(11) DEFAULT 0 COMMENT 'Gold to be invested in building role, ex : units production'
   ,priorityLevel  INT(11) DEFAULT 0 COMMENT 'When not enough population in the city, priority to get population in slots'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS typeBonus;
 CREATE TABLE typeBonus
@@ -178,7 +183,7 @@ CREATE TABLE typeBonus
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS hq;
 CREATE TABLE hq
@@ -193,7 +198,7 @@ CREATE TABLE hq
   ,level INT(11) DEFAULT 0 COMMENT 'Level of the hq'
   ,capop INT(11) DEFAULT 0 COMMENT ''
   ,isPalaceBonus INT(1) DEFAULT 0 COMMENT 'Bonus usable by the palace'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX hq_idHexa_pk ON hq (idHexa);
 CREATE INDEX hq_idPlayer_pk ON hq (idPlayer);
 
@@ -204,7 +209,7 @@ CREATE TABLE typeHq
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS typeMission;
 CREATE TABLE typeMission
@@ -214,7 +219,7 @@ CREATE TABLE typeMission
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX typeMission_unitOrSpy_pk ON typeMission (unitOrSpy);
 
 DROP TABLE IF EXISTS unit;
@@ -228,7 +233,7 @@ CREATE TABLE unit
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,morale VARCHAR(255) DEFAULT '' COMMENT ''
   ,xp INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX unit_idHq_pk ON unit (idHq);
 
 DROP TABLE IF EXISTS typeUnit;
@@ -249,7 +254,7 @@ CREATE TABLE typeUnit
   ,visionRange INT(11) DEFAULT 0 COMMENT ''
   ,price INT(11) DEFAULT 0 COMMENT ''
   ,buildingTime INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX typeUnit_idTypeHq_pk ON typeUnit (idTypeHq);
 
 DROP TABLE IF EXISTS typeUnitMission;
@@ -258,7 +263,7 @@ CREATE TABLE typeUnitMission
   idTypeUnitMission INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeUnit INT(11) DEFAULT 0 COMMENT 'Type of unit'
   ,idTypeMission INT(11) DEFAULT 0 COMMENT 'Type of mission'
-) ENGINE='InnoDB' COMMENT 'Types of missions possibles by unit';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8 COMMENT 'Types of missions possibles by unit';
 CREATE INDEX typeUnitMission_idTypeUnit_pk ON typeUnitMission (idTypeUnit);
 CREATE INDEX typeUnitMission_idTypeMission_pk ON typeUnitMission (idTypeMission);
 
@@ -270,7 +275,7 @@ CREATE TABLE trajectory
   ,idSpy INT(11) DEFAULT 0 COMMENT ''
   ,idCaravan INT(11) DEFAULT 0 COMMENT ''
   ,idExpert INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX trajectory_idHq_pk ON trajectory (idHq);
 CREATE INDEX trajectory_idSpy_pk ON trajectory (idSpy);
 CREATE INDEX trajectory_idCaravan_pk ON trajectory (idCaravan);
@@ -283,7 +288,7 @@ CREATE TABLE trajectoryHexa
   ,idTrajectory INT(11) DEFAULT 0 COMMENT ''
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,rank INT(11) DEFAULT 0 COMMENT 'Rank of the hexa in the trajectory'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX trajectoryHexa_idTrajectory_pk ON trajectoryHexa (idTrajectory);
 CREATE INDEX trajectoryHexa_idHexa_pk ON trajectoryHexa (idHexa);
 
@@ -295,7 +300,7 @@ CREATE TABLE caravan
   ,idTypeRessource  INT(11) DEFAULT 0 COMMENT ''
   ,qty  INT(11) DEFAULT 0 COMMENT ''
   ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX caravan_idPlayer_pk ON caravan (idPlayer);
 CREATE INDEX caravan_idTypeRessource_pk ON caravan (idTypeRessource);
 
@@ -309,7 +314,7 @@ CREATE TABLE spy
   ,idTarget INT(11) DEFAULT 0 COMMENT 'Id of the target of the mission'
   ,infiltrated INT(1) DEFAULT 0 COMMENT 'Tells if the spy is infiltrated in the city where he has a mission'
   ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX spy_idPlayer_pk ON spy (idPlayer);
 CREATE INDEX spy_idHexa_pk ON spy (idHexa);
 CREATE INDEX spy_idTypeMission_pk ON spy (idTypeMission);
@@ -323,7 +328,7 @@ CREATE TABLE expert
   ,idHexa INT(11) DEFAULT 0 COMMENT 'The city where the expert works (destination). If 0 : on sale'
   ,itemsLeft  INT(11) DEFAULT 0 COMMENT 'Number of items left, depending on the role.'
   ,turnsLeft  INT(11) DEFAULT 0 COMMENT 'Number of turns before arrival 1=arrival at next turn resolution.'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX expert_idPlayer_pk ON expert (idPlayer);
 CREATE INDEX expert_idBonus_pk ON expert (idBonus);
 CREATE INDEX expert_idHexa_pk ON expert (idHexa);
@@ -335,7 +340,7 @@ CREATE TABLE typeBonus
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS bonus;
 CREATE TABLE bonus
@@ -347,7 +352,7 @@ CREATE TABLE bonus
   ,idTypeResource  INT(11) DEFAULT 0 COMMENT 'The resource permitted by this bonus'
   ,idTypeUnit  INT(11) DEFAULT 0 COMMENT 'The unit permitted by this bonus or the unit type concerned by the investment bonus'
   ,value  INT(11) DEFAULT 0 COMMENT 'Value of the bonus, in percent, if its not a bonus that permits to use an entity'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX bonus_idTypeBonus_pk ON bonus (idTypeBonus);
 CREATE INDEX bonus_idTypeBuilding_pk ON bonus (idTypeBuilding);
 CREATE INDEX bonus_idTypeResource_pk ON bonus (idTypeResource);
@@ -359,7 +364,7 @@ CREATE TABLE typeTechBonus
   idTechBonus INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idTypeTech INT(11) DEFAULT 0 COMMENT ''
   ,idBonus INT(11) DEFAULT 0 COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX typeTechBonus_idBonus_pk ON typeTechBonus (idBonus);
 CREATE INDEX typeTechBonus_idTypeTech_pk ON typeTechBonus (idTypeTech);
 
@@ -373,7 +378,7 @@ CREATE TABLE typeTech
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
   ,idTechCategoryNeeded  INT(11) DEFAULT 0 COMMENT 'Level technology needed to research the tech'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX typeTech_idTechCategoryBonus_pk ON typeTech (idTechCategory);
 CREATE INDEX typeTech_idEraBonus_pk ON typeTech (idEra);
 CREATE INDEX typeTech_idTechCategoryNeeded_pk ON typeTech (idTechCategoryNeeded);
@@ -385,7 +390,7 @@ CREATE TABLE tech
   ,idPlayer INT(11) DEFAULT 0 COMMENT ''
   ,totalCost  INT(11) DEFAULT 0 COMMENT ''
   ,alreadyInvested  INT(11) DEFAULT 0 COMMENT 'Id this filed is equal to totalCost, the tech is active'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX tech_idPlayer_pk ON tech (idPlayer);
 
 DROP TABLE IF EXISTS alliance;
@@ -393,7 +398,7 @@ CREATE TABLE alliance (
   idAlliance INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,idLeader INT(11) DEFAULT 0 COMMENT 'Id of the leader player'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX alliance_idLeader_pk ON alliance (idLeader);
 
 DROP TABLE IF EXISTS treaty;
@@ -409,7 +414,7 @@ CREATE TABLE treaty
   ,startingTurn INT(11) DEFAULT 0 COMMENT 'The turn from when the treaty is active'
   ,amount INT(11) DEFAULT 0 COMMENT 'In case of a tribute, amount by turn. The player 2 pays to player one'
   ,turnsLeft INT(11) DEFAULT 0 COMMENT 'Number of turns left for the tribute'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX treaty_idTypeTreaty_pk ON treaty (idTypeTreaty);
 CREATE INDEX treaty_idPlayer1_pk ON treaty (idPlayer1);
 CREATE INDEX treaty_idPlayer2_pk ON treaty (idPlayer2);
@@ -423,7 +428,7 @@ CREATE TABLE typeTreaty
   ,name VARCHAR(255) DEFAULT '' COMMENT ''
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS sale;
 CREATE TABLE sale
@@ -438,4 +443,4 @@ CREATE TABLE sale
   ,citySale  INT(1) DEFAULT 0 COMMENT 'For city sales'
   ,idUnit  INT(11) DEFAULT 0 COMMENT 'For unit sales'
   ,idSpy  INT(11) DEFAULT 0 COMMENT 'For prisonners'
-) ENGINE='InnoDB';
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;

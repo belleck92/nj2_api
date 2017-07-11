@@ -31,6 +31,11 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     private $temperature = 0;
 
     /**
+     * @var bool
+     */
+    private $extendedData = false;
+
+    /**
      * @return int
      */
     public function getVegetation()
@@ -211,5 +216,32 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
         return array($xVoisin, $yVoisin);
     }
 
+    public function getAsArray()
+    {
+        $ret = parent::getAsArray();
+        if($this->extendedData) {
+            $ret['typeClimate'] = $this->getTypeClimate()->getName();
+            for($i=0;$i<=5;$i++) {
+                if(!is_null($this->getVoisin($i))) $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
+            }
+        }
+        return $ret;
+    }
 
+
+    /**
+     * @return boolean
+     */
+    public function isExtendedData()
+    {
+        return $this->extendedData;
+    }
+
+    /**
+     * @param boolean $extendedData
+     */
+    public function setExtendedData($extendedData)
+    {
+        $this->extendedData = $extendedData;
+    }
 }

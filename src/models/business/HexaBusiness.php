@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -11,6 +11,8 @@ use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\extended\Game;
+use Fr\Nj2\Api\models\collection\TypeClimateCollection;
+use Fr\Nj2\Api\models\extended\TypeClimate;
 
 
 class HexaBusiness extends BaseBusiness {
@@ -68,6 +70,28 @@ class HexaBusiness extends BaseBusiness {
      */
     public static function getByGame(Game $game){
         $req = "SELECT * FROM hexa WHERE idGame = '".$game->getId()."';";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+    
+    /**
+     * Renvoie les Hexas liés aux TypeClimates de la collection fournie en paramètre
+     * @param TypeClimateCollection $typeClimates
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromTypeClimates(TypeClimateCollection $typeClimates){
+        $ids = $typeClimates->getIdsStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idTypeClimate IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+
+    /**
+     * Renvoie les Hexas liés à un TypeClimate
+     * @param TypeClimate $typeClimate
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getByTypeClimate(TypeClimate $typeClimate){
+        $req = "SELECT * FROM hexa WHERE idTypeClimate = '".$typeClimate->getId()."';";
         return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
     }
     

@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -45,5 +45,17 @@ class BaseCollection extends \ArrayObject {
             if($obj->getId() == $bean->getId()) return true;
         }
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAsArray()
+    {
+        $ret = [];
+        foreach($this as $bean) {/** @var Bean $bean */
+            $ret[] = $bean->getAsArray();
+        }
+        return $ret;
     }
 }

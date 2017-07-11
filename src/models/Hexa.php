@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 
 namespace Fr\Nj2\Api\models;
@@ -10,6 +10,7 @@ namespace Fr\Nj2\Api\models;
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\store\GameStore;
+use Fr\Nj2\Api\models\store\TypeClimateStore;
 
 
 class Hexa implements Bean {
@@ -296,6 +297,16 @@ class Hexa implements Bean {
     public function getGame()
     {
         return GameStore::getById($this->getIdGame());
+    }
+
+
+    /**
+     * Renvoie le typeClimate lié
+     * @return extended\TypeClimate
+     */
+    public function getTypeClimate()
+    {
+        return TypeClimateStore::getById($this->getIdTypeClimate());
     }
 
     /**

@@ -1,14 +1,15 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-09
-* Time: 18:24:10
+* Date: 2017-07-10
+* Time: 17:24:40
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
+use Fr\Nj2\Api\models\collection\HexaCollection;
 
 
 class TypeClimateBusiness extends BaseBusiness {
@@ -43,7 +44,19 @@ class TypeClimateBusiness extends BaseBusiness {
     }
 
     
-     /**
+    
+    /**
+     * Renvoie les TypeClimates liés à une collection de Hexas
+     * @param HexaCollection $hexas
+     * @return TypeClimateCollection|TypeClimate[]
+     */
+    public static function getFromHexas(HexaCollection $hexas){
+        $ids = $hexas->getIdTypeClimateStr();
+        if(!$ids) return new TypeClimateCollection();
+        $req = "SELECT * FROM typeClimate WHERE idTypeClimate IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'TypeClimate', 'TypeClimateCollection');
+    }
+ /**
      * Supprime le TypeClimate en DB
      * @param TypeClimate $typeClimate
      */
