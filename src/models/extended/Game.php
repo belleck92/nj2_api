@@ -117,6 +117,7 @@ class Game extends \Fr\Nj2\Api\models\Game
         $this->genererTemperatures();
         //$this->creerRivieres();
         $this->genererVegetation();
+        $this->genererRessources();
         foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
             HexaBusiness::insert($hexa);
         }
@@ -349,6 +350,14 @@ class Game extends \Fr\Nj2\Api\models\Game
      */
     public static function getIndexCouple(Hexa $hexa1, Hexa $hexa2){
         return min($hexa1->getId(),$hexa2->getId()).'_'.max($hexa1->getId(),$hexa2->getId());
+    }
+
+    /**
+     * Génère les ressources sur la carte
+     */
+    public function genererRessources()
+    {
+        
     }
 
     /**
