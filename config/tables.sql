@@ -103,6 +103,18 @@ CREATE TABLE typeResource
   ,description TEXT COMMENT ''
   ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 )  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
+INSERT INTO typeResource(name, description, fctId) VALUES('Charbon', '', 'TYPE_COAL');
+INSERT INTO typeResource(name, description, fctId) VALUES('Pétrole', '', 'TYPE_OIL');
+INSERT INTO typeResource(name, description, fctId) VALUES('Épices', '', 'TYPE_SPICES');
+INSERT INTO typeResource(name, description, fctId) VALUES('Aluminium', '', 'TYPE_AL');
+INSERT INTO typeResource(name, description, fctId) VALUES('Potassium', '', 'TYPE_K');
+INSERT INTO typeResource(name, description, fctId) VALUES('Lithium', '', 'TYPE_LI');
+INSERT INTO typeResource(name, description, fctId) VALUES('Cuivre', '', 'TYPE_CU');
+INSERT INTO typeResource(name, description, fctId) VALUES('Fer', '', 'TYPE_FE');
+INSERT INTO typeResource(name, description, fctId) VALUES('Chevaux', '', 'TYPE_HORSES');
+INSERT INTO typeResource(name, description, fctId) VALUES('Diamants', '', 'TYPE_DIAMONDS');
+INSERT INTO typeResource(name, description, fctId) VALUES('Uranium', '', 'TYPE_U');
+INSERT INTO typeResource(name, description, fctId) VALUES('Houblon', '', 'TYPE_HOP');
 
 DROP TABLE IF EXISTS typeResourceBonus;
 CREATE TABLE typeResourceBonus
