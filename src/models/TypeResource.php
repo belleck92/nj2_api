@@ -1,14 +1,17 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-10
-* Time: 17:24:40
+* Date: 2017-07-11
+* Time: 17:29:12
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\TypeResourceBusiness;
+use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
+use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
+use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
 
 
 class TypeResource implements Bean {
@@ -32,6 +35,11 @@ class TypeResource implements Bean {
      * @var string
      */
     protected $fctId = '';
+
+    /**
+     * @var ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    protected $cacheProbaResourceClimates = null;
 
     /**
      * @return int
@@ -97,6 +105,44 @@ class TypeResource implements Bean {
         $this->fctId = $fctId;
     }
     
+    /**
+     * Remet à null le cache des probaResourceClimates liés à this
+     */
+    public function resetCacheProbaResourceClimates() {
+        $this->cacheProbaResourceClimates = null;
+    }
+
+    /**
+    * Force la collection de probaResourceClimates de this
+    * @param ProbaResourceClimateCollection $probaResourceClimates
+    */
+    public function setProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates)
+    {
+        $this->cacheProbaResourceClimates = $probaResourceClimates;
+    }
+
+    /**
+     * Renvoie les probaResourceClimates liés à ce TypeResource
+     * @return ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    public function getProbaResourceClimates() {
+        if(is_null($this->cacheProbaResourceClimates)) {
+            $this->cacheProbaResourceClimates = ProbaResourceClimateBusiness::getByTypeResource($this);
+            $this->cacheProbaResourceClimates->store();
+        }
+        return $this->cacheProbaResourceClimates;
+    }
+
+    /**
+     * Crée un probaResourceClimate lié à ce TypeResource
+     * @return extended\ProbaResourceClimate
+     */
+    public function createProbaResourceClimate(){
+        $probaResourceClimate = new extended\ProbaResourceClimate();
+        $probaResourceClimate->setIdTypeResource($this->getIdTypeResource());
+        return $probaResourceClimate;
+    }
+
     /**
      * @return void
      */

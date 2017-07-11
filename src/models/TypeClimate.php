@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-10
-* Time: 17:24:40
+* Date: 2017-07-11
+* Time: 17:29:12
 */
 
 namespace Fr\Nj2\Api\models;
@@ -12,6 +12,9 @@ use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\extended\Hexa;
+use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
+use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
+use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
 
 
 class TypeClimate implements Bean {
@@ -50,6 +53,11 @@ class TypeClimate implements Bean {
      * @var HexaCollection|Hexa[]
      */
     protected $cacheHexas = null;
+
+    /**
+     * @var ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    protected $cacheProbaResourceClimates = null;
 
     /**
      * @return int
@@ -199,6 +207,44 @@ class TypeClimate implements Bean {
         $hexa = new extended\Hexa();
         $hexa->setIdTypeClimate($this->getIdTypeClimate());
         return $hexa;
+    }
+
+    /**
+     * Remet à null le cache des probaResourceClimates liés à this
+     */
+    public function resetCacheProbaResourceClimates() {
+        $this->cacheProbaResourceClimates = null;
+    }
+
+    /**
+    * Force la collection de probaResourceClimates de this
+    * @param ProbaResourceClimateCollection $probaResourceClimates
+    */
+    public function setProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates)
+    {
+        $this->cacheProbaResourceClimates = $probaResourceClimates;
+    }
+
+    /**
+     * Renvoie les probaResourceClimates liés à ce TypeClimate
+     * @return ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    public function getProbaResourceClimates() {
+        if(is_null($this->cacheProbaResourceClimates)) {
+            $this->cacheProbaResourceClimates = ProbaResourceClimateBusiness::getByTypeClimate($this);
+            $this->cacheProbaResourceClimates->store();
+        }
+        return $this->cacheProbaResourceClimates;
+    }
+
+    /**
+     * Crée un probaResourceClimate lié à ce TypeClimate
+     * @return extended\ProbaResourceClimate
+     */
+    public function createProbaResourceClimate(){
+        $probaResourceClimate = new extended\ProbaResourceClimate();
+        $probaResourceClimate->setIdTypeClimate($this->getIdTypeClimate());
+        return $probaResourceClimate;
     }
 
     /**

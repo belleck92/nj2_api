@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-10
-* Time: 17:24:40
+* Date: 2017-07-11
+* Time: 17:29:12
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -10,6 +10,8 @@ use Fr\Nj2\Api\models\store\TypeClimateStore;
 use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
+use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
 
 class TypeClimateCollection extends BaseCollection {
 
@@ -17,6 +19,10 @@ class TypeClimateCollection extends BaseCollection {
      * @var HexaCollection|Hexa[]
      */
     private $cacheHexas = null;
+    /**
+     * @var ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    private $cacheProbaResourceClimates = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -84,6 +90,52 @@ class TypeClimateCollection extends BaseCollection {
             foreach($hexas as $hexa) {
                 if($hexa->getIdTypeClimate() == $typeClimate->getIdTypeClimate()) {
                     $coll->ajout($hexa);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Renvoie les ProbaResourceClimates liés aux TypeClimates de cette collection
+     * @return ProbaResourceClimateCollection|ProbaResourceClimate[]
+     */
+    public function getProbaResourceClimates() {
+        if(is_null($this->cacheProbaResourceClimates)) {
+            $this->cacheProbaResourceClimates = ProbaResourceClimateBusiness::getFromTypeClimates($this);
+            $this->cacheProbaResourceClimates->store();
+        }
+        return $this->cacheProbaResourceClimates;
+    }
+
+    /**
+    * Force la collection de probaResourceClimates de this
+    * @param ProbaResourceClimateCollection $probaResourceClimates
+    */
+    public function setProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates)
+    {
+        $this->cacheProbaResourceClimates = $probaResourceClimates;
+    }
+
+    /**
+    * Remet à null le cache des probaResourceClimates liés à this
+    */
+    public function resetCacheProbaResourceClimates() {
+        $this->cacheProbaResourceClimates = null;
+    }
+
+    /**
+    * Distribue les ProbaResourceClimates fournis en paramètre à chaque TypeClimate de la collection si le ProbaResourceClimate correspond.
+    * @param ProbaResourceClimateCollection $probaResourceClimates
+    */
+    public function fillProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates)
+    {
+        foreach($this as $typeClimate) {/** @var TypeClimate $typeClimate */
+            $typeClimate->resetCacheProbaResourceClimates();
+            $coll = new ProbaResourceClimateCollection();
+            $typeClimate->setProbaResourceClimates($coll);
+            foreach($probaResourceClimates as $probaResourceClimate) {
+                if($probaResourceClimate->getIdTypeClimate() == $typeClimate->getIdTypeClimate()) {
+                    $coll->ajout($probaResourceClimate);
                 }
             }
         }

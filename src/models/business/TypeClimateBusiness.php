@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-10
-* Time: 17:24:40
+* Date: 2017-07-11
+* Time: 17:29:12
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -10,6 +10,7 @@ use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
 
 
 class TypeClimateBusiness extends BaseBusiness {
@@ -52,6 +53,18 @@ class TypeClimateBusiness extends BaseBusiness {
      */
     public static function getFromHexas(HexaCollection $hexas){
         $ids = $hexas->getIdTypeClimateStr();
+        if(!$ids) return new TypeClimateCollection();
+        $req = "SELECT * FROM typeClimate WHERE idTypeClimate IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'TypeClimate', 'TypeClimateCollection');
+    }
+
+    /**
+     * Renvoie les TypeClimates liés à une collection de ProbaResourceClimates
+     * @param ProbaResourceClimateCollection $probaResourceClimates
+     * @return TypeClimateCollection|TypeClimate[]
+     */
+    public static function getFromProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates){
+        $ids = $probaResourceClimates->getIdTypeClimateStr();
         if(!$ids) return new TypeClimateCollection();
         $req = "SELECT * FROM typeClimate WHERE idTypeClimate IN (".$ids.");";
         return DbHandler::collFromQuery($req, 'TypeClimate', 'TypeClimateCollection');

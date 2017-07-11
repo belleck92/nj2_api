@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-09
- * Time: 16:55:27
+ * Date: 2017-07-11
+ * Time: 17:23:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -37,6 +37,10 @@ class Hexas extends LogicalUnit
                     return Games::filterCollection(HexaStore::getByIds($segments[0])->getGames());
                 }
             }
+                case 'typeClimates':
+                    return TypeClimates::filterCollection(HexaStore::getByIds($segments[0])->getTypeClimates());
+                }
+            }
         return parent::get($queryString, $parameters);
     }
 
@@ -64,7 +68,7 @@ class Hexas extends LogicalUnit
             $ret = new HexaCollection();
             foreach ($queryBody as $hexaData) {
                 if (isset($hexaData['idHexa'])) continue;
-                if (!isset($hexaData['idGame'])) continue;
+                if (!isset($hexaData['idGame'])) continue;if (!isset($hexaData['idTypeClimate'])) continue;
                 if (Right::canWrite($hexaData)) {
                     $hexa = new Hexa();
                     $hexa->edit(Right::writeableFields($hexaData));
@@ -76,6 +80,9 @@ class Hexas extends LogicalUnit
         } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
             if($segments[1] == "games") {
                 $unit = new Games();
+                $unit->create('', $parameters, $queryBody);
+            }if($segments[1] == "typeClimates") {
+                $unit = new TypeClimates();
                 $unit->create('', $parameters, $queryBody);
             }
         }

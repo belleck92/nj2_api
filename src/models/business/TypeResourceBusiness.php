@@ -1,14 +1,15 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-10
-* Time: 17:24:40
+* Date: 2017-07-11
+* Time: 17:29:12
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\TypeResource;
 use Fr\Nj2\Api\models\collection\TypeResourceCollection;
+use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
 
 
 class TypeResourceBusiness extends BaseBusiness {
@@ -41,7 +42,19 @@ class TypeResourceBusiness extends BaseBusiness {
     }
 
     
-     /**
+    
+    /**
+     * Renvoie les TypeResources liés à une collection de ProbaResourceClimates
+     * @param ProbaResourceClimateCollection $probaResourceClimates
+     * @return TypeResourceCollection|TypeResource[]
+     */
+    public static function getFromProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates){
+        $ids = $probaResourceClimates->getIdTypeResourceStr();
+        if(!$ids) return new TypeResourceCollection();
+        $req = "SELECT * FROM typeResource WHERE idTypeResource IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'TypeResource', 'TypeResourceCollection');
+    }
+ /**
      * Supprime le TypeResource en DB
      * @param TypeResource $typeResource
      */
