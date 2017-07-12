@@ -11,6 +11,8 @@ namespace Fr\Nj2\Api\models\extended;
 use Fr\Nj2\Api\mapGeneration\Germe;
 use Fr\Nj2\Api\mapGeneration\GermeForet;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\business\TypeResourceBusiness;
+use Fr\Nj2\Api\models\collection\ResourceCollection;
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\HexaStore;
@@ -106,6 +108,11 @@ class Game extends \Fr\Nj2\Api\models\Game
     private $idHexaMini;
 
     /**
+     * @var ResourceCollection
+     */
+    private $allResources;
+
+    /**
      * Génère entièrement la carte
      */
     public function genererHexas() {
@@ -118,8 +125,8 @@ class Game extends \Fr\Nj2\Api\models\Game
         //$this->creerRivieres();
         $this->genererVegetation();
         $this->genererRessources();
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
-            HexaBusiness::insert($hexa);
+        foreach($this->getHexas() as $hexa) {
+            $hexa->save();
         }
     }
 
@@ -134,11 +141,10 @@ class Game extends \Fr\Nj2\Api\models\Game
         for($y=0;$y<$this->getHeight();$y++) {
             for ($x = 0; $x < $this->getWidth();$x++) {
                 $hexa = $this->createHexa();
-                $hexa->setId($id);
                 $hexa->setX($x);
                 $hexa->setY($y);
                 $this->getHexas()->ajout($hexa);
-                $id++;
+                $hexa->save();
             }
         }
         $this->getHexas()->store();
@@ -183,7 +189,7 @@ class Game extends \Fr\Nj2\Api\models\Game
         for($i=1;$i<=$this->getNbGermesForet();$i++) {
             do {
                 $id = mt_rand($this->getIdHexaMini(), $this->getIdHexaMini() + ($this->getLargeur() * $this->getHauteur()) - 1);
-                $hexa = HexaStore::getById($id);/** @var Hexa $hexa */
+                $hexa = HexaStore::getById($id);
             } while (in_array($id, $germesIds) && $hexa->getAltitude() < 4);
             $germesIds[] = $id;
         }
@@ -194,12 +200,12 @@ class Game extends \Fr\Nj2\Api\models\Game
         }
 
         // Supprimer la végétation des mers
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             if($hexa->getAltitude() < 4) $hexa->setVegetation(0);
         }
 
         // Adapter la végétation à l'altitude
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             if($hexa->getAltitude() >=12 ) $hexa->setVegetation(max(0,$hexa->getVegetation()-4));
         }
 
@@ -215,10 +221,10 @@ class Game extends \Fr\Nj2\Api\models\Game
      * Découpe un peu les côtes pour les rendres moins hexagonales
      */
     public function cotesEnDentelle() {
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             if($hexa->getAltitude() >= 4) {
                 $cptMers = 0;
-                foreach($hexa->getCouronne(1) as $voisin) {/** @var Hexa $voisin */
+                foreach($hexa->getCouronne(1) as $voisin) {
                     if($voisin->getAltitude() < 4) $cptMers++;
                 }
                 if($cptMers >= 2 && mt_rand(1,2)==2) $hexa->setAltitude(0);
@@ -247,7 +253,7 @@ class Game extends \Fr\Nj2\Api\models\Game
     public function genererTemperatures()
     {
         mt_srand($this->getRandTemperatures());
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             // Latitude
             $latitude = min($hexa->getY(), $this->getYMax()-$hexa->getY())/($this->getHauteur()/2);
             $hexa->setTemperature((400*pow(($latitude-0.5),5)) + 8.5);
@@ -258,7 +264,7 @@ class Game extends \Fr\Nj2\Api\models\Game
         }
 
         // Climats océaniques
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             if($hexa->getAltitude() < 4) {
                 $ecart = $hexa->getTemperature() - 7.5;
                 $hexa->setTemperature($hexa->getTemperature() - ($ecart/3));
@@ -266,9 +272,9 @@ class Game extends \Fr\Nj2\Api\models\Game
         }
 
         // Climats des littoraux
-        foreach($this->getHexas() as $hexa) {/** @var Hexa $hexa */
+        foreach($this->getHexas() as $hexa) {
             if($hexa->getAltitude() >= 4) {
-                foreach($hexa->getCouronne(1) as $voisin) {/** @var Hexa $voisin */
+                foreach($hexa->getCouronne(1) as $voisin) {
                     if($voisin->getAltitude() < 4) {
                         $ecart = $hexa->getTemperature() - 7.5;
                         $hexa->setTemperature($hexa->getTemperature() - ($ecart/3));
@@ -357,7 +363,16 @@ class Game extends \Fr\Nj2\Api\models\Game
      */
     public function genererRessources()
     {
-        
+        $this->allResources = new ResourceCollection();
+        TypeResourceBusiness::getAll()->store();
+        foreach($this->getHexas() as $hexa) {
+            $typeResource = $hexa->getTypeClimate()->determineRandomResource();
+            if(!is_null($typeResource)) {
+                $res = $hexa->createResource();
+                $res->setIdTypeResource($typeResource->getId());
+                $res->save();
+            }
+        }
     }
 
     /**

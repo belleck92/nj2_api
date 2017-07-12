@@ -90,7 +90,6 @@ CREATE TABLE resource
   idResource INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idHexa INT(11) DEFAULT 0 COMMENT ''
   ,idTypeResource INT(11) DEFAULT 0 COMMENT ''
-  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
 )  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX resource_idHexa ON resource (idHexa);
 CREATE INDEX resource_idTypeResource ON resource (idTypeResource);
@@ -209,6 +208,7 @@ INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT id
 INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 15000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_FE' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
 INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 10000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_DIAMONDS' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
 INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 12000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_U' AND typeClimate.fctId = 'TYPE_MOUNTAIN';
+INSERT INTO probaResourceClimate(idTypeResource, idTypeClimate, proba) SELECT idTypeResource, idTypeClimate, 12000 FROM typeResource, typeClimate WHERE typeResource.fctId = 'TYPE_OIL' AND typeClimate.fctId = 'TYPE_SEA';
 
 DROP TABLE IF EXISTS typeResourceBonus;
 CREATE TABLE typeResourceBonus

@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -10,6 +10,7 @@ use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\TypeResource;
 use Fr\Nj2\Api\models\collection\TypeResourceCollection;
 use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
+use Fr\Nj2\Api\models\collection\ResourceCollection;
 
 
 class TypeResourceBusiness extends BaseBusiness {
@@ -50,6 +51,18 @@ class TypeResourceBusiness extends BaseBusiness {
      */
     public static function getFromProbaResourceClimates(ProbaResourceClimateCollection $probaResourceClimates){
         $ids = $probaResourceClimates->getIdTypeResourceStr();
+        if(!$ids) return new TypeResourceCollection();
+        $req = "SELECT * FROM typeResource WHERE idTypeResource IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'TypeResource', 'TypeResourceCollection');
+    }
+
+    /**
+     * Renvoie les TypeResources liés à une collection de Resources
+     * @param ResourceCollection $resources
+     * @return TypeResourceCollection|TypeResource[]
+     */
+    public static function getFromResources(ResourceCollection $resources){
+        $ids = $resources->getIdTypeResourceStr();
         if(!$ids) return new TypeResourceCollection();
         $req = "SELECT * FROM typeResource WHERE idTypeResource IN (".$ids.");";
         return DbHandler::collFromQuery($req, 'TypeResource', 'TypeResourceCollection');

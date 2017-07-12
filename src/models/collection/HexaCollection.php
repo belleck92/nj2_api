@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -12,9 +12,15 @@ use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\extended\TypeClimate;
+use Fr\Nj2\Api\models\extended\Resource;
+use Fr\Nj2\Api\models\business\ResourceBusiness;
 
 class HexaCollection extends BaseCollection {
 
+    /**
+     * @var ResourceCollection|Resource[]
+     */
+    private $cacheResources = null;
     
     /**
      * @var GameCollection|Game[]
@@ -48,6 +54,52 @@ class HexaCollection extends BaseCollection {
         unset($offset);
         foreach($replaces as $offset=>$hexa) {
             $this->offsetSet($offset, HexaStore::getById($hexa->getId()));
+        }
+    }
+    
+    /**
+     * Renvoie les Resources liés aux Hexas de cette collection
+     * @return ResourceCollection|Resource[]
+     */
+    public function getResources() {
+        if(is_null($this->cacheResources)) {
+            $this->cacheResources = ResourceBusiness::getFromHexas($this);
+            $this->cacheResources->store();
+        }
+        return $this->cacheResources;
+    }
+
+    /**
+    * Force la collection de resources de this
+    * @param ResourceCollection $resources
+    */
+    public function setResources(ResourceCollection $resources)
+    {
+        $this->cacheResources = $resources;
+    }
+
+    /**
+    * Remet à null le cache des resources liés à this
+    */
+    public function resetCacheResources() {
+        $this->cacheResources = null;
+    }
+
+    /**
+    * Distribue les Resources fournis en paramètre à chaque Hexa de la collection si le Resource correspond.
+    * @param ResourceCollection $resources
+    */
+    public function fillResources(ResourceCollection $resources)
+    {
+        foreach($this as $hexa) {/** @var Hexa $hexa */
+            $hexa->resetCacheResources();
+            $coll = new ResourceCollection();
+            $hexa->setResources($coll);
+            foreach($resources as $resource) {
+                if($resource->getIdHexa() == $hexa->getIdHexa()) {
+                    $coll->ajout($resource);
+                }
+            }
         }
     }
     

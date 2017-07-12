@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 
 namespace Fr\Nj2\Api\models;
@@ -234,7 +234,7 @@ class Game implements Bean {
      */
     public function createHexa(){
         $hexa = new extended\Hexa();
-        $hexa->setIdGame($this->getIdGame());
+        $hexa->setIdGameRef($this->idGame);
         return $hexa;
     }
 

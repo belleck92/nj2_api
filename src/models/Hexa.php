@@ -1,14 +1,17 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\collection\ResourceCollection;
+use Fr\Nj2\Api\models\business\ResourceBusiness;
+use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\TypeClimateStore;
 
@@ -64,6 +67,11 @@ class Hexa implements Bean {
      * @var int
      */
     protected $malusConquest = 0;
+
+    /**
+     * @var ResourceCollection|Resource[]
+     */
+    protected $cacheResources = null;
 
     /**
      * @return int
@@ -299,6 +307,15 @@ class Hexa implements Bean {
         return GameStore::getById($this->getIdGame());
     }
 
+    /**
+     * Links the idGame of the Game object
+     * @param int $idGame
+    */
+    public function setIdGameRef(&$idGame)
+    {
+        $this->idGame = $idGame;
+    }
+
 
     /**
      * Renvoie le typeClimate lié
@@ -307,6 +324,53 @@ class Hexa implements Bean {
     public function getTypeClimate()
     {
         return TypeClimateStore::getById($this->getIdTypeClimate());
+    }
+
+    /**
+     * Links the idTypeClimate of the TypeClimate object
+     * @param int $idTypeClimate
+    */
+    public function setIdTypeClimateRef(&$idTypeClimate)
+    {
+        $this->idTypeClimate = $idTypeClimate;
+    }
+
+    /**
+     * Remet à null le cache des resources liés à this
+     */
+    public function resetCacheResources() {
+        $this->cacheResources = null;
+    }
+
+    /**
+    * Force la collection de resources de this
+    * @param ResourceCollection $resources
+    */
+    public function setResources(ResourceCollection $resources)
+    {
+        $this->cacheResources = $resources;
+    }
+
+    /**
+     * Renvoie les resources liés à ce Hexa
+     * @return ResourceCollection|Resource[]
+     */
+    public function getResources() {
+        if(is_null($this->cacheResources)) {
+            $this->cacheResources = ResourceBusiness::getByHexa($this);
+            $this->cacheResources->store();
+        }
+        return $this->cacheResources;
+    }
+
+    /**
+     * Crée un resource lié à ce Hexa
+     * @return extended\Resource
+     */
+    public function createResource(){
+        $resource = new extended\Resource();
+        $resource->setIdHexaRef($this->idHexa);
+        return $resource;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 
 namespace Fr\Nj2\Api\models;
@@ -205,7 +205,7 @@ class TypeClimate implements Bean {
      */
     public function createHexa(){
         $hexa = new extended\Hexa();
-        $hexa->setIdTypeClimate($this->getIdTypeClimate());
+        $hexa->setIdTypeClimateRef($this->idTypeClimate);
         return $hexa;
     }
 
@@ -243,7 +243,7 @@ class TypeClimate implements Bean {
      */
     public function createProbaResourceClimate(){
         $probaResourceClimate = new extended\ProbaResourceClimate();
-        $probaResourceClimate->setIdTypeClimate($this->getIdTypeClimate());
+        $probaResourceClimate->setIdTypeClimateRef($this->idTypeClimate);
         return $probaResourceClimate;
     }
 

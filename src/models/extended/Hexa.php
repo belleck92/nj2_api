@@ -224,10 +224,10 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
             for($i=0;$i<=5;$i++) {
                 if(!is_null($this->getVoisin($i))) $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
             }
+            $ret['resources'] = $this->getResources()->getAsArray();
         }
         return $ret;
     }
-
 
     /**
      * @return boolean

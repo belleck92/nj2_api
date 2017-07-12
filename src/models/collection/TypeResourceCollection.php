@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -10,6 +10,8 @@ use Fr\Nj2\Api\models\store\TypeResourceStore;
 use Fr\Nj2\Api\models\extended\TypeResource;
 use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
 use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
+use Fr\Nj2\Api\models\extended\Resource;
+use Fr\Nj2\Api\models\business\ResourceBusiness;
 
 class TypeResourceCollection extends BaseCollection {
 
@@ -17,6 +19,10 @@ class TypeResourceCollection extends BaseCollection {
      * @var ProbaResourceClimateCollection|ProbaResourceClimate[]
      */
     private $cacheProbaResourceClimates = null;
+    /**
+     * @var ResourceCollection|Resource[]
+     */
+    private $cacheResources = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -84,6 +90,52 @@ class TypeResourceCollection extends BaseCollection {
             foreach($probaResourceClimates as $probaResourceClimate) {
                 if($probaResourceClimate->getIdTypeResource() == $typeResource->getIdTypeResource()) {
                     $coll->ajout($probaResourceClimate);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Renvoie les Resources liés aux TypeResources de cette collection
+     * @return ResourceCollection|Resource[]
+     */
+    public function getResources() {
+        if(is_null($this->cacheResources)) {
+            $this->cacheResources = ResourceBusiness::getFromTypeResources($this);
+            $this->cacheResources->store();
+        }
+        return $this->cacheResources;
+    }
+
+    /**
+    * Force la collection de resources de this
+    * @param ResourceCollection $resources
+    */
+    public function setResources(ResourceCollection $resources)
+    {
+        $this->cacheResources = $resources;
+    }
+
+    /**
+    * Remet à null le cache des resources liés à this
+    */
+    public function resetCacheResources() {
+        $this->cacheResources = null;
+    }
+
+    /**
+    * Distribue les Resources fournis en paramètre à chaque TypeResource de la collection si le Resource correspond.
+    * @param ResourceCollection $resources
+    */
+    public function fillResources(ResourceCollection $resources)
+    {
+        foreach($this as $typeResource) {/** @var TypeResource $typeResource */
+            $typeResource->resetCacheResources();
+            $coll = new ResourceCollection();
+            $typeResource->setResources($coll);
+            foreach($resources as $resource) {
+                if($resource->getIdTypeResource() == $typeResource->getIdTypeResource()) {
+                    $coll->ajout($resource);
                 }
             }
         }

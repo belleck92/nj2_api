@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 
 namespace Fr\Nj2\Api\models;
@@ -12,6 +12,9 @@ use Fr\Nj2\Api\models\business\TypeResourceBusiness;
 use Fr\Nj2\Api\models\collection\ProbaResourceClimateCollection;
 use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
 use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
+use Fr\Nj2\Api\models\collection\ResourceCollection;
+use Fr\Nj2\Api\models\business\ResourceBusiness;
+use Fr\Nj2\Api\models\extended\Resource;
 
 
 class TypeResource implements Bean {
@@ -40,6 +43,11 @@ class TypeResource implements Bean {
      * @var ProbaResourceClimateCollection|ProbaResourceClimate[]
      */
     protected $cacheProbaResourceClimates = null;
+
+    /**
+     * @var ResourceCollection|Resource[]
+     */
+    protected $cacheResources = null;
 
     /**
      * @return int
@@ -139,8 +147,46 @@ class TypeResource implements Bean {
      */
     public function createProbaResourceClimate(){
         $probaResourceClimate = new extended\ProbaResourceClimate();
-        $probaResourceClimate->setIdTypeResource($this->getIdTypeResource());
+        $probaResourceClimate->setIdTypeResourceRef($this->idTypeResource);
         return $probaResourceClimate;
+    }
+
+    /**
+     * Remet à null le cache des resources liés à this
+     */
+    public function resetCacheResources() {
+        $this->cacheResources = null;
+    }
+
+    /**
+    * Force la collection de resources de this
+    * @param ResourceCollection $resources
+    */
+    public function setResources(ResourceCollection $resources)
+    {
+        $this->cacheResources = $resources;
+    }
+
+    /**
+     * Renvoie les resources liés à ce TypeResource
+     * @return ResourceCollection|Resource[]
+     */
+    public function getResources() {
+        if(is_null($this->cacheResources)) {
+            $this->cacheResources = ResourceBusiness::getByTypeResource($this);
+            $this->cacheResources->store();
+        }
+        return $this->cacheResources;
+    }
+
+    /**
+     * Crée un resource lié à ce TypeResource
+     * @return extended\Resource
+     */
+    public function createResource(){
+        $resource = new extended\Resource();
+        $resource->setIdTypeResourceRef($this->idTypeResource);
+        return $resource;
     }
 
     /**

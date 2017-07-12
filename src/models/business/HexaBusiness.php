@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -13,6 +13,7 @@ use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 use Fr\Nj2\Api\models\extended\TypeClimate;
+use Fr\Nj2\Api\models\collection\ResourceCollection;
 
 
 class HexaBusiness extends BaseBusiness {
@@ -95,7 +96,19 @@ class HexaBusiness extends BaseBusiness {
         return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
     }
     
-     /**
+    
+    /**
+     * Renvoie les Hexas liés à une collection de Resources
+     * @param ResourceCollection $resources
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromResources(ResourceCollection $resources){
+        $ids = $resources->getIdHexaStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idHexa IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+ /**
      * Supprime le Hexa en DB
      * @param Hexa $hexa
      */

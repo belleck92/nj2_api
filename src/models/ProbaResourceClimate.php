@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-11
-* Time: 17:29:12
+* Date: 2017-07-12
+* Time: 11:03:33
 */
 
 namespace Fr\Nj2\Api\models;
@@ -133,6 +133,15 @@ class ProbaResourceClimate implements Bean {
         return TypeClimateStore::getById($this->getIdTypeClimate());
     }
 
+    /**
+     * Links the idTypeClimate of the TypeClimate object
+     * @param int $idTypeClimate
+    */
+    public function setIdTypeClimateRef(&$idTypeClimate)
+    {
+        $this->idTypeClimate = $idTypeClimate;
+    }
+
 
     /**
      * Renvoie le typeResource lié
@@ -141,6 +150,15 @@ class ProbaResourceClimate implements Bean {
     public function getTypeResource()
     {
         return TypeResourceStore::getById($this->getIdTypeResource());
+    }
+
+    /**
+     * Links the idTypeResource of the TypeResource object
+     * @param int $idTypeResource
+    */
+    public function setIdTypeResourceRef(&$idTypeResource)
+    {
+        $this->idTypeResource = $idTypeResource;
     }
 
     /**

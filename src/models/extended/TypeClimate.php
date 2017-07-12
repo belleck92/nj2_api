@@ -11,6 +11,7 @@ namespace Fr\Nj2\Api\models\extended;
 use Exception;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 use Fr\Nj2\Api\models\DbHandler;
+use Fr\Nj2\Api\models\store\TypeResourceStore;
 
 class TypeClimate extends \Fr\Nj2\Api\models\TypeClimate
 {
@@ -29,6 +30,11 @@ class TypeClimate extends \Fr\Nj2\Api\models\TypeClimate
      * @var array
      */
     private static $storage;
+
+    /**
+     * @var array
+     */
+    private $cumulativeResourcesProbas;
 
     /**
      * @param string $fctId
@@ -55,5 +61,27 @@ class TypeClimate extends \Fr\Nj2\Api\models\TypeClimate
             $typeClimate->edit($line);
             self::$storage[$typeClimate->getFctId()] = $typeClimate;
         }
+    }
+
+    /**
+     * Randomly determines a resource or nothing for the climate
+     * @return TypeResource
+     */
+    public function determineRandomResource()
+    {
+        $ret = null;
+        if(is_null($this->cumulativeResourcesProbas)) {
+            $prev = 0 ;
+            $this->cumulativeResourcesProbas = [];
+            foreach ($this->getProbaResourceClimates() as $probaResourceClimate) {
+                $prev += $probaResourceClimate->getProba();
+                $this->cumulativeResourcesProbas[$probaResourceClimate->getIdTypeResource()] = $prev;
+            }
+        }
+        $rnd = rand(0,1000000);
+        foreach ($this->cumulativeResourcesProbas as $idTypeResource=>$cumulativeResourcesProba) {
+            if($rnd<$cumulativeResourcesProba) $ret = TypeResourceStore::getById($idTypeResource);
+        }
+        return $ret;
     }
 }

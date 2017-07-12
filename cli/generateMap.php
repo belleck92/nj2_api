@@ -16,6 +16,7 @@ try {
 
     DbHandler::query('TRUNCATE game;');
     DbHandler::query('TRUNCATE hexa;');
+    DbHandler::query('TRUNCATE resource;');
 
 
     $game = new Game();
