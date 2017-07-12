@@ -2,7 +2,7 @@
 /**
  * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
  */
 namespace Fr\Nj2\Api\models;
 
@@ -38,4 +38,14 @@ interface Bean {
      * @param array $data
      */
     public function edit($data);
+
+    /**
+     * @return boolean
+     */
+    public function isExtendedData();
+
+    /**
+     * @param boolean $extendedData
+     */
+    public function setExtendedData($extendedData);
 }

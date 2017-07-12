@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-11
- * Time: 17:23:57
+ * Date: 2017-07-12
+ * Time: 11:44:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -30,6 +30,15 @@ class ProbaResourceClimates extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'typeClimates':
+                    return TypeClimates::filterCollection(ProbaResourceClimateStore::getByIds($segments[0])->getTypeClimates());
+            
+                case 'typeResources':
+                    return TypeResources::filterCollection(ProbaResourceClimateStore::getByIds($segments[0])->getTypeResources());
+            }}
         return parent::get($queryString, $parameters);
     }
 
@@ -57,7 +66,7 @@ class ProbaResourceClimates extends LogicalUnit
             $ret = new ProbaResourceClimateCollection();
             foreach ($queryBody as $probaResourceClimateData) {
                 if (isset($probaResourceClimateData['idProbaResourceClimate'])) continue;
-                
+                if (!isset($probaResourceClimateData['idTypeClimate'])) continue;if (!isset($probaResourceClimateData['idTypeResource'])) continue;
                 if (Right::canWrite($probaResourceClimateData)) {
                     $probaResourceClimate = new ProbaResourceClimate();
                     $probaResourceClimate->edit(Right::writeableFields($probaResourceClimateData));
@@ -66,6 +75,14 @@ class ProbaResourceClimates extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "typeClimates") {
+                $unit = new TypeClimates();
+                $unit->create('', $parameters, $queryBody);
+            }if($segments[1] == "typeResources") {
+                $unit = new TypeResources();
+                $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }

@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-11
- * Time: 17:23:57
+ * Date: 2017-07-12
+ * Time: 11:44:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -30,6 +30,15 @@ class Resources extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'typeResources':
+                    return TypeResources::filterCollection(ResourceStore::getByIds($segments[0])->getTypeResources());
+            
+                case 'hexas':
+                    return Hexas::filterCollection(ResourceStore::getByIds($segments[0])->getHexas());
+            }}
         return parent::get($queryString, $parameters);
     }
 
@@ -57,7 +66,7 @@ class Resources extends LogicalUnit
             $ret = new ResourceCollection();
             foreach ($queryBody as $resourceData) {
                 if (isset($resourceData['idResource'])) continue;
-                
+                if (!isset($resourceData['idTypeResource'])) continue;if (!isset($resourceData['idHexa'])) continue;
                 if (Right::canWrite($resourceData)) {
                     $resource = new Resource();
                     $resource->edit(Right::writeableFields($resourceData));
@@ -66,6 +75,14 @@ class Resources extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "typeResources") {
+                $unit = new TypeResources();
+                $unit->create('', $parameters, $queryBody);
+            }if($segments[1] == "hexas") {
+                $unit = new Hexas();
+                $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }

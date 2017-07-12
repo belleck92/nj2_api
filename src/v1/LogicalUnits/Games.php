@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-11
- * Time: 17:23:57
+ * Date: 2017-07-12
+ * Time: 11:44:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -34,9 +34,8 @@ class Games extends LogicalUnit
         if(count($segments) > 1) {
             switch ($segments[1]) {
                 case 'hexas':
-                return Hexas::filterCollection(GameStore::getByIds($segments[0])->getHexas());
-            }
-        }
+                    return Hexas::filterCollection(GameStore::getByIds($segments[0])->getHexas());
+        }}
         return parent::get($queryString, $parameters);
     }
 

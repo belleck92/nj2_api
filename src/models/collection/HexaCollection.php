@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -59,7 +59,7 @@ class HexaCollection extends BaseCollection {
     
     /**
      * Renvoie les Resources liés aux Hexas de cette collection
-     * @return ResourceCollection|Resource[]
+     * @return ResourceCollection
      */
     public function getResources() {
         if(is_null($this->cacheResources)) {
@@ -95,7 +95,7 @@ class HexaCollection extends BaseCollection {
             $hexa->resetCacheResources();
             $coll = new ResourceCollection();
             $hexa->setResources($coll);
-            foreach($resources as $resource) {
+            foreach($resources as $resource) {/** @var Resource $resource */
                 if($resource->getIdHexa() == $hexa->getIdHexa()) {
                     $coll->ajout($resource);
                 }
@@ -112,7 +112,7 @@ class HexaCollection extends BaseCollection {
 
     /**
      * Renvoie les Games liés aux Hexas de cette collection
-     * @return GameCollection|Game[]
+     * @return GameCollection
      */
     public function getGames(){
         if(is_null($this->cacheGames)) {
@@ -146,7 +146,7 @@ class HexaCollection extends BaseCollection {
 
     /**
      * Renvoie les TypeClimates liés aux Hexas de cette collection
-     * @return TypeClimateCollection|TypeClimate[]
+     * @return TypeClimateCollection
      */
     public function getTypeClimates(){
         if(is_null($this->cacheTypeClimates)) {
@@ -178,6 +178,6 @@ class HexaCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

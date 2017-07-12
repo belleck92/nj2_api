@@ -31,11 +31,6 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     private $temperature = 0;
 
     /**
-     * @var bool
-     */
-    private $extendedData = false;
-
-    /**
      * @return int
      */
     public function getVegetation()
@@ -227,21 +222,5 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
             $ret['resources'] = $this->getResources()->getAsArray();
         }
         return $ret;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isExtendedData()
-    {
-        return $this->extendedData;
-    }
-
-    /**
-     * @param boolean $extendedData
-     */
-    public function setExtendedData($extendedData)
-    {
-        $this->extendedData = $extendedData;
     }
 }

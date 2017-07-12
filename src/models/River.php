@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 
 namespace Fr\Nj2\Api\models;
@@ -32,6 +32,11 @@ class River implements Bean {
      * @var bool
      */
     protected $ford = false;
+
+    /**
+     * @var bool
+     */
+    protected $extendedData = false;
 
     /**
      * @return int
@@ -168,5 +173,21 @@ class River implements Bean {
             $method = 'set'.BaseBusiness::lowerToUpperCamelCase($field);
             $this->$method($val);
         }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExtendedData()
+    {
+        return $this->extendedData;
+    }
+
+    /**
+     * @param boolean $extendedData
+     */
+    public function setExtendedData($extendedData)
+    {
+        $this->extendedData = $extendedData;
     }
 }

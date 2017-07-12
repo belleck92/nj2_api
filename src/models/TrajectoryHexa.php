@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 
 namespace Fr\Nj2\Api\models;
@@ -32,6 +32,11 @@ class TrajectoryHexa implements Bean {
      * @var int
      */
     protected $rank = 0;
+
+    /**
+     * @var bool
+     */
+    protected $extendedData = false;
 
     /**
      * @return int
@@ -176,5 +181,21 @@ class TrajectoryHexa implements Bean {
             $method = 'set'.BaseBusiness::lowerToUpperCamelCase($field);
             $this->$method($val);
         }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExtendedData()
+    {
+        return $this->extendedData;
+    }
+
+    /**
+     * @param boolean $extendedData
+     */
+    public function setExtendedData($extendedData)
+    {
+        $this->extendedData = $extendedData;
     }
 }

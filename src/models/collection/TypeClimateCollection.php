@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -51,7 +51,7 @@ class TypeClimateCollection extends BaseCollection {
     
     /**
      * Renvoie les Hexas liés aux TypeClimates de cette collection
-     * @return HexaCollection|Hexa[]
+     * @return HexaCollection
      */
     public function getHexas() {
         if(is_null($this->cacheHexas)) {
@@ -87,7 +87,7 @@ class TypeClimateCollection extends BaseCollection {
             $typeClimate->resetCacheHexas();
             $coll = new HexaCollection();
             $typeClimate->setHexas($coll);
-            foreach($hexas as $hexa) {
+            foreach($hexas as $hexa) {/** @var Hexa $hexa */
                 if($hexa->getIdTypeClimate() == $typeClimate->getIdTypeClimate()) {
                     $coll->ajout($hexa);
                 }
@@ -97,7 +97,7 @@ class TypeClimateCollection extends BaseCollection {
     
     /**
      * Renvoie les ProbaResourceClimates liés aux TypeClimates de cette collection
-     * @return ProbaResourceClimateCollection|ProbaResourceClimate[]
+     * @return ProbaResourceClimateCollection
      */
     public function getProbaResourceClimates() {
         if(is_null($this->cacheProbaResourceClimates)) {
@@ -133,7 +133,7 @@ class TypeClimateCollection extends BaseCollection {
             $typeClimate->resetCacheProbaResourceClimates();
             $coll = new ProbaResourceClimateCollection();
             $typeClimate->setProbaResourceClimates($coll);
-            foreach($probaResourceClimates as $probaResourceClimate) {
+            foreach($probaResourceClimates as $probaResourceClimate) {/** @var ProbaResourceClimate $probaResourceClimate */
                 if($probaResourceClimate->getIdTypeClimate() == $typeClimate->getIdTypeClimate()) {
                     $coll->ajout($probaResourceClimate);
                 }
@@ -148,6 +148,6 @@ class TypeClimateCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

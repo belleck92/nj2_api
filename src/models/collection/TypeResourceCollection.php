@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -51,7 +51,7 @@ class TypeResourceCollection extends BaseCollection {
     
     /**
      * Renvoie les ProbaResourceClimates liés aux TypeResources de cette collection
-     * @return ProbaResourceClimateCollection|ProbaResourceClimate[]
+     * @return ProbaResourceClimateCollection
      */
     public function getProbaResourceClimates() {
         if(is_null($this->cacheProbaResourceClimates)) {
@@ -87,7 +87,7 @@ class TypeResourceCollection extends BaseCollection {
             $typeResource->resetCacheProbaResourceClimates();
             $coll = new ProbaResourceClimateCollection();
             $typeResource->setProbaResourceClimates($coll);
-            foreach($probaResourceClimates as $probaResourceClimate) {
+            foreach($probaResourceClimates as $probaResourceClimate) {/** @var ProbaResourceClimate $probaResourceClimate */
                 if($probaResourceClimate->getIdTypeResource() == $typeResource->getIdTypeResource()) {
                     $coll->ajout($probaResourceClimate);
                 }
@@ -97,7 +97,7 @@ class TypeResourceCollection extends BaseCollection {
     
     /**
      * Renvoie les Resources liés aux TypeResources de cette collection
-     * @return ResourceCollection|Resource[]
+     * @return ResourceCollection
      */
     public function getResources() {
         if(is_null($this->cacheResources)) {
@@ -133,7 +133,7 @@ class TypeResourceCollection extends BaseCollection {
             $typeResource->resetCacheResources();
             $coll = new ResourceCollection();
             $typeResource->setResources($coll);
-            foreach($resources as $resource) {
+            foreach($resources as $resource) {/** @var Resource $resource */
                 if($resource->getIdTypeResource() == $typeResource->getIdTypeResource()) {
                     $coll->ajout($resource);
                 }
@@ -148,6 +148,6 @@ class TypeResourceCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

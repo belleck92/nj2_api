@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -44,6 +44,6 @@ class TypeHqCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

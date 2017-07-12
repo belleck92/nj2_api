@@ -15,6 +15,7 @@ use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\extended\Hexa;
+use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\HexaStore;
 use Fr\Nj2\Api\models\store\TypeClimateStore;
@@ -122,6 +123,11 @@ class Map extends LogicalUnit
         }
 
         $this->buildHexas();
+        $resources = $this->hexas->getResources();
+        foreach($resources as $res) {/** @var Resource $res */
+            $res->setExtendedData(true);
+        }
+        $this->hexas->fillResources($resources);
 
         $ret = ['squares'=>Hexas::filterCollection($this->hexas)];
 

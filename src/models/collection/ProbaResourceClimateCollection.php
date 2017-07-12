@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -60,7 +60,7 @@ class ProbaResourceClimateCollection extends BaseCollection {
 
     /**
      * Renvoie les TypeClimates liés aux ProbaResourceClimates de cette collection
-     * @return TypeClimateCollection|TypeClimate[]
+     * @return TypeClimateCollection
      */
     public function getTypeClimates(){
         if(is_null($this->cacheTypeClimates)) {
@@ -94,7 +94,7 @@ class ProbaResourceClimateCollection extends BaseCollection {
 
     /**
      * Renvoie les TypeResources liés aux ProbaResourceClimates de cette collection
-     * @return TypeResourceCollection|TypeResource[]
+     * @return TypeResourceCollection
      */
     public function getTypeResources(){
         if(is_null($this->cacheTypeResources)) {
@@ -126,6 +126,6 @@ class ProbaResourceClimateCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

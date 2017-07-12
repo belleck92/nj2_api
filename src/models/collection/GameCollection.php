@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -45,7 +45,7 @@ class GameCollection extends BaseCollection {
     
     /**
      * Renvoie les Hexas liés aux Games de cette collection
-     * @return HexaCollection|Hexa[]
+     * @return HexaCollection
      */
     public function getHexas() {
         if(is_null($this->cacheHexas)) {
@@ -81,7 +81,7 @@ class GameCollection extends BaseCollection {
             $game->resetCacheHexas();
             $coll = new HexaCollection();
             $game->setHexas($coll);
-            foreach($hexas as $hexa) {
+            foreach($hexas as $hexa) {/** @var Hexa $hexa */
                 if($hexa->getIdGame() == $game->getIdGame()) {
                     $coll->ajout($hexa);
                 }
@@ -96,6 +96,6 @@ class GameCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

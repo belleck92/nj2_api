@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-11
- * Time: 17:23:57
+ * Date: 2017-07-12
+ * Time: 11:44:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -34,9 +34,11 @@ class TypeClimates extends LogicalUnit
         if(count($segments) > 1) {
             switch ($segments[1]) {
                 case 'hexas':
-                return Hexas::filterCollection(TypeClimateStore::getByIds($segments[0])->getHexas());
-            }
-        }
+                    return Hexas::filterCollection(TypeClimateStore::getByIds($segments[0])->getHexas());
+        
+                case 'probaResourceClimates':
+                    return ProbaResourceClimates::filterCollection(TypeClimateStore::getByIds($segments[0])->getProbaResourceClimates());
+        }}
         return parent::get($queryString, $parameters);
     }
 
@@ -80,6 +82,15 @@ class TypeClimates extends LogicalUnit
                     $hexa['idTypeClimate'] = $segments[0];
                 }
                 $unit = new Hexas();
+                return $unit->create('', $parameters, $queryBody);
+            }
+
+            
+            if($segments[1] == "probaResourceClimates") {
+                foreach ($queryBody as &$probaResourceClimate) {
+                    $probaResourceClimate['idTypeClimate'] = $segments[0];
+                }
+                $unit = new ProbaResourceClimates();
                 return $unit->create('', $parameters, $queryBody);
             }
 

@@ -2,7 +2,7 @@
 /**
 * Created by Manu
 * Date: 2017-07-12
-* Time: 11:03:33
+* Time: 12:12:19
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -60,7 +60,7 @@ class ResourceCollection extends BaseCollection {
 
     /**
      * Renvoie les TypeResources liés aux Resources de cette collection
-     * @return TypeResourceCollection|TypeResource[]
+     * @return TypeResourceCollection
      */
     public function getTypeResources(){
         if(is_null($this->cacheTypeResources)) {
@@ -94,7 +94,7 @@ class ResourceCollection extends BaseCollection {
 
     /**
      * Renvoie les Hexas liés aux Resources de cette collection
-     * @return HexaCollection|Hexa[]
+     * @return HexaCollection
      */
     public function getHexas(){
         if(is_null($this->cacheHexas)) {
@@ -126,6 +126,6 @@ class ResourceCollection extends BaseCollection {
      */
     public function offsetGet($index)
     {
-        parent::offsetGet($index);
+        return parent::offsetGet($index);
     }
 }

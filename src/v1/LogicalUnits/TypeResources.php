@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-11
- * Time: 17:23:57
+ * Date: 2017-07-12
+ * Time: 11:44:57
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -30,6 +30,15 @@ class TypeResources extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'probaResourceClimates':
+                    return ProbaResourceClimates::filterCollection(TypeResourceStore::getByIds($segments[0])->getProbaResourceClimates());
+        
+                case 'resources':
+                    return Resources::filterCollection(TypeResourceStore::getByIds($segments[0])->getResources());
+        }}
         return parent::get($queryString, $parameters);
     }
 
@@ -66,6 +75,26 @@ class TypeResources extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            
+            if($segments[1] == "probaResourceClimates") {
+                foreach ($queryBody as &$probaResourceClimate) {
+                    $probaResourceClimate['idTypeResource'] = $segments[0];
+                }
+                $unit = new ProbaResourceClimates();
+                return $unit->create('', $parameters, $queryBody);
+            }
+
+            
+            if($segments[1] == "resources") {
+                foreach ($queryBody as &$resource) {
+                    $resource['idTypeResource'] = $segments[0];
+                }
+                $unit = new Resources();
+                return $unit->create('', $parameters, $queryBody);
+            }
+
+            
         }
         return [];
     }
