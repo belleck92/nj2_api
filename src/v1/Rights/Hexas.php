@@ -39,6 +39,8 @@ class Hexas extends Right
             ,'idNeighbor4'
             ,'idNeighbor5'
             ,'resources'
+            ,'foodProduction'
+            ,'defenseBonus'
         ]));
     }
 
@@ -68,6 +70,8 @@ class Hexas extends Right
             ,'idNeighbor4'
             ,'idNeighbor5'
             ,'resources'
+            ,'foodProduction'
+            ,'defenseBonus'
         ]));
     }
 

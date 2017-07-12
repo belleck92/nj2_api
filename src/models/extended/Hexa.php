@@ -155,6 +155,23 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     }
 
     /**
+     * Food produced at the nex turn resolution
+     * @return int
+     */
+    public function foodProduction()
+    {
+        return $this->getTypeClimate()->getFood();
+    }
+
+    /**
+     * @return int In percent
+     */
+    public function defenseBonus()
+    {
+        return $this->getTypeClimate()->getDefenseBonus();
+    }
+
+    /**
      * Renvoie le x et le y du voisin demandé par rapport à un x et un y. Coordonnées pures, sans correction de bords
      * @param int $xBase
      * @param int $yBase
@@ -220,6 +237,8 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
                 if(!is_null($this->getVoisin($i))) $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
             }
             $ret['resources'] = $this->getResources()->getAsArray();
+            $ret['foodProduction'] = $this->foodProduction();
+            $ret['defenseBonus'] = $this->defenseBonus();
         }
         return $ret;
     }
