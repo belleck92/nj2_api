@@ -8,8 +8,10 @@
 
 namespace Fr\Nj2\Api\models\extended;
 
+use Fr\Nj2\Api\mapGeneration\Dot;
 use Fr\Nj2\Api\mapGeneration\Germe;
 use Fr\Nj2\Api\mapGeneration\GermeForet;
+use Fr\Nj2\Api\mapGeneration\Line;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\business\TypeResourceBusiness;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
@@ -113,6 +115,16 @@ class Game extends \Fr\Nj2\Api\models\Game
     private $allResources;
 
     /**
+     * @var Dot(]
+     */
+    private $dots = [];
+
+    /**
+     * @var Line[]
+     */
+    private $lines = [];
+
+    /**
      * Génère entièrement la carte
      */
     public function genererHexas() {
@@ -122,9 +134,10 @@ class Game extends \Fr\Nj2\Api\models\Game
         $this->cotesEnDentelle();
         $this->erosionMontagnes();
         $this->genererTemperatures();
-        //$this->creerRivieres();
+        $this->creerRivieres();
         $this->genererVegetation();
         $this->genererRessources();
+
         foreach($this->getHexas() as $hexa) {
             $hexa->save();
         }
@@ -297,56 +310,137 @@ class Game extends \Fr\Nj2\Api\models\Game
      */
     public function creerRivieres()
     {
-        mt_srand($this->getRandRivieres());
+        foreach($this->getHexas() as $hexa) {
 
-        // Création d'une grille de frontières avec voisinages de proche en proche
-        $frontieres = $this->getHexas()->getFrontieres();
-        $frontieres->uasort('fr\\gilman\\nj\\common\\bb\\collection\\FrontiereCollection::triParHauteur');
-
-        // Création des sources de rivières
-        $sources = new RiviereCollection();
-        $rivieres = new RiviereCollection();
-        $index = 0;
-        foreach($frontieres as $frontiere) {/** @var Frontiere $frontiere */
-            if($frontiere->bordDeMer()) break;
-            $proba = (1/40) * ($frontiere->getHauteur()/15);
-            if(mt_rand()/mt_getrandmax()<=$proba) {
-                $riviere = new Riviere();
-                $riviere->setSource($frontiere->getIndex());
-                $riviere->setFrontiere($frontiere);
-                $sources->ajout($riviere);
-                $rivieres->ajout($riviere);
-                $index++;
-            }
-        }
-
-        // Faire couler les rivieres
-        foreach($sources as $index=>$source) {/** @var Riviere $source */
-            /** @var Frontiere $prochain */
-            $frontiereCourante = $source->getFrontiere();
-            $coule = true;
-            $precedent = null;
-            while($coule) {
-                $prochain = $frontiereCourante->prochainCoulage();
-                if(!is_null($prochain)) {
-                    // La rivière se jette dans un fleuve
-                    if(!is_null($prochain->getRiviere()) && $prochain->getRiviere()->getSource() != $frontiereCourante->getRiviere()->getSource()) break;
-
-                    $riviere = new Riviere();
-                    $riviere->setSource($source->getFrontiere()->getIndex());
-                    $riviere->setFrontiere($prochain);
-                    if(rand(1,10) == 1) $riviere->setGue(1);
-                    $rivieres->ajout($riviere);
-                    $frontiereCourante = $prochain;
-
-                    // La rivière se jette dans la mer
-                    if($prochain->bordDeMer()) $coule = false;
-                } else {
-                    $coule = false;
+            /*
+             * Dots creation
+             */
+            if(!isset($hexa->dots[0])) {
+                $dot = new Dot();
+                if(!is_null($hexa->getVoisin(1))) {
+                    $hexa->getVoisin(1)->dots[3] = $dot;
                 }
+                $hexa->dots[0] = $dot;
+                $hexa->getVoisin(0)->dots[2] = $dot;
+                $this->dots[] = $dot;
+            }
+            if(!isset($hexa->dots[1]) && !is_null($hexa->getVoisin(1)) && !is_null($hexa->getVoisin(2))) {
+                $dot = new Dot();
+                $hexa->dots[1] = $dot;
+                $hexa->getVoisin(1)->dots[3] = $dot;
+                $hexa->getVoisin(2)->dots[5] = $dot;
+                $this->dots[] = $dot;
+            }
+            if(!isset($hexa->dots[2])) {
+                $dot = new Dot();
+                $hexa->dots[2] = $dot;
+                $hexa->getVoisin(2)->dots[4] = $dot;
+                $hexa->getVoisin(3)->dots[0] = $dot;
+                $this->dots[] = $dot;
+            }
+            if(!isset($hexa->dots[3])) {
+                $dot = new Dot();
+                $hexa->dots[3] = $dot;
+                $hexa->getVoisin(3)->dots[5] = $dot;
+                if(!is_null($hexa->getVoisin(4))) {
+                    $hexa->getVoisin(4)->dots[1] = $dot;
+                }
+                $this->dots[] = $dot;
+            }
+            if(!isset($hexa->dots[4]) && !is_null($hexa->getVoisin(4)) && !is_null($hexa->getVoisin(5))) {
+                $dot = new Dot();
+                $hexa->dots[4] = $dot;
+                $hexa->getVoisin(4)->dots[0] = $dot;
+                $hexa->getVoisin(5)->dots[2] = $dot;
+                $this->dots[] = $dot;
+            }
+            if(!isset($hexa->dots[5])) {
+                $dot = new Dot();
+                $hexa->dots[5] = $dot;
+                $hexa->getVoisin(0)->dots[3] = $dot;
+                if(!is_null($hexa->getVoisin(5))) {
+                    $hexa->getVoisin(5)->dots[1] = $dot;
+                }
+                $this->dots[] = $dot;
+            }
+
+            /*
+             * Lines creation
+             */
+            if(!isset($hexa->lines[0])) {
+                $line = new Line();
+                $hexa->lines[0] = $line;
+                $hexa->getVoisin(0)->lines[3] = $line;
+                $line->setDot0($hexa->dots[0]);
+                $line->setDot1($hexa->dots[5]);
+                $line->setHexa0($hexa->getVoisin(0));
+                $line->setHexa1($hexa);
+                $this->lines[] = $line;
+                $hexa->dots[0]->setLine2($line);
+                $hexa->dots[5]->setLine0($line);
+            }
+            if(!isset($hexa->lines[1]) && !is_null($hexa->getVoisin(1))) {
+                $line = new Line();
+                $hexa->lines[1] = $line;
+                if(!is_null($hexa->getVoisin(1))) $hexa->getVoisin(1)->lines[4] = $line;
+                $line->setDot0($hexa->dots[1]);
+                $line->setDot1($hexa->dots[0]);
+                if(!is_null($hexa->getVoisin(1))) $line->setHexa0($hexa->getVoisin(1));
+                $line->setHexa1($hexa);
+                $this->lines[] = $line;
+                $hexa->dots[0]->setLine1($line);
+                $hexa->dots[1]->setLine2($line);
+            }
+            if(!isset($hexa->lines[2]) && !is_null($hexa->getVoisin(2))) {
+                $line = new Line();
+                $hexa->lines[2] = $line;
+                if(!is_null($hexa->getVoisin(2))) $hexa->getVoisin(2)->lines[5] = $line;
+                $line->setDot0($hexa->dots[1]);
+                $line->setDot1($hexa->dots[2]);
+                if(!is_null($hexa->getVoisin(2))) $line->setHexa0($hexa->getVoisin(2));
+                $line->setHexa1($hexa);
+                $this->lines[] = $line;
+                $hexa->dots[1]->setLine1($line);
+                $hexa->dots[2]->setLine0($line);
+            }
+            if(!isset($hexa->lines[3])) {
+                $line = new Line();
+                $hexa->lines[3] = $line;
+                $hexa->getVoisin(3)->lines[0] = $line;
+                $line->setDot0($hexa->dots[2]);
+                $line->setDot1($hexa->dots[3]);
+                $line->setHexa0($hexa);
+                $line->setHexa1($hexa->getVoisin(3));
+                $this->lines[] = $line;
+                $hexa->dots[2]->setLine2($line);
+                $hexa->dots[3]->setLine0($line);
+            }
+            if(!isset($hexa->lines[4]) && !is_null($hexa->getVoisin(4))) {
+                $line = new Line();
+                $hexa->lines[4] = $line;
+                if(!is_null($hexa->getVoisin(4))) $hexa->getVoisin(4)->lines[1] = $line;
+                $line->setDot0($hexa->dots[3]);
+                $line->setDot1($hexa->dots[4]);
+                if(!is_null($hexa->getVoisin(4))) $line->setHexa0($hexa->getVoisin(4));
+                $line->setHexa1($hexa);
+                $this->lines[] = $line;
+                $hexa->dots[3]->setLine2($line);
+                $hexa->dots[4]->setLine1($line);
+            }
+            if(!isset($hexa->lines[5]) && !is_null($hexa->getVoisin(5))) {
+                $line = new Line();
+                $hexa->lines[5] = $line;
+                if(!is_null($hexa->getVoisin(5))) $hexa->getVoisin(5)->lines[2] = $line;
+                $line->setDot0($hexa->dots[5]);
+                $line->setDot1($hexa->dots[4]);
+                if(!is_null($hexa->getVoisin(5))) $line->setHexa0($hexa->getVoisin(5));
+                $line->setHexa1($hexa);
+                $this->lines[] = $line;
+                $hexa->dots[4]->setLine0($line);
+                $hexa->dots[5]->setLine1($line);
             }
         }
-        $rivieres->save();
+       foreach ($this->dots as $dot) echo $dot."\n";
     }
 
     /**

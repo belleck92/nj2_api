@@ -8,6 +8,8 @@
 
 namespace Fr\Nj2\Api\models\extended;
 
+use Fr\Nj2\Api\mapGeneration\Dot;
+use Fr\Nj2\Api\mapGeneration\Line;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 
 class Hexa extends \Fr\Nj2\Api\models\Hexa
@@ -29,6 +31,16 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
      * @var int
      */
     private $temperature = 0;
+
+    /**
+     * @var Dot[]
+     */
+    public $dots = [];
+
+    /**
+     * @var Line[]
+     */
+    public $lines = [];
 
     /**
      * @return int
@@ -242,4 +254,6 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
         }
         return $ret;
     }
+
+
 }
