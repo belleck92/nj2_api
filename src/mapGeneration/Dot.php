@@ -48,6 +48,27 @@ class Dot
     }
 
     /**
+     * @return bool
+     */
+    public function has3Lines()
+    {
+        return !is_null($this->line0) && !is_null($this->line1) && !is_null($this->line2);
+    }
+
+    /**
+     * Tells if the dot is at a coastline and has a line in land
+     * @return true
+     */
+    public function canBeginRiver()
+    {
+        $total = 0;
+        if($this->line0->riverCanFlow()) $total++;
+        if($this->line1->riverCanFlow()) $total++;
+        if($this->line2->riverCanFlow()) $total++;
+        return $this->has3Lines() && $total == 1;
+    }
+
+    /**
      * @return Line
      */
     public function getLine0()

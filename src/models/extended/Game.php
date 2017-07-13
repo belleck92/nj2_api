@@ -440,7 +440,8 @@ class Game extends \Fr\Nj2\Api\models\Game
                 $hexa->dots[5]->setLine1($line);
             }
         }
-       foreach ($this->dots as $dot) echo $dot."\n";
+       //foreach ($this->dots as $dot) echo $dot."\n";
+        
     }
 
     /**
