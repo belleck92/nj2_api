@@ -167,6 +167,25 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     }
 
     /**
+     * Dit quel est l'angle de voisinage de la case demandée
+     * @param Hexa $hexa
+     * @return int ou null si la case n'est pas voisine de this
+     */
+    public function quelVoisin(Hexa $hexa)
+    {
+        $voisins = array();
+        for($angle = 0;$angle<=5;$angle++) {
+            $coords = self::getCoordsVoisins($this->getX(),$this->getY(),$angle);
+            $coords = $this->getGame()->coordsCorrigees($coords[0],$coords[1]);
+            if(!is_null($coords)) {
+                $voisins[$coords[0].'_'.$coords[1]] = $angle;
+            }
+        }
+        if(isset($voisins[$hexa->getX().'_'.$hexa->getY()])) return $voisins[$hexa->getX().'_'.$hexa->getY()];
+        return null;
+    }
+
+    /**
      * Food produced at the nex turn resolution
      * @return int
      */
@@ -248,6 +267,7 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
             for($i=0;$i<=5;$i++) {
                 if(!is_null($this->getVoisin($i))) $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
             }
+            $ret['rivers'] = $this->getRivers()->getAsArray();
             $ret['resources'] = $this->getResources()->getAsArray();
             $ret['foodProduction'] = $this->foodProduction();
             $ret['defenseBonus'] = $this->defenseBonus();

@@ -17,7 +17,7 @@ try {
     DbHandler::query('TRUNCATE game;');
     DbHandler::query('TRUNCATE hexa;');
     DbHandler::query('TRUNCATE resource;');
-
+    DbHandler::query('TRUNCATE river;');
 
     $game = new Game();
     $game->setWidth(30);

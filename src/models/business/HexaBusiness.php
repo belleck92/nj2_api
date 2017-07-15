@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-12
-* Time: 12:12:19
+* Date: 2017-07-14
+* Time: 11:44:36
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -14,6 +14,7 @@ use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
+use Fr\Nj2\Api\models\collection\RiverCollection;
 
 
 class HexaBusiness extends BaseBusiness {
@@ -104,6 +105,18 @@ class HexaBusiness extends BaseBusiness {
      */
     public static function getFromResources(ResourceCollection $resources){
         $ids = $resources->getIdHexaStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idHexa IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+
+    /**
+     * Renvoie les Hexas liés à une collection de Rivers
+     * @param RiverCollection $rivers
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromRivers(RiverCollection $rivers){
+        $ids = $rivers->getIdHexaStr();
         if(!$ids) return new HexaCollection();
         $req = "SELECT * FROM hexa WHERE idHexa IN (".$ids.");";
         return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');

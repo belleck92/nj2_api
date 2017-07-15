@@ -35,10 +35,11 @@ class Hexas extends Right
             ,'idNeighbor0'
             ,'idNeighbor1'
             ,'idNeighbor2'
-            ,'idNeighbor3'
+            ,'idNeighbor3' 
             ,'idNeighbor4'
             ,'idNeighbor5'
             ,'resources'
+            ,'rivers'
             ,'foodProduction'
             ,'defenseBonus'
         ]));
@@ -70,6 +71,7 @@ class Hexas extends Right
             ,'idNeighbor4'
             ,'idNeighbor5'
             ,'resources'
+            ,'rivers'
             ,'foodProduction'
             ,'defenseBonus'
         ]));

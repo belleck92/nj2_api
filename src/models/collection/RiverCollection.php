@@ -1,16 +1,23 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-12
-* Time: 12:12:19
+* Date: 2017-07-14
+* Time: 11:44:36
 */
 namespace Fr\Nj2\Api\models\collection;
 
 use Fr\Nj2\Api\models\store\RiverStore;
 use Fr\Nj2\Api\models\extended\River;
+use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\Hexa;
 
 class RiverCollection extends BaseCollection {
 
+    
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    private $cacheHexas = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -35,6 +42,40 @@ class RiverCollection extends BaseCollection {
         foreach($replaces as $offset=>$river) {
             $this->offsetSet($offset, RiverStore::getById($river->getId()));
         }
+    }
+    
+    /**
+     * Remet à null le cache des Hexas liés à la collection
+     */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+     * Renvoie les Hexas liés aux Rivers de cette collection
+     * @return HexaCollection
+     */
+    public function getHexas(){
+        if(is_null($this->cacheHexas)) {
+        $this->cacheHexas = HexaBusiness::getFromRivers($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+       
+    /**
+     * Renvoie une chaîne d'idHexa de la collection
+     * @return string
+     */  
+    public function getIdHexaStr() {
+        $ret = '';
+        $prem = true;
+        foreach($this as $river) {
+            if(!$prem) $ret .=',';
+            $prem = false;
+            $ret .= $river->getIdHexa();
+        }
+        return $ret;
     }
     
 

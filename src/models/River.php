@@ -1,14 +1,15 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-12
-* Time: 12:12:19
+* Date: 2017-07-14
+* Time: 11:44:36
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\RiverBusiness;
+use Fr\Nj2\Api\models\store\HexaStore;
 
 
 class River implements Bean {
@@ -118,6 +119,25 @@ class River implements Bean {
         $this->ford = $ford;
     }
     
+
+    /**
+     * Renvoie le hexa lié
+     * @return extended\Hexa
+     */
+    public function getHexa()
+    {
+        return HexaStore::getById($this->getIdHexa());
+    }
+
+    /**
+     * Links the idHexa of the Hexa object
+     * @param int $idHexa
+    */
+    public function setIdHexaRef(&$idHexa)
+    {
+        $this->idHexa = $idHexa;
+    }
+
     /**
      * @return void
      */

@@ -8,6 +8,7 @@
 
 namespace Fr\Nj2\Api\models\extended;
 
+use Exception;
 use Fr\Nj2\Api\mapGeneration\Dot;
 use Fr\Nj2\Api\mapGeneration\Germe;
 use Fr\Nj2\Api\mapGeneration\GermeForet;
@@ -115,7 +116,7 @@ class Game extends \Fr\Nj2\Api\models\Game
     private $allResources;
 
     /**
-     * @var Dot(]
+     * @var Dot[]
      */
     private $dots = [];
 
@@ -440,7 +441,42 @@ class Game extends \Fr\Nj2\Api\models\Game
                 $hexa->dots[5]->setLine1($line);
             }
         }
-       //foreach ($this->dots as $dot) echo $dot."\n";
+
+        /*
+         * Get beginning of rivers
+         */
+        $beginingCandidates = [];
+        foreach($this->dots as $index=>$dot) {
+            if(is_null($dot)) echo $index."\n";
+        }
+        foreach ($this->dots as $dot) {
+            if($dot->canBeginRiver()) $beginingCandidates[] = $dot;
+        }
+        if(!count($beginingCandidates)) throw new Exception("No dots candidates to begin a river");
+        $indexes = array_rand($beginingCandidates, max(round(count($beginingCandidates)/10), 1));
+        $beginningDots = array_intersect_key($beginingCandidates, array_flip($indexes));
+        
+        /*
+         * Trace main rivers
+         */
+        foreach ($beginningDots as $beginningDot) {/** @var Dot $beginningDot */
+            $beginningDot->traceRiver();
+        }
+
+        /*
+         * Save data
+         */
+        foreach ($this->lines as $line) {
+            if($line->isRiver()) {
+                $river = $line->getHexa0()->createRiver();
+                $river->setSide($line->getHexa0()->quelVoisin($line->getHexa1()));
+                $river->save();
+                $river = $line->getHexa1()->createRiver();
+                $river->setSide($line->getHexa1()->quelVoisin($line->getHexa0()));
+                $river->save();
+            }
+            echo $line."\n";
+        }
         
     }
 

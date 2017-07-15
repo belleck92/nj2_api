@@ -14,6 +14,11 @@ use Fr\Nj2\Api\models\extended\Hexa;
 class Line
 {
     /**
+     * @var string
+     */
+    private $id;
+
+    /**
      * @var Hexa
      */
     private $hexa0;
@@ -32,6 +37,19 @@ class Line
      * @var Dot
      */
     private $dot1;
+
+    /**
+     * @var bool
+     */
+    private $river = false;
+
+    /**
+     * Line constructor.
+     */
+    public function __construct()
+    {
+        $this->id = md5(rand(1,1000000).microtime(true));
+    }
 
     /**
      * @return float
@@ -135,8 +153,36 @@ class Line
             if($ret) $ret .= ',';
             $ret .= 'h1:'.$this->hexa1->getId();
         }
+        if($this->river) {
+
+            if($ret) $ret .= ',';
+            $ret .= 'Riv';
+}
         return $ret;
     }
 
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRiver()
+    {
+        return $this->river;
+    }
+
+    /**
+     * @param boolean $river
+     */
+    public function setRiver($river)
+    {
+        $this->river = $river;
+    }
 
 }

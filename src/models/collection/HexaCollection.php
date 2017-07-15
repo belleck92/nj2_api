@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-12
-* Time: 12:12:19
+* Date: 2017-07-14
+* Time: 11:44:36
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -14,6 +14,8 @@ use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
+use Fr\Nj2\Api\models\extended\River;
+use Fr\Nj2\Api\models\business\RiverBusiness;
 
 class HexaCollection extends BaseCollection {
 
@@ -21,6 +23,10 @@ class HexaCollection extends BaseCollection {
      * @var ResourceCollection|Resource[]
      */
     private $cacheResources = null;
+    /**
+     * @var RiverCollection|River[]
+     */
+    private $cacheRivers = null;
     
     /**
      * @var GameCollection|Game[]
@@ -98,6 +104,52 @@ class HexaCollection extends BaseCollection {
             foreach($resources as $resource) {/** @var Resource $resource */
                 if($resource->getIdHexa() == $hexa->getIdHexa()) {
                     $coll->ajout($resource);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Renvoie les Rivers liés aux Hexas de cette collection
+     * @return RiverCollection
+     */
+    public function getRivers() {
+        if(is_null($this->cacheRivers)) {
+            $this->cacheRivers = RiverBusiness::getFromHexas($this);
+            $this->cacheRivers->store();
+        }
+        return $this->cacheRivers;
+    }
+
+    /**
+    * Force la collection de rivers de this
+    * @param RiverCollection $rivers
+    */
+    public function setRivers(RiverCollection $rivers)
+    {
+        $this->cacheRivers = $rivers;
+    }
+
+    /**
+    * Remet à null le cache des rivers liés à this
+    */
+    public function resetCacheRivers() {
+        $this->cacheRivers = null;
+    }
+
+    /**
+    * Distribue les Rivers fournis en paramètre à chaque Hexa de la collection si le River correspond.
+    * @param RiverCollection $rivers
+    */
+    public function fillRivers(RiverCollection $rivers)
+    {
+        foreach($this as $hexa) {/** @var Hexa $hexa */
+            $hexa->resetCacheRivers();
+            $coll = new RiverCollection();
+            $hexa->setRivers($coll);
+            foreach($rivers as $river) {/** @var River $river */
+                if($river->getIdHexa() == $hexa->getIdHexa()) {
+                    $coll->ajout($river);
                 }
             }
         }

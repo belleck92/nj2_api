@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-12
-* Time: 12:12:19
+* Date: 2017-07-14
+* Time: 11:44:36
 */
 
 namespace Fr\Nj2\Api\models;
@@ -12,6 +12,9 @@ use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
 use Fr\Nj2\Api\models\extended\Resource;
+use Fr\Nj2\Api\models\collection\RiverCollection;
+use Fr\Nj2\Api\models\business\RiverBusiness;
+use Fr\Nj2\Api\models\extended\River;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\TypeClimateStore;
 
@@ -77,6 +80,11 @@ class Hexa implements Bean {
      * @var ResourceCollection|Resource[]
      */
     protected $cacheResources = null;
+
+    /**
+     * @var RiverCollection|River[]
+     */
+    protected $cacheRivers = null;
 
     /**
      * @return int
@@ -376,6 +384,44 @@ class Hexa implements Bean {
         $resource = new extended\Resource();
         $resource->setIdHexaRef($this->idHexa);
         return $resource;
+    }
+
+    /**
+     * Remet à null le cache des rivers liés à this
+     */
+    public function resetCacheRivers() {
+        $this->cacheRivers = null;
+    }
+
+    /**
+    * Force la collection de rivers de this
+    * @param RiverCollection $rivers
+    */
+    public function setRivers(RiverCollection $rivers)
+    {
+        $this->cacheRivers = $rivers;
+    }
+
+    /**
+     * Renvoie les rivers liés à ce Hexa
+     * @return RiverCollection|River[]
+     */
+    public function getRivers() {
+        if(is_null($this->cacheRivers)) {
+            $this->cacheRivers = RiverBusiness::getByHexa($this);
+            $this->cacheRivers->store();
+        }
+        return $this->cacheRivers;
+    }
+
+    /**
+     * Crée un river lié à ce Hexa
+     * @return extended\River
+     */
+    public function createRiver(){
+        $river = new extended\River();
+        $river->setIdHexaRef($this->idHexa);
+        return $river;
     }
 
     /**

@@ -11,6 +11,11 @@ namespace Fr\Nj2\Api\mapGeneration;
 class Dot
 {
     /**
+     * @var string
+     */
+    private $id;
+
+    /**
      * @var Line
      */
     private $line0;
@@ -24,6 +29,14 @@ class Dot
      * @var Line
      */
     private $line2;
+
+    /**
+     * Line constructor.
+     */
+    public function __construct()
+    {
+        $this->id = md5(rand(1,1000000).microtime(true));
+    }
 
     /**
      * @return float
@@ -48,6 +61,36 @@ class Dot
     }
 
     /**
+     * Returns the dot at the end of the line
+     * @param Line $line
+     * @return Dot
+     */
+    public function connectedDot(Line $line)
+    {
+        if($line->getDot0()->getId() == $this->id) return $line->getDot1();
+        else return $line->getDot0();
+    }
+
+    /**
+     * Returns the higher connected dot of the dot
+     * @return Dot
+     */
+    public function higherConnectedDot()
+    {
+        $ret = null;/** @var Dot $ret */
+        if(!is_null($this->line0)) {
+            if(is_null($ret) || $this->connectedDot($this->line0)->getHeight() > $ret->getHeight()) $ret = $this->connectedDot($this->line0);
+        }
+        if(!is_null($this->line1)) {
+            if(is_null($ret) || $this->connectedDot($this->line1)->getHeight() > $ret->getHeight()) $ret = $this->connectedDot($this->line1);
+        }
+        if(!is_null($this->line2)) {
+            if(is_null($ret) || $this->connectedDot($this->line2)->getHeight() > $ret->getHeight()) $ret = $this->connectedDot($this->line2);
+        }
+        return $ret;
+    }
+
+    /**
      * @return bool
      */
     public function has3Lines()
@@ -61,11 +104,59 @@ class Dot
      */
     public function canBeginRiver()
     {
+        if(!$this->has3Lines()) return false;
         $total = 0;
         if($this->line0->riverCanFlow()) $total++;
         if($this->line1->riverCanFlow()) $total++;
         if($this->line2->riverCanFlow()) $total++;
-        return $this->has3Lines() && $total == 1;
+        return $total == 1;
+    }
+
+    /**
+     * Traces a river from this dot
+     */
+    public function traceRiver()
+    {
+        $trace = true;
+        $line = null;
+        if($this->line0->riverCanFlow()) $line = $this->line0;
+        if($this->line1->riverCanFlow()) $line = $this->line1;
+        if($this->line2->riverCanFlow()) $line = $this->line2;
+        $dot = $this;
+        $line->setRiver(true);
+        $dot = $dot->connectedDot($line);
+
+        while($trace) {
+            $height = 0;
+            $nextLine = null;
+            if (!is_null($dot->getLine0()) && $dot->getLine0()->getId() != $line->getId() && $height <= $dot->getLine0()->getHeight() && !$dot->connectedDot($dot->getLine0())->hasRiver() && !$dot->connectedDot($dot->getLine0())->canBeginRiver()) {
+                $nextLine = $dot->getLine0();
+                $height = $nextLine->getHeight();
+            }
+            if (!is_null($dot->getLine1()) && $dot->getLine1()->getId() != $line->getId() && $height <= $dot->getLine1()->getHeight() && !$dot->connectedDot($dot->getLine1())->hasRiver() && !$dot->connectedDot($dot->getLine1())->canBeginRiver()) {
+                $nextLine = $dot->getLine1();
+                $height = $nextLine->getHeight();
+            }
+            if (!is_null($dot->getLine2()) && $dot->getLine2()->getId() != $line->getId() && $height <= $dot->getLine2()->getHeight() && !$dot->connectedDot($dot->getLine2())->hasRiver() && !$dot->connectedDot($dot->getLine2())->canBeginRiver()) {
+                $nextLine = $dot->getLine2();
+            }
+            if (is_null($nextLine)) break;
+            $dot = $dot->connectedDot($nextLine);
+            $line = $nextLine;
+            $line->setRiver(true);
+        }
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRiver()
+    {
+        if(!is_null($this->line0) && $this->line0->isRiver()) return true;
+        if(!is_null($this->line1) && $this->line1->isRiver()) return true;
+        if(!is_null($this->line2) && $this->line2->isRiver()) return true;
+        return false;
     }
 
     /**
@@ -134,5 +225,11 @@ class Dot
         return $ret.' ';
     }
 
-
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
