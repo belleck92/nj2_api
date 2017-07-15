@@ -468,11 +468,14 @@ class Game extends \Fr\Nj2\Api\models\Game
          */
         foreach ($this->lines as $line) {
             if($line->isRiver()) {
+                $ford = rand(1,100) < Parameter::getByFctId(Parameter::PROBA_FORD)->getValue();
                 $river = $line->getHexa0()->createRiver();
                 $river->setSide($line->getHexa0()->quelVoisin($line->getHexa1()));
+                $river->setFord($ford);
                 $river->save();
                 $river = $line->getHexa1()->createRiver();
                 $river->setSide($line->getHexa1()->quelVoisin($line->getHexa0()));
+                $river->setFord($ford);
                 $river->save();
             }
             echo $line."\n";

@@ -67,7 +67,7 @@ echo "\n";
 
 
 
-$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=314&width=5&height=5");
+$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=600&width=10&height=10");
 curl_setopt($ch,CURLOPT_HTTPHEADER,[
     "Authorization: Bearer ".$token
 ]);
