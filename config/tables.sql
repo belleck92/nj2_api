@@ -550,3 +550,37 @@ CREATE TABLE sale
   ,idUnit  INT(11) DEFAULT 0 COMMENT 'For unit sales'
   ,idSpy  INT(11) DEFAULT 0 COMMENT 'For prisonners'
 )  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS parameter;
+CREATE TABLE parameter
+(
+  idParameter INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,value INT(11) DEFAULT 0 COMMENT ''
+  ,description TEXT COMMENT ''
+  ,fctId VARCHAR(255) DEFAULT '' COMMENT ''
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
+CREATE INDEX parameter_fctId_pk ON parameter (fctId);
+INSERT INTO parameter(value, description, fctId) VALUES
+ (100,"Nombre de tours dans une partie",'NB_TURN_GAME')
+,(25,"Nombre max de joueurs dans une partie",'MAX_PLAYERS')
+,(2,"Slots d'infrastructures par case",'SLOTS_INFRA_BY_HEXA')
+,(9,"Slots de bâtiments par ville",'SLOTS_BUILDING_BY_CITY')
+,(1,"Coût en déplacement d'un embarquement",'BOARDING_COST')
+,(100,"Capacité de stockage par niveau d'entrepôt",'STOCK_WAREHOUSE_LEVEL')
+,(1,"Consommation de nourriture par population/tour",'FOOD_POP_TURN')
+,(1,"Croissance de population, paramètre n",'N_PARAM_GROWTH')
+,(2,"Croissance de population, paramètre b",'B_PARAM_GROWTH')
+,(30,"Population max dans une ville",'MAX_POP')
+,(10,"Population capitale en début de partie",'CAPITAL_POP')
+,(10,"Production d'or (impôts) de base par pop/tour",'TAX_GOLD_POP_TURN')
+,(140,"Trésor au début de la partie",'BEGINNING_TREASURY')
+,(50,"Temps de destruction d'un bâtiment % du temps de construction",'BUILDING_DESTRUCTION_TIME')
+,(2,"Nombre de bonus donnés par le palais",'NB_BONUS_PALACE')
+,(1,"Nombre de niveaux d'entrepôts dans la ville sans le bâtiment entrepôt",'FREE_WAREHOUSE_SLOT')
+,(2,"Rayon de la zone d'une ville",'CITY_RADIUS')
+,(7,"Nombre d'unités par expert",'EXPERT_NB_UNITS')
+,(3,"Nombre de niveaux de bâtiments par expert",'EXPERT_NB_BUILDINGS')
+,(10,"Nombre de tours de bonus par expert",'EXPERT_NB_TURNS')
+,(50,"Malus de conquête (en %)",'CONQUEST_MALUS')
+,(5,"Décroissance malus de conquête par tour",'CONQUEST_MALUS_DECREASE')
+,(20,"Probabilité qu'un segment de rivière soit un gué (/100)",'PROBA_FORD');

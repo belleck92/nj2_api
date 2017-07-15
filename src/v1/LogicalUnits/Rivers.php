@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-12
- * Time: 11:44:57
+ * Date: 2017-07-15
+ * Time: 12:29:11
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -30,6 +30,12 @@ class Rivers extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'hexas':
+                    return Hexas::filterCollection(RiverStore::getByIds($segments[0])->getHexas());
+            }}
         return parent::get($queryString, $parameters);
     }
 
@@ -57,7 +63,7 @@ class Rivers extends LogicalUnit
             $ret = new RiverCollection();
             foreach ($queryBody as $riverData) {
                 if (isset($riverData['idRiver'])) continue;
-                
+                if (!isset($riverData['idHexa'])) continue;
                 if (Right::canWrite($riverData)) {
                     $river = new River();
                     $river->edit(Right::writeableFields($riverData));
@@ -66,6 +72,11 @@ class Rivers extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "hexas") {
+                $unit = new Hexas();
+                $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }

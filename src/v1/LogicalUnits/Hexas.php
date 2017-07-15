@@ -2,8 +2,8 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-12
- * Time: 11:44:57
+ * Date: 2017-07-15
+ * Time: 12:29:11
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -41,6 +41,9 @@ class Hexas extends LogicalUnit
             
                 case 'resources':
                     return Resources::filterCollection(HexaStore::getByIds($segments[0])->getResources());
+        
+                case 'rivers':
+                    return Rivers::filterCollection(HexaStore::getByIds($segments[0])->getRivers());
         }}
         return parent::get($queryString, $parameters);
     }
@@ -91,6 +94,15 @@ class Hexas extends LogicalUnit
                     $resource['idHexa'] = $segments[0];
                 }
                 $unit = new Resources();
+                return $unit->create('', $parameters, $queryBody);
+            }
+
+            
+            if($segments[1] == "rivers") {
+                foreach ($queryBody as &$river) {
+                    $river['idHexa'] = $segments[0];
+                }
+                $unit = new Rivers();
                 return $unit->create('', $parameters, $queryBody);
             }
 

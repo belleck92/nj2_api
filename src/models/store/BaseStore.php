@@ -1,8 +1,8 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-14
-* Time: 11:44:36
+* Date: 2017-07-15
+* Time: 12:29:12
 */
 namespace Fr\Nj2\Api\models\store;
 
@@ -19,6 +19,7 @@ use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\business\HqBusiness;
 use Fr\Nj2\Api\models\business\PalaceBonusBusiness;
+use Fr\Nj2\Api\models\business\ParameterBusiness;
 use Fr\Nj2\Api\models\business\PlayerBusiness;
 use Fr\Nj2\Api\models\business\ProbaResourceClimateBusiness;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
