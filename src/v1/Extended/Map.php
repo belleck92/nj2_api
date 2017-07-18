@@ -2,23 +2,19 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 03/07/17
- * Time: 14:02
+ * Date: 18/07/17
+ * Time: 12:32
  */
 
-namespace Fr\Nj2\Api\v1\LogicalUnits;
-
+namespace Fr\Nj2\Api\v1\Extended;
 
 use Fr\Nj2\Api\API;
 use Fr\Nj2\Api\models\Bean;
-use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\extended\Hexa;
-use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\HexaStore;
-use Fr\Nj2\Api\models\store\TypeClimateStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class Map extends LogicalUnit
@@ -143,20 +139,11 @@ class Map extends LogicalUnit
     {
         $this->hexas = new HexaCollection();
         $debutLigne = $this->coinSupGauche();
-        $rivieres = array();
         for($y=1;$y<=$this->height;$y++) {
             $current = $debutLigne;
             for($x=0;$x<$this->width;$x++) {
                 $current->setExtendedData(true);
                 $this->hexas->ajout($current);
-
-                //// Rivères
-                //foreach($current->getRivieres() as $riviere) {/** @var Riviere $riviere */
-                //    if(!isset($rivieres[$riviere->getId()])) {
-                //        $this->rivieres->ajout($riviere);
-                //        $rivieres[$riviere->getId()] = true;
-                //    }
-                //}
 
                 // Visibles
                 //$this->ajoutVisiblesHexa($current);

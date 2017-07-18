@@ -55,7 +55,6 @@ class Trajectorys extends LogicalUnit
             $ret = new TrajectoryCollection();
             foreach ($queryBody as $trajectoryData) {
                 if (isset($trajectoryData['idTrajectory'])) continue;
-                
                 if (Right::canWrite($trajectoryData)) {
                     $trajectory = new Trajectory();
                     $trajectory->edit(Right::writeableFields($trajectoryData));

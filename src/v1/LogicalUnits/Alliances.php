@@ -55,7 +55,6 @@ class Alliances extends LogicalUnit
             $ret = new AllianceCollection();
             foreach ($queryBody as $allianceData) {
                 if (isset($allianceData['idAlliance'])) continue;
-                
                 if (Right::canWrite($allianceData)) {
                     $alliance = new Alliance();
                     $alliance->edit(Right::writeableFields($allianceData));

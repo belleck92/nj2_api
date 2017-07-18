@@ -1,14 +1,13 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 
 namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\store\GameStore;
 
 
 class Player implements Bean {
@@ -276,6 +275,25 @@ class Player implements Bean {
         $this->setTaxRate($this->getTaxRate() + $increment);
     }
     
+
+    /**
+     * Renvoie le game lié
+     * @return extended\Game
+     */
+    public function getGame()
+    {
+        return GameStore::getById($this->getIdGame());
+    }
+
+    /**
+     * Links the idGame of the Game object
+     * @param int $idGame
+    */
+    public function setIdGameRef(&$idGame)
+    {
+        $this->idGame = $idGame;
+    }
+
     /**
      * @return void
      */

@@ -55,7 +55,6 @@ class TypeResourceBonuss extends LogicalUnit
             $ret = new TypeResourceBonusCollection();
             foreach ($queryBody as $typeResourceBonusData) {
                 if (isset($typeResourceBonusData['idTypeResourceBonus'])) continue;
-                
                 if (Right::canWrite($typeResourceBonusData)) {
                     $typeResourceBonus = new TypeResourceBonus();
                     $typeResourceBonus->edit(Right::writeableFields($typeResourceBonusData));

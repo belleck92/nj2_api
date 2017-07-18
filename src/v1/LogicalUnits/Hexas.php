@@ -74,7 +74,8 @@ class Hexas extends LogicalUnit
             $ret = new HexaCollection();
             foreach ($queryBody as $hexaData) {
                 if (isset($hexaData['idHexa'])) continue;
-                if (!isset($hexaData['idGame'])) continue;if (!isset($hexaData['idTypeClimate'])) continue;
+                if (!isset($hexaData['idGame'])) continue;
+                if (!isset($hexaData['idTypeClimate'])) continue;
                 if (Right::canWrite($hexaData)) {
                     $hexa = new Hexa();
                     $hexa->edit(Right::writeableFields($hexaData));
@@ -84,13 +85,6 @@ class Hexas extends LogicalUnit
             }
             return $this->filterCollection($ret);
         } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
-            if($segments[1] == "games") {
-                $unit = new Games();
-                $unit->create('', $parameters, $queryBody);
-            }if($segments[1] == "typeClimates") {
-                $unit = new TypeClimates();
-                $unit->create('', $parameters, $queryBody);
-            }
             if($segments[1] == "resources") {
                 foreach ($queryBody as &$resource) {
                     $resource['idHexa'] = $segments[0];
@@ -98,8 +92,6 @@ class Hexas extends LogicalUnit
                 $unit = new Resources();
                 return $unit->create('', $parameters, $queryBody);
             }
-
-            
             if($segments[1] == "rivers") {
                 foreach ($queryBody as &$river) {
                     $river['idHexa'] = $segments[0];
@@ -107,8 +99,6 @@ class Hexas extends LogicalUnit
                 $unit = new Rivers();
                 return $unit->create('', $parameters, $queryBody);
             }
-
-            
         }
         return [];
     }

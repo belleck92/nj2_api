@@ -55,7 +55,6 @@ class TypeBonuss extends LogicalUnit
             $ret = new TypeBonusCollection();
             foreach ($queryBody as $typeBonusData) {
                 if (isset($typeBonusData['idTypeBonus'])) continue;
-                
                 if (Right::canWrite($typeBonusData)) {
                     $typeBonus = new TypeBonus();
                     $typeBonus->edit(Right::writeableFields($typeBonusData));

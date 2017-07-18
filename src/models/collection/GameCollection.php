@@ -1,8 +1,6 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 namespace Fr\Nj2\Api\models\collection;
 
@@ -10,6 +8,8 @@ use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\Player;
+use Fr\Nj2\Api\models\business\PlayerBusiness;
 
 class GameCollection extends BaseCollection {
 
@@ -17,6 +17,10 @@ class GameCollection extends BaseCollection {
      * @var HexaCollection|Hexa[]
      */
     private $cacheHexas = null;
+    /**
+     * @var PlayerCollection|Player[]
+     */
+    private $cachePlayers = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -84,6 +88,52 @@ class GameCollection extends BaseCollection {
             foreach($hexas as $hexa) {/** @var Hexa $hexa */
                 if($hexa->getIdGame() == $game->getIdGame()) {
                     $coll->ajout($hexa);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Renvoie les Players liés aux Games de cette collection
+     * @return PlayerCollection
+     */
+    public function getPlayers() {
+        if(is_null($this->cachePlayers)) {
+            $this->cachePlayers = PlayerBusiness::getFromGames($this);
+            $this->cachePlayers->store();
+        }
+        return $this->cachePlayers;
+    }
+
+    /**
+    * Force la collection de players de this
+    * @param PlayerCollection $players
+    */
+    public function setPlayers(PlayerCollection $players)
+    {
+        $this->cachePlayers = $players;
+    }
+
+    /**
+    * Remet à null le cache des players liés à this
+    */
+    public function resetCachePlayers() {
+        $this->cachePlayers = null;
+    }
+
+    /**
+    * Distribue les Players fournis en paramètre à chaque Game de la collection si le Player correspond.
+    * @param PlayerCollection $players
+    */
+    public function fillPlayers(PlayerCollection $players)
+    {
+        foreach($this as $game) {/** @var Game $game */
+            $game->resetCachePlayers();
+            $coll = new PlayerCollection();
+            $game->setPlayers($coll);
+            foreach($players as $player) {/** @var Player $player */
+                if($player->getIdGame() == $game->getIdGame()) {
+                    $coll->ajout($player);
                 }
             }
         }

@@ -55,7 +55,6 @@ class TypeTechs extends LogicalUnit
             $ret = new TypeTechCollection();
             foreach ($queryBody as $typeTechData) {
                 if (isset($typeTechData['idTypeTech'])) continue;
-                
                 if (Right::canWrite($typeTechData)) {
                     $typeTech = new TypeTech();
                     $typeTech->edit(Right::writeableFields($typeTechData));

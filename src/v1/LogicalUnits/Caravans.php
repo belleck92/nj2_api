@@ -55,7 +55,6 @@ class Caravans extends LogicalUnit
             $ret = new CaravanCollection();
             foreach ($queryBody as $caravanData) {
                 if (isset($caravanData['idCaravan'])) continue;
-                
                 if (Right::canWrite($caravanData)) {
                     $caravan = new Caravan();
                     $caravan->edit(Right::writeableFields($caravanData));

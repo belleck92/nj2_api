@@ -55,7 +55,6 @@ class Users extends LogicalUnit
             $ret = new UserCollection();
             foreach ($queryBody as $userData) {
                 if (isset($userData['idUser'])) continue;
-                
                 if (Right::canWrite($userData)) {
                     $user = new User();
                     $user->edit(Right::writeableFields($userData));

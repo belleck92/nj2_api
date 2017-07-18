@@ -55,7 +55,6 @@ class TypeMissions extends LogicalUnit
             $ret = new TypeMissionCollection();
             foreach ($queryBody as $typeMissionData) {
                 if (isset($typeMissionData['idTypeMission'])) continue;
-                
                 if (Right::canWrite($typeMissionData)) {
                     $typeMission = new TypeMission();
                     $typeMission->edit(Right::writeableFields($typeMissionData));

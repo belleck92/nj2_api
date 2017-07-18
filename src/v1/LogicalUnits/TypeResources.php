@@ -66,7 +66,6 @@ class TypeResources extends LogicalUnit
             $ret = new TypeResourceCollection();
             foreach ($queryBody as $typeResourceData) {
                 if (isset($typeResourceData['idTypeResource'])) continue;
-                
                 if (Right::canWrite($typeResourceData)) {
                     $typeResource = new TypeResource();
                     $typeResource->edit(Right::writeableFields($typeResourceData));
@@ -76,7 +75,6 @@ class TypeResources extends LogicalUnit
             }
             return $this->filterCollection($ret);
         } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
-            
             if($segments[1] == "probaResourceClimates") {
                 foreach ($queryBody as &$probaResourceClimate) {
                     $probaResourceClimate['idTypeResource'] = $segments[0];
@@ -84,8 +82,6 @@ class TypeResources extends LogicalUnit
                 $unit = new ProbaResourceClimates();
                 return $unit->create('', $parameters, $queryBody);
             }
-
-            
             if($segments[1] == "resources") {
                 foreach ($queryBody as &$resource) {
                     $resource['idTypeResource'] = $segments[0];
@@ -93,8 +89,6 @@ class TypeResources extends LogicalUnit
                 $unit = new Resources();
                 return $unit->create('', $parameters, $queryBody);
             }
-
-            
         }
         return [];
     }

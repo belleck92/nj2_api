@@ -55,7 +55,6 @@ class TypeUnits extends LogicalUnit
             $ret = new TypeUnitCollection();
             foreach ($queryBody as $typeUnitData) {
                 if (isset($typeUnitData['idTypeUnit'])) continue;
-                
                 if (Right::canWrite($typeUnitData)) {
                     $typeUnit = new TypeUnit();
                     $typeUnit->edit(Right::writeableFields($typeUnitData));

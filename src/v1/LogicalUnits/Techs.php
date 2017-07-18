@@ -55,7 +55,6 @@ class Techs extends LogicalUnit
             $ret = new TechCollection();
             foreach ($queryBody as $techData) {
                 if (isset($techData['idTech'])) continue;
-                
                 if (Right::canWrite($techData)) {
                     $tech = new Tech();
                     $tech->edit(Right::writeableFields($techData));

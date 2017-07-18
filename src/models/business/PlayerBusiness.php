@@ -1,14 +1,14 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 namespace Fr\Nj2\Api\models\business;
 
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\collection\PlayerCollection;
+use Fr\Nj2\Api\models\collection\GameCollection;
+use Fr\Nj2\Api\models\extended\Game;
 
 
 class PlayerBusiness extends BaseBusiness {
@@ -46,6 +46,28 @@ class PlayerBusiness extends BaseBusiness {
         return parent::getByIds($ids);
     }
 
+    
+    /**
+     * Renvoie les Players liés aux Games de la collection fournie en paramètre
+     * @param GameCollection $games
+     * @return PlayerCollection|Player[]
+     */
+    public static function getFromGames(GameCollection $games){
+        $ids = $games->getIdsStr();
+        if(!$ids) return new PlayerCollection();
+        $req = "SELECT * FROM player WHERE idGame IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
+
+    /**
+     * Renvoie les Players liés à un Game
+     * @param Game $game
+     * @return PlayerCollection|Player[]
+     */
+    public static function getByGame(Game $game){
+        $req = "SELECT * FROM player WHERE idGame = '".$game->getId()."';";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
     
      /**
      * Supprime le Player en DB

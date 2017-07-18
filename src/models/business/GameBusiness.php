@@ -1,8 +1,6 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 namespace Fr\Nj2\Api\models\business;
 
@@ -10,6 +8,7 @@ use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
 
 
 class GameBusiness extends BaseBusiness {
@@ -53,6 +52,18 @@ class GameBusiness extends BaseBusiness {
      */
     public static function getFromHexas(HexaCollection $hexas){
         $ids = $hexas->getIdGameStr();
+        if(!$ids) return new GameCollection();
+        $req = "SELECT * FROM game WHERE idGame IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Game', 'GameCollection');
+    }
+
+    /**
+     * Renvoie les Games liés à une collection de Players
+     * @param PlayerCollection $players
+     * @return GameCollection|Game[]
+     */
+    public static function getFromPlayers(PlayerCollection $players){
+        $ids = $players->getIdGameStr();
         if(!$ids) return new GameCollection();
         $req = "SELECT * FROM game WHERE idGame IN (".$ids.");";
         return DbHandler::collFromQuery($req, 'Game', 'GameCollection');

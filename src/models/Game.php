@@ -1,8 +1,6 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 
 namespace Fr\Nj2\Api\models;
@@ -12,6 +10,9 @@ use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\extended\Hexa;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
+use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\extended\Player;
 
 
 class Game implements Bean {
@@ -60,6 +61,11 @@ class Game implements Bean {
      * @var HexaCollection|Hexa[]
      */
     protected $cacheHexas = null;
+
+    /**
+     * @var PlayerCollection|Player[]
+     */
+    protected $cachePlayers = null;
 
     /**
      * @return int
@@ -241,6 +247,44 @@ class Game implements Bean {
         $hexa = new extended\Hexa();
         $hexa->setIdGameRef($this->idGame);
         return $hexa;
+    }
+
+    /**
+     * Remet à null le cache des players liés à this
+     */
+    public function resetCachePlayers() {
+        $this->cachePlayers = null;
+    }
+
+    /**
+    * Force la collection de players de this
+    * @param PlayerCollection $players
+    */
+    public function setPlayers(PlayerCollection $players)
+    {
+        $this->cachePlayers = $players;
+    }
+
+    /**
+     * Renvoie les players liés à ce Game
+     * @return PlayerCollection|Player[]
+     */
+    public function getPlayers() {
+        if(is_null($this->cachePlayers)) {
+            $this->cachePlayers = PlayerBusiness::getByGame($this);
+            $this->cachePlayers->store();
+        }
+        return $this->cachePlayers;
+    }
+
+    /**
+     * Crée un player lié à ce Game
+     * @return extended\Player
+     */
+    public function createPlayer(){
+        $player = new extended\Player();
+        $player->setIdGameRef($this->idGame);
+        return $player;
     }
 
     /**

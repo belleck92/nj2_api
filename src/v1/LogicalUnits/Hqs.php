@@ -55,7 +55,6 @@ class Hqs extends LogicalUnit
             $ret = new HqCollection();
             foreach ($queryBody as $hqData) {
                 if (isset($hqData['idHq'])) continue;
-                
                 if (Right::canWrite($hqData)) {
                     $hq = new Hq();
                     $hq->edit(Right::writeableFields($hqData));

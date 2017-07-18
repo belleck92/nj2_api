@@ -55,7 +55,6 @@ class TypeTreatys extends LogicalUnit
             $ret = new TypeTreatyCollection();
             foreach ($queryBody as $typeTreatyData) {
                 if (isset($typeTreatyData['idTypeTreaty'])) continue;
-                
                 if (Right::canWrite($typeTreatyData)) {
                     $typeTreaty = new TypeTreaty();
                     $typeTreaty->edit(Right::writeableFields($typeTreatyData));

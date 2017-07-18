@@ -55,7 +55,6 @@ class Units extends LogicalUnit
             $ret = new UnitCollection();
             foreach ($queryBody as $unitData) {
                 if (isset($unitData['idUnit'])) continue;
-                
                 if (Right::canWrite($unitData)) {
                     $unit = new Unit();
                     $unit->edit(Right::writeableFields($unitData));

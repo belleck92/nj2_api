@@ -55,7 +55,6 @@ class Treatys extends LogicalUnit
             $ret = new TreatyCollection();
             foreach ($queryBody as $treatyData) {
                 if (isset($treatyData['idTreaty'])) continue;
-                
                 if (Right::canWrite($treatyData)) {
                     $treaty = new Treaty();
                     $treaty->edit(Right::writeableFields($treatyData));

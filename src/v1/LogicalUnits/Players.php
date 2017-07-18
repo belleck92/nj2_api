@@ -13,6 +13,7 @@ use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\store\PlayerStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Players as Right;
+use Fr\Nj2\Api\v1\Extended\Games;
 
 class Players extends LogicalUnit
 {
@@ -28,6 +29,12 @@ class Players extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'games':
+                    return Games::filterCollection(PlayerStore::getByIds($segments[0])->getGames());
+            }}
         return parent::get($queryString, $parameters);
     }
 
@@ -55,7 +62,7 @@ class Players extends LogicalUnit
             $ret = new PlayerCollection();
             foreach ($queryBody as $playerData) {
                 if (isset($playerData['idPlayer'])) continue;
-                
+                if (!isset($playerData['idGame'])) continue;
                 if (Right::canWrite($playerData)) {
                     $player = new Player();
                     $player->edit(Right::writeableFields($playerData));

@@ -66,7 +66,8 @@ class ProbaResourceClimates extends LogicalUnit
             $ret = new ProbaResourceClimateCollection();
             foreach ($queryBody as $probaResourceClimateData) {
                 if (isset($probaResourceClimateData['idProbaResourceClimate'])) continue;
-                if (!isset($probaResourceClimateData['idTypeClimate'])) continue;if (!isset($probaResourceClimateData['idTypeResource'])) continue;
+                if (!isset($probaResourceClimateData['idTypeClimate'])) continue;
+                if (!isset($probaResourceClimateData['idTypeResource'])) continue;
                 if (Right::canWrite($probaResourceClimateData)) {
                     $probaResourceClimate = new ProbaResourceClimate();
                     $probaResourceClimate->edit(Right::writeableFields($probaResourceClimateData));
@@ -75,14 +76,6 @@ class ProbaResourceClimates extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
-        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
-            if($segments[1] == "typeClimates") {
-                $unit = new TypeClimates();
-                $unit->create('', $parameters, $queryBody);
-            }if($segments[1] == "typeResources") {
-                $unit = new TypeResources();
-                $unit->create('', $parameters, $queryBody);
-            }
         }
         return [];
     }

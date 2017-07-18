@@ -55,7 +55,6 @@ class TypeHqs extends LogicalUnit
             $ret = new TypeHqCollection();
             foreach ($queryBody as $typeHqData) {
                 if (isset($typeHqData['idTypeHq'])) continue;
-                
                 if (Right::canWrite($typeHqData)) {
                     $typeHq = new TypeHq();
                     $typeHq->edit(Right::writeableFields($typeHqData));

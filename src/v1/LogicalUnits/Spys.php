@@ -55,7 +55,6 @@ class Spys extends LogicalUnit
             $ret = new SpyCollection();
             foreach ($queryBody as $spyData) {
                 if (isset($spyData['idSpy'])) continue;
-                
                 if (Right::canWrite($spyData)) {
                     $spy = new Spy();
                     $spy->edit(Right::writeableFields($spyData));

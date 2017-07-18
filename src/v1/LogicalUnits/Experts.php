@@ -55,7 +55,6 @@ class Experts extends LogicalUnit
             $ret = new ExpertCollection();
             foreach ($queryBody as $expertData) {
                 if (isset($expertData['idExpert'])) continue;
-                
                 if (Right::canWrite($expertData)) {
                     $expert = new Expert();
                     $expert->edit(Right::writeableFields($expertData));

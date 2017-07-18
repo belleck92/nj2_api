@@ -128,6 +128,7 @@ class API
                 'error'=>$this->getErrorData()
                 ,'data'=>$this->returnedData
                 ,'token'=>$this->getJwtToken()
+                ,'tokenData'=>$this->getToken()
             ], JSON_UNESCAPED_UNICODE);
         }
         exit();

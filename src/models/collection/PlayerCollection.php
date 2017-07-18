@@ -1,16 +1,21 @@
 <?php
 /**
 * Created by Manu
-* Date: 2017-07-15
-* Time: 12:29:12
 */
 namespace Fr\Nj2\Api\models\collection;
 
 use Fr\Nj2\Api\models\store\PlayerStore;
 use Fr\Nj2\Api\models\extended\Player;
+use Fr\Nj2\Api\models\business\GameBusiness;
+use Fr\Nj2\Api\models\extended\Game;
 
 class PlayerCollection extends BaseCollection {
 
+    
+    /**
+     * @var GameCollection|Game[]
+     */
+    private $cacheGames = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -35,6 +40,40 @@ class PlayerCollection extends BaseCollection {
         foreach($replaces as $offset=>$player) {
             $this->offsetSet($offset, PlayerStore::getById($player->getId()));
         }
+    }
+    
+    /**
+     * Remet à null le cache des Games liés à la collection
+     */
+    public function resetCacheGames() {
+        $this->cacheGames = null;
+    }
+
+    /**
+     * Renvoie les Games liés aux Players de cette collection
+     * @return GameCollection
+     */
+    public function getGames(){
+        if(is_null($this->cacheGames)) {
+        $this->cacheGames = GameBusiness::getFromPlayers($this);
+            $this->cacheGames->store();
+        }
+        return $this->cacheGames;
+    }
+       
+    /**
+     * Renvoie une chaîne d'idGame de la collection
+     * @return string
+     */  
+    public function getIdGameStr() {
+        $ret = '';
+        $prem = true;
+        foreach($this as $player) {
+            if(!$prem) $ret .=',';
+            $prem = false;
+            $ret .= $player->getIdGame();
+        }
+        return $ret;
     }
     
 

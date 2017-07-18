@@ -55,7 +55,6 @@ class TypeBuildings extends LogicalUnit
             $ret = new TypeBuildingCollection();
             foreach ($queryBody as $typeBuildingData) {
                 if (isset($typeBuildingData['idTypeBuilding'])) continue;
-                
                 if (Right::canWrite($typeBuildingData)) {
                     $typeBuilding = new TypeBuilding();
                     $typeBuilding->edit(Right::writeableFields($typeBuildingData));

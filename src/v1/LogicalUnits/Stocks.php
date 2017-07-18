@@ -55,7 +55,6 @@ class Stocks extends LogicalUnit
             $ret = new StockCollection();
             foreach ($queryBody as $stockData) {
                 if (isset($stockData['idStock'])) continue;
-                
                 if (Right::canWrite($stockData)) {
                     $stock = new Stock();
                     $stock->edit(Right::writeableFields($stockData));

@@ -55,7 +55,6 @@ class Parameters extends LogicalUnit
             $ret = new ParameterCollection();
             foreach ($queryBody as $parameterData) {
                 if (isset($parameterData['idParameter'])) continue;
-                
                 if (Right::canWrite($parameterData)) {
                     $parameter = new Parameter();
                     $parameter->edit(Right::writeableFields($parameterData));

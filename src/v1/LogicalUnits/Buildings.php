@@ -55,7 +55,6 @@ class Buildings extends LogicalUnit
             $ret = new BuildingCollection();
             foreach ($queryBody as $buildingData) {
                 if (isset($buildingData['idBuilding'])) continue;
-                
                 if (Right::canWrite($buildingData)) {
                     $building = new Building();
                     $building->edit(Right::writeableFields($buildingData));

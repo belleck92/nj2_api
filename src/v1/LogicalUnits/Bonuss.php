@@ -55,7 +55,6 @@ class Bonuss extends LogicalUnit
             $ret = new BonusCollection();
             foreach ($queryBody as $bonusData) {
                 if (isset($bonusData['idBonus'])) continue;
-                
                 if (Right::canWrite($bonusData)) {
                     $bonus = new Bonus();
                     $bonus->edit(Right::writeableFields($bonusData));

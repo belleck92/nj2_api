@@ -55,7 +55,6 @@ class PalaceBonuss extends LogicalUnit
             $ret = new PalaceBonusCollection();
             foreach ($queryBody as $palaceBonusData) {
                 if (isset($palaceBonusData['idPalaceBonus'])) continue;
-                
                 if (Right::canWrite($palaceBonusData)) {
                     $palaceBonus = new PalaceBonus();
                     $palaceBonus->edit(Right::writeableFields($palaceBonusData));

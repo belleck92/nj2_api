@@ -55,7 +55,6 @@ class TrajectoryHexas extends LogicalUnit
             $ret = new TrajectoryHexaCollection();
             foreach ($queryBody as $trajectoryHexaData) {
                 if (isset($trajectoryHexaData['idTrajectoryHexa'])) continue;
-                
                 if (Right::canWrite($trajectoryHexaData)) {
                     $trajectoryHexa = new TrajectoryHexa();
                     $trajectoryHexa->edit(Right::writeableFields($trajectoryHexaData));

@@ -71,11 +71,6 @@ class Rivers extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
-        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
-            if($segments[1] == "hexas") {
-                $unit = new Hexas();
-                $unit->create('', $parameters, $queryBody);
-            }
         }
         return [];
     }

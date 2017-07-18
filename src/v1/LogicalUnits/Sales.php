@@ -55,7 +55,6 @@ class Sales extends LogicalUnit
             $ret = new SaleCollection();
             foreach ($queryBody as $saleData) {
                 if (isset($saleData['idSale'])) continue;
-                
                 if (Right::canWrite($saleData)) {
                     $sale = new Sale();
                     $sale->edit(Right::writeableFields($saleData));
