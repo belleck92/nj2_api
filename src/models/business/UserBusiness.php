@@ -7,6 +7,7 @@ namespace Fr\Nj2\Api\models\business;
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\User;
 use Fr\Nj2\Api\models\collection\UserCollection;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
 
 
 class UserBusiness extends BaseBusiness {
@@ -39,7 +40,19 @@ class UserBusiness extends BaseBusiness {
     }
 
     
-     /**
+    
+    /**
+     * Renvoie les Users liés à une collection de Players
+     * @param PlayerCollection $players
+     * @return UserCollection|User[]
+     */
+    public static function getFromPlayers(PlayerCollection $players){
+        $ids = $players->getIdUserStr();
+        if(!$ids) return new UserCollection();
+        $req = "SELECT * FROM user WHERE idUser IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'User', 'UserCollection');
+    }
+ /**
      * Supprime le User en DB
      * @param User $user
      */

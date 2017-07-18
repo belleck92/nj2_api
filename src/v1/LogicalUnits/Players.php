@@ -14,6 +14,8 @@ use Fr\Nj2\Api\models\store\PlayerStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Players as Right;
 use Fr\Nj2\Api\v1\Extended\Games;
+use Fr\Nj2\Api\v1\Extended\Users;
+use Fr\Nj2\Api\v1\Extended\Hexas;
 
 class Players extends LogicalUnit
 {
@@ -34,7 +36,13 @@ class Players extends LogicalUnit
             switch ($segments[1]) {
                 case 'games':
                     return Games::filterCollection(PlayerStore::getByIds($segments[0])->getGames());
-            }}
+            
+                case 'users':
+                    return Users::filterCollection(PlayerStore::getByIds($segments[0])->getUsers());
+            
+                case 'hexas':
+                    return Hexas::filterCollection(PlayerStore::getByIds($segments[0])->getHexas());
+        }}
         return parent::get($queryString, $parameters);
     }
 
@@ -63,6 +71,7 @@ class Players extends LogicalUnit
             foreach ($queryBody as $playerData) {
                 if (isset($playerData['idPlayer'])) continue;
                 if (!isset($playerData['idGame'])) continue;
+                if (!isset($playerData['idUser'])) continue;
                 if (Right::canWrite($playerData)) {
                     $player = new Player();
                     $player->edit(Right::writeableFields($playerData));
@@ -71,6 +80,14 @@ class Players extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "hexas") {
+                foreach ($queryBody as &$hexa) {
+                    $hexa['idPlayer'] = $segments[0];
+                }
+                $unit = new Hexas();
+                return $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }

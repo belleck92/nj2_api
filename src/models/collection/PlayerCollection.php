@@ -8,14 +8,27 @@ use Fr\Nj2\Api\models\store\PlayerStore;
 use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\extended\Game;
+use Fr\Nj2\Api\models\business\UserBusiness;
+use Fr\Nj2\Api\models\extended\User;
+use Fr\Nj2\Api\models\extended\Hexa;
+use Fr\Nj2\Api\models\business\HexaBusiness;
 
 class PlayerCollection extends BaseCollection {
 
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    private $cacheHexas = null;
     
     /**
      * @var GameCollection|Game[]
      */
     private $cacheGames = null;
+    
+    /**
+     * @var UserCollection|User[]
+     */
+    private $cacheUsers = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -39,6 +52,52 @@ class PlayerCollection extends BaseCollection {
         unset($offset);
         foreach($replaces as $offset=>$player) {
             $this->offsetSet($offset, PlayerStore::getById($player->getId()));
+        }
+    }
+    
+    /**
+     * Renvoie les Hexas liés aux Players de cette collection
+     * @return HexaCollection
+     */
+    public function getHexas() {
+        if(is_null($this->cacheHexas)) {
+            $this->cacheHexas = HexaBusiness::getFromPlayers($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+
+    /**
+    * Force la collection de hexas de this
+    * @param HexaCollection $hexas
+    */
+    public function setHexas(HexaCollection $hexas)
+    {
+        $this->cacheHexas = $hexas;
+    }
+
+    /**
+    * Remet à null le cache des hexas liés à this
+    */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+    * Distribue les Hexas fournis en paramètre à chaque Player de la collection si le Hexa correspond.
+    * @param HexaCollection $hexas
+    */
+    public function fillHexas(HexaCollection $hexas)
+    {
+        foreach($this as $player) {/** @var Player $player */
+            $player->resetCacheHexas();
+            $coll = new HexaCollection();
+            $player->setHexas($coll);
+            foreach($hexas as $hexa) {/** @var Hexa $hexa */
+                if($hexa->getIdTerritory() == $player->getIdPlayer()) {
+                    $coll->ajout($hexa);
+                }
+            }
         }
     }
     
@@ -72,6 +131,40 @@ class PlayerCollection extends BaseCollection {
             if(!$prem) $ret .=',';
             $prem = false;
             $ret .= $player->getIdGame();
+        }
+        return $ret;
+    }
+    
+    /**
+     * Remet à null le cache des Users liés à la collection
+     */
+    public function resetCacheUsers() {
+        $this->cacheUsers = null;
+    }
+
+    /**
+     * Renvoie les Users liés aux Players de cette collection
+     * @return UserCollection
+     */
+    public function getUsers(){
+        if(is_null($this->cacheUsers)) {
+        $this->cacheUsers = UserBusiness::getFromPlayers($this);
+            $this->cacheUsers->store();
+        }
+        return $this->cacheUsers;
+    }
+       
+    /**
+     * Renvoie une chaîne d'idUser de la collection
+     * @return string
+     */  
+    public function getIdUserStr() {
+        $ret = '';
+        $prem = true;
+        foreach($this as $player) {
+            if(!$prem) $ret .=',';
+            $prem = false;
+            $ret .= $player->getIdUser();
         }
         return $ret;
     }

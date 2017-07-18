@@ -7,7 +7,11 @@ namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\business\HexaBusiness;
+use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\store\GameStore;
+use Fr\Nj2\Api\models\store\UserStore;
 
 
 class Player implements Bean {
@@ -66,6 +70,11 @@ class Player implements Bean {
      * @var bool
      */
     protected $extendedData = false;
+
+    /**
+     * @var HexaCollection|Hexa[]
+     */
+    protected $cacheHexas = null;
 
     /**
      * @return int
@@ -292,6 +301,63 @@ class Player implements Bean {
     public function setIdGameRef(&$idGame)
     {
         $this->idGame = $idGame;
+    }
+
+
+    /**
+     * Renvoie le user lié
+     * @return extended\User
+     */
+    public function getUser()
+    {
+        return UserStore::getById($this->getIdUser());
+    }
+
+    /**
+     * Links the idUser of the User object
+     * @param int $idUser
+    */
+    public function setIdUserRef(&$idUser)
+    {
+        $this->idUser = $idUser;
+    }
+
+    /**
+     * Remet à null le cache des hexas liés à this
+     */
+    public function resetCacheHexas() {
+        $this->cacheHexas = null;
+    }
+
+    /**
+    * Force la collection de hexas de this
+    * @param HexaCollection $hexas
+    */
+    public function setHexas(HexaCollection $hexas)
+    {
+        $this->cacheHexas = $hexas;
+    }
+
+    /**
+     * Renvoie les hexas liés à ce Player
+     * @return HexaCollection|Hexa[]
+     */
+    public function getHexas() {
+        if(is_null($this->cacheHexas)) {
+            $this->cacheHexas = HexaBusiness::getByPlayer($this);
+            $this->cacheHexas->store();
+        }
+        return $this->cacheHexas;
+    }
+
+    /**
+     * Crée un hexa lié à ce Player
+     * @return extended\Hexa
+     */
+    public function createHexa(){
+        $hexa = new extended\Hexa();
+        $hexa->setIdTerritoryRef($this->idPlayer);
+        return $hexa;
     }
 
     /**

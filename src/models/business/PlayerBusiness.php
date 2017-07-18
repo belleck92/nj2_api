@@ -9,6 +9,9 @@ use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\collection\PlayerCollection;
 use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\extended\Game;
+use Fr\Nj2\Api\models\collection\UserCollection;
+use Fr\Nj2\Api\models\extended\User;
+use Fr\Nj2\Api\models\collection\HexaCollection;
 
 
 class PlayerBusiness extends BaseBusiness {
@@ -69,7 +72,41 @@ class PlayerBusiness extends BaseBusiness {
         return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
     }
     
-     /**
+    /**
+     * Renvoie les Players liés aux Users de la collection fournie en paramètre
+     * @param UserCollection $users
+     * @return PlayerCollection|Player[]
+     */
+    public static function getFromUsers(UserCollection $users){
+        $ids = $users->getIdsStr();
+        if(!$ids) return new PlayerCollection();
+        $req = "SELECT * FROM player WHERE idUser IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
+
+    /**
+     * Renvoie les Players liés à un User
+     * @param User $user
+     * @return PlayerCollection|Player[]
+     */
+    public static function getByUser(User $user){
+        $req = "SELECT * FROM player WHERE idUser = '".$user->getId()."';";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
+    
+    
+    /**
+     * Renvoie les Players liés à une collection de Hexas
+     * @param HexaCollection $hexas
+     * @return PlayerCollection|Player[]
+     */
+    public static function getFromHexas(HexaCollection $hexas){
+        $ids = $hexas->getIdTerritoryStr();
+        if(!$ids) return new PlayerCollection();
+        $req = "SELECT * FROM player WHERE idPlayer IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
+ /**
      * Supprime le Player en DB
      * @param Player $player
      */

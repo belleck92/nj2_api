@@ -89,7 +89,6 @@ class Games extends LogicalUnit
                 $unit = new Players();
                 return $unit->create('', $parameters, $queryBody);
             }
-            
         }
         return [];
     }

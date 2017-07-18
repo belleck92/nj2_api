@@ -15,6 +15,7 @@ use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Hexas as Right;
 use Fr\Nj2\Api\v1\Extended\Games;
 use Fr\Nj2\Api\v1\Extended\TypeClimates;
+use Fr\Nj2\Api\v1\Extended\Players;
 use Fr\Nj2\Api\v1\Extended\Resources;
 use Fr\Nj2\Api\v1\Extended\Rivers;
 
@@ -40,6 +41,9 @@ class Hexas extends LogicalUnit
             
                 case 'typeClimates':
                     return TypeClimates::filterCollection(HexaStore::getByIds($segments[0])->getTypeClimates());
+            
+                case 'players':
+                    return Players::filterCollection(HexaStore::getByIds($segments[0])->getPlayers());
             
                 case 'resources':
                     return Resources::filterCollection(HexaStore::getByIds($segments[0])->getResources());
@@ -76,6 +80,7 @@ class Hexas extends LogicalUnit
                 if (isset($hexaData['idHexa'])) continue;
                 if (!isset($hexaData['idGame'])) continue;
                 if (!isset($hexaData['idTypeClimate'])) continue;
+                if (!isset($hexaData['idPlayer'])) continue;
                 if (Right::canWrite($hexaData)) {
                     $hexa = new Hexa();
                     $hexa->edit(Right::writeableFields($hexaData));

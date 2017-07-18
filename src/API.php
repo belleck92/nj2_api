@@ -68,7 +68,7 @@ class API
         /*
          * Token handling
          */
-        if(strtolower($segments[2]) != 'authenticate' && !$exec->canWorkWithoutToken()) {
+        if((strtolower($segments[2]) != 'authenticate' || (strtolower($segments[2]) == 'authenticate' && isset($segments[3]))) && !$exec->canWorkWithoutToken()) {
             if(isset(\getallheaders()['Authorization'])) {
                 if(preg_match('#^Bearer (.*)$#', \getallheaders()['Authorization'])) {
                     $token = preg_replace('#^Bearer (.*)$#', '$1', \getallheaders()['Authorization']);
@@ -79,15 +79,19 @@ class API
                         if($signature == $segments[2]) {
                             $this->token = json_decode(base64_decode($segments[1]), true);
                         } else {
+                            $this->setErrorCode(4);
                             $this->sendResponse(401);
                         }
                     } else {
+                        $this->setErrorCode(3);
                         $this->sendResponse(401);
                     }
                 } else {
+                    $this->setErrorCode(2);
                     $this->sendResponse(401);
                 }
             } else {
+                $this->setErrorCode(1);
                 $this->sendResponse(401);
             }
         }

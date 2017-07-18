@@ -7,6 +7,9 @@ namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\UserBusiness;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
+use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\extended\Player;
 
 
 class User implements Bean {
@@ -35,6 +38,11 @@ class User implements Bean {
      * @var bool
      */
     protected $extendedData = false;
+
+    /**
+     * @var PlayerCollection|Player[]
+     */
+    protected $cachePlayers = null;
 
     /**
      * @return int
@@ -108,6 +116,44 @@ class User implements Bean {
         $this->setRole($this->getRole() + $increment);
     }
     
+    /**
+     * Remet à null le cache des players liés à this
+     */
+    public function resetCachePlayers() {
+        $this->cachePlayers = null;
+    }
+
+    /**
+    * Force la collection de players de this
+    * @param PlayerCollection $players
+    */
+    public function setPlayers(PlayerCollection $players)
+    {
+        $this->cachePlayers = $players;
+    }
+
+    /**
+     * Renvoie les players liés à ce User
+     * @return PlayerCollection|Player[]
+     */
+    public function getPlayers() {
+        if(is_null($this->cachePlayers)) {
+            $this->cachePlayers = PlayerBusiness::getByUser($this);
+            $this->cachePlayers->store();
+        }
+        return $this->cachePlayers;
+    }
+
+    /**
+     * Crée un player lié à ce User
+     * @return extended\Player
+     */
+    public function createPlayer(){
+        $player = new extended\Player();
+        $player->setIdUserRef($this->idUser);
+        return $player;
+    }
+
     /**
      * @return void
      */

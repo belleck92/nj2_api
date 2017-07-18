@@ -13,6 +13,7 @@ use Fr\Nj2\Api\models\extended\User;
 use Fr\Nj2\Api\models\store\UserStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Users as Right;
+use Fr\Nj2\Api\v1\Extended\Players;
 
 class Users extends LogicalUnit
 {
@@ -28,6 +29,12 @@ class Users extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'players':
+                    return Players::filterCollection(UserStore::getByIds($segments[0])->getPlayers());
+        }}
         return parent::get($queryString, $parameters);
     }
 
@@ -63,6 +70,14 @@ class Users extends LogicalUnit
                 }
             }
             return $this->filterCollection($ret);
+        } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "players") {
+                foreach ($queryBody as &$player) {
+                    $player['idUser'] = $segments[0];
+                }
+                $unit = new Players();
+                return $unit->create('', $parameters, $queryBody);
+            }
         }
         return [];
     }

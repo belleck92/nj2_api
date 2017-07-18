@@ -15,6 +15,7 @@ use Fr\Nj2\Api\models\business\RiverBusiness;
 use Fr\Nj2\Api\models\extended\River;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\TypeClimateStore;
+use Fr\Nj2\Api\models\store\PlayerStore;
 
 
 class Hexa implements Bean {
@@ -344,6 +345,25 @@ class Hexa implements Bean {
     public function setIdTypeClimateRef(&$idTypeClimate)
     {
         $this->idTypeClimate = $idTypeClimate;
+    }
+
+
+    /**
+     * Renvoie le player lié
+     * @return extended\Player
+     */
+    public function getPlayer()
+    {
+        return PlayerStore::getById($this->getIdPlayer());
+    }
+
+    /**
+     * Links the idPlayer of the Player object
+     * @param int $idPlayer
+    */
+    public function setIdPlayerRef(&$idPlayer)
+    {
+        $this->idPlayer = $idPlayer;
     }
 
     /**

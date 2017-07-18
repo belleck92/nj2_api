@@ -10,6 +10,8 @@ use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\business\TypeClimateBusiness;
 use Fr\Nj2\Api\models\extended\TypeClimate;
+use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
 use Fr\Nj2\Api\models\extended\River;
@@ -35,6 +37,11 @@ class HexaCollection extends BaseCollection {
      * @var TypeClimateCollection|TypeClimate[]
      */
     private $cacheTypeClimates = null;
+    
+    /**
+     * @var PlayerCollection|Player[]
+     */
+    private $cachePlayers = null;
     
     /**
      * Ajoute un objet à la collection en vérifiant le type
@@ -217,6 +224,40 @@ class HexaCollection extends BaseCollection {
             if(!$prem) $ret .=',';
             $prem = false;
             $ret .= $hexa->getIdTypeClimate();
+        }
+        return $ret;
+    }
+    
+    /**
+     * Remet à null le cache des Players liés à la collection
+     */
+    public function resetCachePlayers() {
+        $this->cachePlayers = null;
+    }
+
+    /**
+     * Renvoie les Players liés aux Hexas de cette collection
+     * @return PlayerCollection
+     */
+    public function getPlayers(){
+        if(is_null($this->cachePlayers)) {
+        $this->cachePlayers = PlayerBusiness::getFromHexas($this);
+            $this->cachePlayers->store();
+        }
+        return $this->cachePlayers;
+    }
+       
+    /**
+     * Renvoie une chaîne d'idTerritory de la collection
+     * @return string
+     */  
+    public function getIdTerritoryStr() {
+        $ret = '';
+        $prem = true;
+        foreach($this as $hexa) {
+            if(!$prem) $ret .=',';
+            $prem = false;
+            $ret .= $hexa->getIdTerritory();
         }
         return $ret;
     }

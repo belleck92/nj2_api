@@ -11,6 +11,8 @@ use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\collection\TypeClimateCollection;
 use Fr\Nj2\Api\models\extended\TypeClimate;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
+use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
 use Fr\Nj2\Api\models\collection\RiverCollection;
 
@@ -92,6 +94,28 @@ class HexaBusiness extends BaseBusiness {
      */
     public static function getByTypeClimate(TypeClimate $typeClimate){
         $req = "SELECT * FROM hexa WHERE idTypeClimate = '".$typeClimate->getId()."';";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+    
+    /**
+     * Renvoie les Hexas liés aux Players de la collection fournie en paramètre
+     * @param PlayerCollection $players
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromPlayers(PlayerCollection $players){
+        $ids = $players->getIdsStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idTerritory IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+
+    /**
+     * Renvoie les Hexas liés à un Player
+     * @param Player $player
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getByPlayer(Player $player){
+        $req = "SELECT * FROM hexa WHERE idTerritory = '".$player->getId()."';";
         return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
     }
     
