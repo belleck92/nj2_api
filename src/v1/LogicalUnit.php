@@ -2,8 +2,6 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-15
- * Time: 12:29:11
  */
 
 namespace Fr\Nj2\Api\v1;

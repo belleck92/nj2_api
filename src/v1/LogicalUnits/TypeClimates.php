@@ -2,8 +2,6 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-15
- * Time: 12:29:11
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -15,6 +13,8 @@ use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\store\TypeClimateStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\TypeClimates as Right;
+use Fr\Nj2\Api\v1\Extended\Hexas;
+use Fr\Nj2\Api\v1\Extended\ProbaResourceClimates;
 
 class TypeClimates extends LogicalUnit
 {

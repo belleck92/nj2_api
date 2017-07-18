@@ -53,7 +53,7 @@ class API
         } else throw new Exception("First segment of URL must be the version");
 
         $seg2 = explode('?', $segments[2]);
-        $class = __NAMESPACE__.'\\'.$version.'\\LogicalUnits\\'.BaseBusiness::lowerToUpperCamelCase($seg2[0]);
+        $class = __NAMESPACE__.'\\'.$version.'\\Extended\\'.BaseBusiness::lowerToUpperCamelCase($seg2[0]);
         if(!class_exists($class)) {
             $this->errorCode=1;
             $this->error='API function not found';
@@ -122,6 +122,7 @@ class API
     public function sendResponse($code = 200)
     {
         http_response_code($code);
+        header('Access-Control-Allow-Origin: http://nj2.gruik.fr',false);
         if(substr($code, 0,1) != '5') {
             echo json_encode([
                 'error'=>$this->getErrorData()

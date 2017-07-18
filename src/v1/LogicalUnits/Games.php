@@ -2,8 +2,6 @@
 /**
  * Created by IntelliJ IDEA.
  * User: manu
- * Date: 2017-07-15
- * Time: 12:29:11
  */
 
 namespace Fr\Nj2\Api\v1\LogicalUnits;
@@ -15,6 +13,7 @@ use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Games as Right;
+use Fr\Nj2\Api\v1\Extended\Hexas;
 
 class Games extends LogicalUnit
 {
