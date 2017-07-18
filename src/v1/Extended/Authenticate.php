@@ -60,10 +60,7 @@ class Authenticate extends LogicalUnit
                 API::getInstance()->sendResponse(401);
             }
             API::getInstance()->setToken(['idUser'=>$user->getId(), "role" => $user->getRole(), "idGame" => 1, "exp" => time() + 7200]);
-            $header = base64_encode(json_encode(["typ" => "JWT", 'alg' => Config::ENCRYPTION_ALGO]));
-            $payload = base64_encode(json_encode(API::getInstance()->getToken()));
-            $signature = hash_hmac(Config::ENCRYPTION_ALGO, $header . '.' . $payload, Config::ENCRYPTION_KEY);
-            API::getInstance()->setJwtToken($header . '.' . $payload . '.' . $signature);
+            API::getInstance()->setJwtToken($this->encodeToken());
             return [];
             
         } elseif($segments[0] == 'connectToGame') {
@@ -94,6 +91,7 @@ class Authenticate extends LogicalUnit
             $token['idPlayer'] = $selectedPlayer->getId();
             $token['idCapitalCity'] = $selectedPlayer->getCapitalCity();
             API::getInstance()->setToken($token);
+            API::getInstance()->setJwtToken($this->encodeToken());
             return [];
         }
     }
@@ -101,6 +99,17 @@ class Authenticate extends LogicalUnit
     public function delete($queryString, $parameters, $queryBody)
     {
         API::getInstance()->sendResponse(404);
+    }
+
+    /**
+     * @return string
+     */
+    private function encodeToken()
+    {
+        $header = base64_encode(json_encode(["typ" => "JWT", 'alg' => Config::ENCRYPTION_ALGO]));
+        $payload = base64_encode(json_encode(API::getInstance()->getToken()));
+        $signature = hash_hmac(Config::ENCRYPTION_ALGO, $header . '.' . $payload, Config::ENCRYPTION_KEY);
+        return $header . '.' . $payload . '.' . $signature;
     }
 
 
