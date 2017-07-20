@@ -27,6 +27,7 @@ class Parameter extends \Fr\Nj2\Api\models\Parameter
     const CAPITAL_POP = 'CAPITAL_POP';
     const TAX_GOLD_POP_TURN = 'TAX_GOLD_POP_TURN';
     const BEGINNING_TREASURY = 'BEGINNING_TREASURY';
+    const BEGINNING_TAX_RATE = 'BEGINNING_TAX_RATE';
     const BUILDING_DESTRUCTION_TIME = 'BUILDING_DESTRUCTION_TIME';
     const NB_BONUS_PALACE = 'NB_BONUS_PALACE';
     const FREE_WAREHOUSE_SLOT = 'FREE_WAREHOUSE_SLOT';
@@ -53,6 +54,15 @@ class Parameter extends \Fr\Nj2\Api\models\Parameter
         if(is_null(self::$storage)) self::initTypes();
         if(!self::$storage[$fctId]) throw new Exception($fctId." type doesn't exists");
         return self::$storage[$fctId];
+    }
+
+    /**
+     * @param string $fctId
+     * @return string
+     */
+    public static function val($fctId)
+    {
+        return self::getByFctId($fctId)->getValue();
     }
 
     /**

@@ -141,6 +141,23 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
     }
 
     /**
+     * Renvoie tous les hexas sur la couronne et à l'intérieur
+     * @param $rayon
+     * @return HexaCollection
+     */
+    public function getCouronnePleine($rayon)
+    {
+        $ret = new HexaCollection();
+        for($i = 0; $i <= $rayon; $i++) {
+            if($i == 0) $ret->ajout($this);
+            else {
+                foreach ($this->getCouronne($i) as $h) $ret->ajout($h);
+            }
+        }
+        return $ret;
+    }
+
+    /**
      * Renvoie le voisin demandé
      * @param int $angle Angle en pi/3 avec 0=hexagone de droite
      * @return Hexa Ou null si on est sur un bord

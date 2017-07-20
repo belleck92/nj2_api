@@ -22,6 +22,17 @@ class User extends \Fr\Nj2\Api\models\User
     public static function getByUserPassword($user, $password)
     {
         $req = "SELECT * FROM `user` WHERE email = '".DbHandler::getConn()->escape_string($user)."' AND password = PASSWORD('".DbHandler::getConn()->escape_string($password)."');";
-        return DbHandler::objFromQuery($req,BaseBusiness::underscoreToCamelCase('user'));
+        return DbHandler::objFromQuery($req,'User');
+    }
+
+    /**
+     * @param Game $game
+     * @return bool
+     */
+    public function hasPlayerOn(Game $game)
+    {
+        $req = "SELECT * FROM player WHERE idUser = ".$this->getId()." AND idGame = ".$game->getId().";";
+        $player = DbHandler::objFromQuery($req,'Player');
+        return !is_null($player);
     }
 }

@@ -574,6 +574,7 @@ INSERT INTO parameter(value, description, fctId) VALUES
 ,(10,"Population capitale en début de partie",'CAPITAL_POP')
 ,(10,"Production d'or (impôts) de base par pop/tour",'TAX_GOLD_POP_TURN')
 ,(140,"Trésor au début de la partie",'BEGINNING_TREASURY')
+,(140,"Tax rate au début de la partie",'BEGINNING_TAX_RATE')
 ,(50,"Temps de destruction d'un bâtiment % du temps de construction",'BUILDING_DESTRUCTION_TIME')
 ,(2,"Nombre de bonus donnés par le palais",'NB_BONUS_PALACE')
 ,(1,"Nombre de niveaux d'entrepôts dans la ville sans le bâtiment entrepôt",'FREE_WAREHOUSE_SLOT')

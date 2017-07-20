@@ -59,7 +59,7 @@ class Authenticate extends LogicalUnit
                 API::getInstance()->setError('user not found');
                 API::getInstance()->sendResponse(401);
             }
-            API::getInstance()->setToken(['idUser'=>$user->getId(), "role" => $user->getRole(), "idGame" => 1, "exp" => time() + 7200]);
+            API::getInstance()->setToken(['idUser'=>$user->getId(), "role" => $user->getRole(), "exp" => time() + 7200]);
             API::getInstance()->setJwtToken($this->encodeToken());
             return [];
             
