@@ -495,7 +495,7 @@ CREATE TABLE tech
   idTech INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
   ,idPlayer INT(11) DEFAULT 0 COMMENT ''
   ,totalCost  INT(11) DEFAULT 0 COMMENT ''
-  ,alreadyInvested  INT(11) DEFAULT 0 COMMENT 'Id this filed is equal to totalCost, the tech is active'
+  ,alreadyInvested  INT(11) DEFAULT 0 COMMENT 'If this filed is equal to totalCost, the tech is active'
 )  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE INDEX tech_idPlayer_pk ON tech (idPlayer);
 
