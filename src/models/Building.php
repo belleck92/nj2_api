@@ -12,31 +12,37 @@ use Fr\Nj2\Api\models\business\BuildingBusiness;
 class Building implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idBuilding;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeBuilding = 0;
 
     /**
+     * 
      * @var int
      */
     protected $actualLevel = 0;
 
     /**
+     * When not on 0 the building is currently in construction to the actualLevel+1
      * @var int
      */
     protected $buildingTurnsLeft = 0;
 
     /**
+     * Number of population working in the building
      * @var int
      */
     protected $populationWorking = 0;
@@ -47,6 +53,7 @@ class Building implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdBuilding()
@@ -63,6 +70,7 @@ class Building implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -87,6 +95,7 @@ class Building implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeBuilding()
@@ -111,6 +120,7 @@ class Building implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getActualLevel()
@@ -135,6 +145,7 @@ class Building implements Bean {
     }
     
     /**
+     * When not on 0 the building is currently in construction to the actualLevel+1
      * @return int
      */
     public function getBuildingTurnsLeft()
@@ -159,6 +170,7 @@ class Building implements Bean {
     }
     
     /**
+     * Number of population working in the building
      * @return int
      */
     public function getPopulationWorking()

@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\TypeResourceBonusBusiness;
 class TypeResourceBonus implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeResourceBonus;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeResource = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idBonus = 0;
 
     /**
+     * The era the bonus is active
      * @var int
      */
     protected $era = 0;
@@ -37,6 +41,7 @@ class TypeResourceBonus implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeResourceBonus()
@@ -53,6 +58,7 @@ class TypeResourceBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeResource()
@@ -77,6 +83,7 @@ class TypeResourceBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdBonus()
@@ -101,6 +108,7 @@ class TypeResourceBonus implements Bean {
     }
     
     /**
+     * The era the bonus is active
      * @return int
      */
     public function getEra()

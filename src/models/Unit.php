@@ -12,41 +12,49 @@ use Fr\Nj2\Api\models\business\UnitBusiness;
 class Unit implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idUnit;
 
     /**
+     * Type of unit
      * @var int
      */
     protected $idTypeUnit = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idHq = 0;
 
     /**
+     * The hexa where the unit is being produced
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * When not on 0 the unit is currently in construction
      * @var int
      */
     protected $buildingTurnsLeft = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $morale = '';
 
     /**
+     * 
      * @var int
      */
     protected $xp = 0;
@@ -57,6 +65,7 @@ class Unit implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdUnit()
@@ -73,6 +82,7 @@ class Unit implements Bean {
     }
     
     /**
+     * Type of unit
      * @return int
      */
     public function getIdTypeUnit()
@@ -97,6 +107,7 @@ class Unit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHq()
@@ -121,6 +132,7 @@ class Unit implements Bean {
     }
     
     /**
+     * The hexa where the unit is being produced
      * @return int
      */
     public function getIdHexa()
@@ -145,6 +157,7 @@ class Unit implements Bean {
     }
     
     /**
+     * When not on 0 the unit is currently in construction
      * @return int
      */
     public function getBuildingTurnsLeft()
@@ -169,6 +182,7 @@ class Unit implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -185,6 +199,7 @@ class Unit implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getMorale()
@@ -201,6 +216,7 @@ class Unit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getXp()

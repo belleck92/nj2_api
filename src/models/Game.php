@@ -18,36 +18,43 @@ use Fr\Nj2\Api\models\extended\Player;
 class Game implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idGame;
 
     /**
+     * 
      * @var int
      */
     protected $currentTurn = 0;
 
     /**
+     * 
      * @var int
      */
     protected $maxTurns = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * If the game is started, no one can create a new player on it
      * @var bool
      */
     protected $started = false;
 
     /**
+     * 
      * @var int
      */
     protected $width = 0;
 
     /**
+     * 
      * @var int
      */
     protected $height = 0;
@@ -68,6 +75,7 @@ class Game implements Bean {
     protected $cachePlayers = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdGame()
@@ -84,6 +92,7 @@ class Game implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getCurrentTurn()
@@ -108,6 +117,7 @@ class Game implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getMaxTurns()
@@ -132,6 +142,7 @@ class Game implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -148,6 +159,7 @@ class Game implements Bean {
     }
     
     /**
+     * If the game is started, no one can create a new player on it
      * @return bool
      */
     public function getStarted()
@@ -164,6 +176,7 @@ class Game implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getWidth()
@@ -188,6 +201,7 @@ class Game implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getHeight()

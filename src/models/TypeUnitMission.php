@@ -12,16 +12,19 @@ use Fr\Nj2\Api\models\business\TypeUnitMissionBusiness;
 class TypeUnitMission implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeUnitMission;
 
     /**
+     * Type of unit
      * @var int
      */
     protected $idTypeUnit = 0;
 
     /**
+     * Type of mission
      * @var int
      */
     protected $idTypeMission = 0;
@@ -32,6 +35,7 @@ class TypeUnitMission implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeUnitMission()
@@ -48,6 +52,7 @@ class TypeUnitMission implements Bean {
     }
     
     /**
+     * Type of unit
      * @return int
      */
     public function getIdTypeUnit()
@@ -72,6 +77,7 @@ class TypeUnitMission implements Bean {
     }
     
     /**
+     * Type of mission
      * @return int
      */
     public function getIdTypeMission()

@@ -18,31 +18,37 @@ use Fr\Nj2\Api\models\extended\ProbaResourceClimate;
 class TypeClimate implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeClimate;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
 
     /**
+     * 
      * @var int
      */
     protected $food = 0;
 
     /**
+     * 
      * @var int
      */
     protected $defenseBonus = 0;
@@ -63,6 +69,7 @@ class TypeClimate implements Bean {
     protected $cacheProbaResourceClimates = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeClimate()
@@ -79,6 +86,7 @@ class TypeClimate implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -95,6 +103,7 @@ class TypeClimate implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -111,6 +120,7 @@ class TypeClimate implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()
@@ -127,6 +137,7 @@ class TypeClimate implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getFood()
@@ -151,6 +162,7 @@ class TypeClimate implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getDefenseBonus()

@@ -14,24 +14,22 @@ use Fr\Nj2\Api\models\store\HexaStore;
 class Resource implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idResource;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeResource = 0;
-
-    /**
-     * @var string
-     */
-    protected $fctId = '';
 
     /**
      * @var bool
@@ -39,6 +37,7 @@ class Resource implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdResource()
@@ -55,6 +54,7 @@ class Resource implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -79,6 +79,7 @@ class Resource implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeResource()
@@ -100,22 +101,6 @@ class Resource implements Bean {
      */
     public function incrIdTypeResource($increment) {
         $this->setIdTypeResource($this->getIdTypeResource() + $increment);
-    }
-    
-    /**
-     * @return string
-     */
-    public function getFctId()
-    {
-        return $this->fctId;
-    }
-
-    /**
-     * @param string $fctId
-     */
-    public function setFctId($fctId)
-    {
-        $this->fctId = $fctId;
     }
     
 
@@ -198,7 +183,6 @@ class Resource implements Bean {
             'idResource'=>$this->idResource
             ,'idHexa'=>$this->idHexa
             ,'idTypeResource'=>$this->idTypeResource
-            ,'fctId'=>$this->fctId
         ];
     }
 

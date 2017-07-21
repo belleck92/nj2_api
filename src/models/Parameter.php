@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\ParameterBusiness;
 class Parameter implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idParameter;
 
     /**
+     * 
      * @var int
      */
     protected $value = 0;
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
@@ -37,6 +41,7 @@ class Parameter implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdParameter()
@@ -53,6 +58,7 @@ class Parameter implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getValue()
@@ -77,6 +83,7 @@ class Parameter implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -93,6 +100,7 @@ class Parameter implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()

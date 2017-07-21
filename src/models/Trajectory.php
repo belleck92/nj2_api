@@ -12,26 +12,31 @@ use Fr\Nj2\Api\models\business\TrajectoryBusiness;
 class Trajectory implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTrajectory;
 
     /**
+     * 
      * @var int
      */
     protected $idHq = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idSpy = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idCaravan = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idExpert = 0;
@@ -42,6 +47,7 @@ class Trajectory implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTrajectory()
@@ -58,6 +64,7 @@ class Trajectory implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHq()
@@ -82,6 +89,7 @@ class Trajectory implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdSpy()
@@ -106,6 +114,7 @@ class Trajectory implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdCaravan()
@@ -130,6 +139,7 @@ class Trajectory implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdExpert()

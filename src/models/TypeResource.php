@@ -18,21 +18,25 @@ use Fr\Nj2\Api\models\extended\Resource;
 class TypeResource implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeResource;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
@@ -53,6 +57,7 @@ class TypeResource implements Bean {
     protected $cacheResources = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeResource()
@@ -69,6 +74,7 @@ class TypeResource implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -85,6 +91,7 @@ class TypeResource implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -101,6 +108,7 @@ class TypeResource implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()

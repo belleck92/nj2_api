@@ -12,76 +12,91 @@ use Fr\Nj2\Api\models\business\TypeUnitBusiness;
 class TypeUnit implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeMission;
 
     /**
+     * Type of hq (terrestrial, aerial, naval)
      * @var int
      */
     protected $idTypeHq = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
 
     /**
+     * 
      * @var int
      */
     protected $assault = 0;
 
     /**
+     * 
      * @var int
      */
     protected $resistance = 0;
 
     /**
+     * 
      * @var int
      */
     protected $mvt = 0;
 
     /**
+     * The building necessary to build the unit
      * @var int
      */
     protected $idTypeBuilding = 0;
 
     /**
+     * Priority for displaying in a unit stack. Much is better
      * @var int
      */
     protected $zIndex = 0;
 
     /**
+     * 
      * @var bool
      */
     protected $mecanized = false;
 
     /**
+     * 
      * @var bool
      */
     protected $motorized = false;
 
     /**
+     * 
      * @var int
      */
     protected $visionRange = 0;
 
     /**
+     * 
      * @var int
      */
     protected $price = 0;
 
     /**
+     * 
      * @var int
      */
     protected $buildingTime = 0;
@@ -92,6 +107,7 @@ class TypeUnit implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeMission()
@@ -108,6 +124,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * Type of hq (terrestrial, aerial, naval)
      * @return int
      */
     public function getIdTypeHq()
@@ -132,6 +149,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -148,6 +166,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -164,6 +183,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()
@@ -180,6 +200,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getAssault()
@@ -204,6 +225,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getResistance()
@@ -228,6 +250,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getMvt()
@@ -252,6 +275,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * The building necessary to build the unit
      * @return int
      */
     public function getIdTypeBuilding()
@@ -276,6 +300,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * Priority for displaying in a unit stack. Much is better
      * @return int
      */
     public function getZIndex()
@@ -300,6 +325,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return bool
      */
     public function getMecanized()
@@ -316,6 +342,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return bool
      */
     public function getMotorized()
@@ -332,6 +359,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getVisionRange()
@@ -356,6 +384,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getPrice()
@@ -380,6 +409,7 @@ class TypeUnit implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getBuildingTime()

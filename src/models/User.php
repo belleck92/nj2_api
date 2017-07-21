@@ -15,21 +15,25 @@ use Fr\Nj2\Api\models\extended\Player;
 class User implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idUser;
 
     /**
+     * 
      * @var string
      */
     protected $email = '';
 
     /**
+     * 
      * @var string
      */
     protected $password = '';
 
     /**
+     * 
      * @var int
      */
     protected $role = 0;
@@ -45,6 +49,7 @@ class User implements Bean {
     protected $cachePlayers = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdUser()
@@ -61,6 +66,7 @@ class User implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getEmail()
@@ -77,6 +83,7 @@ class User implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getPassword()
@@ -93,6 +100,7 @@ class User implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getRole()

@@ -12,26 +12,31 @@ use Fr\Nj2\Api\models\business\CaravanBusiness;
 class Caravan implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idCaravan;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeRessource = 0;
 
     /**
+     * 
      * @var int
      */
     protected $qty = 0;
 
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution
      * @var int
      */
     protected $turnsLeft = 0;
@@ -42,6 +47,7 @@ class Caravan implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdCaravan()
@@ -58,6 +64,7 @@ class Caravan implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -82,6 +89,7 @@ class Caravan implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeRessource()
@@ -106,6 +114,7 @@ class Caravan implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getQty()
@@ -130,6 +139,7 @@ class Caravan implements Bean {
     }
     
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution
      * @return int
      */
     public function getTurnsLeft()

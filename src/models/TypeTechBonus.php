@@ -12,16 +12,19 @@ use Fr\Nj2\Api\models\business\TypeTechBonusBusiness;
 class TypeTechBonus implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTechBonus;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeTech = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idBonus = 0;
@@ -32,6 +35,7 @@ class TypeTechBonus implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTechBonus()
@@ -48,6 +52,7 @@ class TypeTechBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeTech()
@@ -72,6 +77,7 @@ class TypeTechBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdBonus()

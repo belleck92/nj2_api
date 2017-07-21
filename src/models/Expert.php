@@ -12,31 +12,37 @@ use Fr\Nj2\Api\models\business\ExpertBusiness;
 class Expert implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idExpert;
 
     /**
+     * If 0 : on sale
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idBonus = 0;
 
     /**
+     * The city where the expert works (destination). If 0 : on sale
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * Number of items left, depending on the role.
      * @var int
      */
     protected $itemsLeft = 0;
 
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution.
      * @var int
      */
     protected $turnsLeft = 0;
@@ -47,6 +53,7 @@ class Expert implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdExpert()
@@ -63,6 +70,7 @@ class Expert implements Bean {
     }
     
     /**
+     * If 0 : on sale
      * @return int
      */
     public function getIdPlayer()
@@ -87,6 +95,7 @@ class Expert implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdBonus()
@@ -111,6 +120,7 @@ class Expert implements Bean {
     }
     
     /**
+     * The city where the expert works (destination). If 0 : on sale
      * @return int
      */
     public function getIdHexa()
@@ -135,6 +145,7 @@ class Expert implements Bean {
     }
     
     /**
+     * Number of items left, depending on the role.
      * @return int
      */
     public function getItemsLeft()
@@ -159,6 +170,7 @@ class Expert implements Bean {
     }
     
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution.
      * @return int
      */
     public function getTurnsLeft()

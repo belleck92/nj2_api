@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\TypeHqBusiness;
 class TypeHq implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeHq;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
@@ -37,6 +41,7 @@ class TypeHq implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeHq()
@@ -53,6 +58,7 @@ class TypeHq implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -69,6 +75,7 @@ class TypeHq implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -85,6 +92,7 @@ class TypeHq implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()

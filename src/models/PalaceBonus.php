@@ -12,16 +12,19 @@ use Fr\Nj2\Api\models\business\PalaceBonusBusiness;
 class PalaceBonus implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idPalaceBonus;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeBonus = 0;
@@ -32,6 +35,7 @@ class PalaceBonus implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdPalaceBonus()
@@ -48,6 +52,7 @@ class PalaceBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -72,6 +77,7 @@ class PalaceBonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeBonus()

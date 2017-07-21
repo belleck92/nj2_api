@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\TrajectoryHexaBusiness;
 class TrajectoryHexa implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTrajectoryHexa;
 
     /**
+     * 
      * @var int
      */
     protected $idTrajectory = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * Rank of the hexa in the trajectory
      * @var int
      */
     protected $rank = 0;
@@ -37,6 +41,7 @@ class TrajectoryHexa implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTrajectoryHexa()
@@ -53,6 +58,7 @@ class TrajectoryHexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTrajectory()
@@ -77,6 +83,7 @@ class TrajectoryHexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -101,6 +108,7 @@ class TrajectoryHexa implements Bean {
     }
     
     /**
+     * Rank of the hexa in the trajectory
      * @return int
      */
     public function getRank()

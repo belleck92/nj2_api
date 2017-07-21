@@ -12,36 +12,43 @@ use Fr\Nj2\Api\models\business\SpyBusiness;
 class Spy implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idSpy;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * Id of the mission type
      * @var int
      */
     protected $idTypeMission = 0;
 
     /**
+     * Id of the target of the mission
      * @var int
      */
     protected $idTarget = 0;
 
     /**
+     * Tells if the spy is infiltrated in the city where he has a mission
      * @var bool
      */
     protected $infiltrated = false;
 
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution
      * @var int
      */
     protected $turnsLeft = 0;
@@ -52,6 +59,7 @@ class Spy implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdSpy()
@@ -68,6 +76,7 @@ class Spy implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -92,6 +101,7 @@ class Spy implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -116,6 +126,7 @@ class Spy implements Bean {
     }
     
     /**
+     * Id of the mission type
      * @return int
      */
     public function getIdTypeMission()
@@ -140,6 +151,7 @@ class Spy implements Bean {
     }
     
     /**
+     * Id of the target of the mission
      * @return int
      */
     public function getIdTarget()
@@ -164,6 +176,7 @@ class Spy implements Bean {
     }
     
     /**
+     * Tells if the spy is infiltrated in the city where he has a mission
      * @return bool
      */
     public function getInfiltrated()
@@ -180,6 +193,7 @@ class Spy implements Bean {
     }
     
     /**
+     * Number of turns before arrival 1=arrival at next turn resolution
      * @return int
      */
     public function getTurnsLeft()

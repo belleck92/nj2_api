@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\StockBusiness;
 class Stock implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idStock;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeResource = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * 
      * @var int
      */
     protected $qty = 0;
@@ -37,6 +41,7 @@ class Stock implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdStock()
@@ -53,6 +58,7 @@ class Stock implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeResource()
@@ -77,6 +83,7 @@ class Stock implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -101,6 +108,7 @@ class Stock implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getQty()

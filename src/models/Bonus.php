@@ -12,36 +12,43 @@ use Fr\Nj2\Api\models\business\BonusBusiness;
 class Bonus implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idBonus;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeBonus = 0;
 
     /**
+     * The building permitted by this bonus or the building type concerned by the investment bonus
      * @var int
      */
     protected $idTypeBuilding = 0;
 
     /**
+     * The era of the building if the bonus permits a building. The era of the bonus if it's a resource bonus
      * @var int
      */
     protected $era = 0;
 
     /**
+     * The resource permitted by this bonus
      * @var int
      */
     protected $idTypeResource = 0;
 
     /**
+     * The unit permitted by this bonus or the unit type concerned by the investment bonus
      * @var int
      */
     protected $idTypeUnit = 0;
 
     /**
+     * Value of the bonus, in percent, if its not a bonus that permits to use an entity
      * @var int
      */
     protected $value = 0;
@@ -52,6 +59,7 @@ class Bonus implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdBonus()
@@ -68,6 +76,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeBonus()
@@ -92,6 +101,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * The building permitted by this bonus or the building type concerned by the investment bonus
      * @return int
      */
     public function getIdTypeBuilding()
@@ -116,6 +126,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * The era of the building if the bonus permits a building. The era of the bonus if it's a resource bonus
      * @return int
      */
     public function getEra()
@@ -140,6 +151,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * The resource permitted by this bonus
      * @return int
      */
     public function getIdTypeResource()
@@ -164,6 +176,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * The unit permitted by this bonus or the unit type concerned by the investment bonus
      * @return int
      */
     public function getIdTypeUnit()
@@ -188,6 +201,7 @@ class Bonus implements Bean {
     }
     
     /**
+     * Value of the bonus, in percent, if its not a bonus that permits to use an entity
      * @return int
      */
     public function getValue()

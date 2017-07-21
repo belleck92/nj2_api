@@ -21,51 +21,61 @@ use Fr\Nj2\Api\models\store\PlayerStore;
 class Hexa implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idHexa;
 
     /**
+     * 
      * @var int
      */
     protected $idGame = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTerritory = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeClimate = 0;
 
     /**
+     * 
      * @var int
      */
     protected $X = 0;
 
     /**
+     * 
      * @var int
      */
     protected $Y = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * The exact number of inhabitants in the city. The size of the city come from a formula using this field.
      * @var int
      */
     protected $population = 0;
 
     /**
+     * In percent. Malus on production, growth, science, etc... of the city due to recent conquest. Decreases by the time
      * @var int
      */
     protected $malusConquest = 0;
@@ -86,6 +96,7 @@ class Hexa implements Bean {
     protected $cacheRivers = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdHexa()
@@ -102,6 +113,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdGame()
@@ -126,6 +138,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -150,6 +163,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTerritory()
@@ -174,6 +188,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeClimate()
@@ -198,6 +213,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getX()
@@ -222,6 +238,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getY()
@@ -246,6 +263,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -262,6 +280,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * The exact number of inhabitants in the city. The size of the city come from a formula using this field.
      * @return int
      */
     public function getPopulation()
@@ -286,6 +305,7 @@ class Hexa implements Bean {
     }
     
     /**
+     * In percent. Malus on production, growth, science, etc... of the city due to recent conquest. Decreases by the time
      * @return int
      */
     public function getMalusConquest()

@@ -12,16 +12,19 @@ use Fr\Nj2\Api\models\business\AllianceBusiness;
 class Alliance implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idAlliance;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * Id of the leader player
      * @var int
      */
     protected $idLeader = 0;
@@ -32,6 +35,7 @@ class Alliance implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdAlliance()
@@ -48,6 +52,7 @@ class Alliance implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -64,6 +69,7 @@ class Alliance implements Bean {
     }
     
     /**
+     * Id of the leader player
      * @return int
      */
     public function getIdLeader()

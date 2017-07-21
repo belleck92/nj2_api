@@ -12,61 +12,73 @@ use Fr\Nj2\Api\models\business\TypeBuildingBusiness;
 class TypeBuilding implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeBuilding;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
 
     /**
+     * Price of the level 1
      * @var int
      */
     protected $price = 0;
 
     /**
+     * Time of building for 1 level
      * @var int
      */
     protected $buildingTime = 0;
 
     /**
+     * Max level, 0 for infinite
      * @var int
      */
     protected $maxLevel = 0;
 
     /**
+     * level 2 is (1+(priceCoef/100))than level 1 and so on
      * @var int
      */
     protected $priceCoef = 0;
 
     /**
+     * Cost of the building each turn : (maintenancePriceRatio/100)*Total contruction price
      * @var int
      */
     protected $maintenancePriceRatio = 0;
 
     /**
+     * Tells if the building needs some population units to work
      * @var bool
      */
     protected $needsPopulation = false;
 
     /**
+     * Gold to be invested in building role, ex : units production
      * @var int
      */
     protected $investmentCapacity = 0;
 
     /**
+     * When not enough population in the city, priority to get population in slots
      * @var int
      */
     protected $priorityLevel = 0;
@@ -77,6 +89,7 @@ class TypeBuilding implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeBuilding()
@@ -93,6 +106,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -109,6 +123,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -125,6 +140,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()
@@ -141,6 +157,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Price of the level 1
      * @return int
      */
     public function getPrice()
@@ -165,6 +182,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Time of building for 1 level
      * @return int
      */
     public function getBuildingTime()
@@ -189,6 +207,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Max level, 0 for infinite
      * @return int
      */
     public function getMaxLevel()
@@ -213,6 +232,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * level 2 is (1+(priceCoef/100))than level 1 and so on
      * @return int
      */
     public function getPriceCoef()
@@ -237,6 +257,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Cost of the building each turn : (maintenancePriceRatio/100)*Total contruction price
      * @return int
      */
     public function getMaintenancePriceRatio()
@@ -261,6 +282,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Tells if the building needs some population units to work
      * @return bool
      */
     public function getNeedsPopulation()
@@ -277,6 +299,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * Gold to be invested in building role, ex : units production
      * @return int
      */
     public function getInvestmentCapacity()
@@ -301,6 +324,7 @@ class TypeBuilding implements Bean {
     }
     
     /**
+     * When not enough population in the city, priority to get population in slots
      * @return int
      */
     public function getPriorityLevel()

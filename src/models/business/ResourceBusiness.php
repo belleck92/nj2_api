@@ -19,7 +19,6 @@ class ResourceBusiness extends BaseBusiness {
         'idResource'
         ,'idHexa'
         ,'idTypeResource'
-        ,'fctId'
     );
 
     protected static $table = 'resource';

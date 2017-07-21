@@ -13,21 +13,25 @@ use Fr\Nj2\Api\models\store\HexaStore;
 class River implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idRiver;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * 
      * @var int
      */
     protected $side = 0;
 
     /**
+     * 
      * @var bool
      */
     protected $ford = false;
@@ -38,6 +42,7 @@ class River implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdRiver()
@@ -54,6 +59,7 @@ class River implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -78,6 +84,7 @@ class River implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getSide()
@@ -102,6 +109,7 @@ class River implements Bean {
     }
     
     /**
+     * 
      * @return bool
      */
     public function getFord()

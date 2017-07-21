@@ -12,36 +12,43 @@ use Fr\Nj2\Api\models\business\TypeTechBusiness;
 class TypeTech implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeTech;
 
     /**
+     * 
      * @var int
      */
     protected $idTechCategory = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idEra = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
 
     /**
+     * Level technology needed to research the tech
      * @var int
      */
     protected $idTechCategoryNeeded = 0;
@@ -52,6 +59,7 @@ class TypeTech implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeTech()
@@ -68,6 +76,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTechCategory()
@@ -92,6 +101,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdEra()
@@ -116,6 +126,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -132,6 +143,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -148,6 +160,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()
@@ -164,6 +177,7 @@ class TypeTech implements Bean {
     }
     
     /**
+     * Level technology needed to research the tech
      * @return int
      */
     public function getIdTechCategoryNeeded()

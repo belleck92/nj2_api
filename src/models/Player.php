@@ -17,51 +17,61 @@ use Fr\Nj2\Api\models\store\UserStore;
 class Player implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idPlayer;
 
     /**
+     * 
      * @var int
      */
     protected $idUser = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idGame = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idAlliance = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var int
      */
     protected $treasure = 0;
 
     /**
+     * 
      * @var string
      */
     protected $color = '';
 
     /**
+     * 
      * @var int
      */
     protected $capitalCity = 0;
 
     /**
+     * A JSON describing the last turn events the player can see
      * @var string
      */
     protected $lastResolutionEvents = '';
 
     /**
+     * Percentage, from 0 to 100
      * @var int
      */
     protected $taxRate = 0;
@@ -77,6 +87,7 @@ class Player implements Bean {
     protected $cacheHexas = null;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdPlayer()
@@ -93,6 +104,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdUser()
@@ -117,6 +129,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdGame()
@@ -141,6 +154,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdAlliance()
@@ -165,6 +179,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -181,6 +196,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getTreasure()
@@ -205,6 +221,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getColor()
@@ -221,6 +238,7 @@ class Player implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getCapitalCity()
@@ -245,6 +263,7 @@ class Player implements Bean {
     }
     
     /**
+     * A JSON describing the last turn events the player can see
      * @return string
      */
     public function getLastResolutionEvents()
@@ -261,6 +280,7 @@ class Player implements Bean {
     }
     
     /**
+     * Percentage, from 0 to 100
      * @return int
      */
     public function getTaxRate()

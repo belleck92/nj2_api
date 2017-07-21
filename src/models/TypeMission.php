@@ -12,26 +12,31 @@ use Fr\Nj2\Api\models\business\TypeMissionBusiness;
 class TypeMission implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTypeMission;
 
     /**
+     * 1 : military mission, 2 : Spy mission
      * @var int
      */
     protected $unitOrSpy = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * 
      * @var string
      */
     protected $description = '';
 
     /**
+     * 
      * @var string
      */
     protected $fctId = '';
@@ -42,6 +47,7 @@ class TypeMission implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTypeMission()
@@ -58,6 +64,7 @@ class TypeMission implements Bean {
     }
     
     /**
+     * 1 : military mission, 2 : Spy mission
      * @return int
      */
     public function getUnitOrSpy()
@@ -82,6 +89,7 @@ class TypeMission implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -98,6 +106,7 @@ class TypeMission implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getDescription()
@@ -114,6 +123,7 @@ class TypeMission implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getFctId()

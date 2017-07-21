@@ -14,21 +14,25 @@ use Fr\Nj2\Api\models\store\TypeResourceStore;
 class ProbaResourceClimate implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idProbaResourceClimate;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeResource = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeClimate = 0;
 
     /**
+     * Probability, by million, to have the resource on the type of climate
      * @var int
      */
     protected $proba = 0;
@@ -39,6 +43,7 @@ class ProbaResourceClimate implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdProbaResourceClimate()
@@ -55,6 +60,7 @@ class ProbaResourceClimate implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeResource()
@@ -79,6 +85,7 @@ class ProbaResourceClimate implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeClimate()
@@ -103,6 +110,7 @@ class ProbaResourceClimate implements Bean {
     }
     
     /**
+     * Probability, by million, to have the resource on the type of climate
      * @return int
      */
     public function getProba()

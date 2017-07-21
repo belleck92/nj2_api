@@ -12,21 +12,25 @@ use Fr\Nj2\Api\models\business\TechBusiness;
 class Tech implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTech;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * 
      * @var int
      */
     protected $totalCost = 0;
 
     /**
+     * Id this filed is equal to totalCost, the tech is active
      * @var int
      */
     protected $alreadyInvested = 0;
@@ -37,6 +41,7 @@ class Tech implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTech()
@@ -53,6 +58,7 @@ class Tech implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -77,6 +83,7 @@ class Tech implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getTotalCost()
@@ -101,6 +108,7 @@ class Tech implements Bean {
     }
     
     /**
+     * Id this filed is equal to totalCost, the tech is active
      * @return int
      */
     public function getAlreadyInvested()

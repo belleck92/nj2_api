@@ -12,51 +12,61 @@ use Fr\Nj2\Api\models\business\SaleBusiness;
 class Sale implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idSale;
 
     /**
+     * Origin Hexa of the sale
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * Sale price
      * @var int
      */
     protected $price = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeResource = 0;
 
     /**
+     * Qty, in case of a resource
      * @var int
      */
     protected $qty = 0;
 
     /**
+     * For experts sales
      * @var int
      */
     protected $idExpert = 0;
 
     /**
+     * For tech sales
      * @var int
      */
     protected $idTypeTech = 0;
 
     /**
+     * For city sales
      * @var bool
      */
     protected $citySale = false;
 
     /**
+     * For unit sales
      * @var int
      */
     protected $idUnit = 0;
 
     /**
+     * For prisonners
      * @var int
      */
     protected $idSpy = 0;
@@ -67,6 +77,7 @@ class Sale implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdSale()
@@ -83,6 +94,7 @@ class Sale implements Bean {
     }
     
     /**
+     * Origin Hexa of the sale
      * @return int
      */
     public function getIdHexa()
@@ -107,6 +119,7 @@ class Sale implements Bean {
     }
     
     /**
+     * Sale price
      * @return int
      */
     public function getPrice()
@@ -131,6 +144,7 @@ class Sale implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeResource()
@@ -155,6 +169,7 @@ class Sale implements Bean {
     }
     
     /**
+     * Qty, in case of a resource
      * @return int
      */
     public function getQty()
@@ -179,6 +194,7 @@ class Sale implements Bean {
     }
     
     /**
+     * For experts sales
      * @return int
      */
     public function getIdExpert()
@@ -203,6 +219,7 @@ class Sale implements Bean {
     }
     
     /**
+     * For tech sales
      * @return int
      */
     public function getIdTypeTech()
@@ -227,6 +244,7 @@ class Sale implements Bean {
     }
     
     /**
+     * For city sales
      * @return bool
      */
     public function getCitySale()
@@ -243,6 +261,7 @@ class Sale implements Bean {
     }
     
     /**
+     * For unit sales
      * @return int
      */
     public function getIdUnit()
@@ -267,6 +286,7 @@ class Sale implements Bean {
     }
     
     /**
+     * For prisonners
      * @return int
      */
     public function getIdSpy()

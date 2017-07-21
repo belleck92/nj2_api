@@ -12,51 +12,61 @@ use Fr\Nj2\Api\models\business\HqBusiness;
 class Hq implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idHq;
 
     /**
+     * 
      * @var int
      */
     protected $idHexa = 0;
 
     /**
+     * 
      * @var int
      */
     protected $idPlayer = 0;
 
     /**
+     * Id of the mission type
      * @var int
      */
     protected $idTypeMission = 0;
 
     /**
+     * Type of hq (terrestrial, aerial, naval)
      * @var int
      */
     protected $idTypeHq = 0;
 
     /**
+     * Id of the target of the mission
      * @var int
      */
     protected $idTarget = 0;
 
     /**
+     * 
      * @var string
      */
     protected $name = '';
 
     /**
+     * Level of the hq
      * @var int
      */
     protected $level = 0;
 
     /**
+     * 
      * @var int
      */
     protected $capop = 0;
 
     /**
+     * Bonus usable by the palace
      * @var bool
      */
     protected $isPalaceBonus = false;
@@ -67,6 +77,7 @@ class Hq implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdHq()
@@ -83,6 +94,7 @@ class Hq implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdHexa()
@@ -107,6 +119,7 @@ class Hq implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdPlayer()
@@ -131,6 +144,7 @@ class Hq implements Bean {
     }
     
     /**
+     * Id of the mission type
      * @return int
      */
     public function getIdTypeMission()
@@ -155,6 +169,7 @@ class Hq implements Bean {
     }
     
     /**
+     * Type of hq (terrestrial, aerial, naval)
      * @return int
      */
     public function getIdTypeHq()
@@ -179,6 +194,7 @@ class Hq implements Bean {
     }
     
     /**
+     * Id of the target of the mission
      * @return int
      */
     public function getIdTarget()
@@ -203,6 +219,7 @@ class Hq implements Bean {
     }
     
     /**
+     * 
      * @return string
      */
     public function getName()
@@ -219,6 +236,7 @@ class Hq implements Bean {
     }
     
     /**
+     * Level of the hq
      * @return int
      */
     public function getLevel()
@@ -243,6 +261,7 @@ class Hq implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getCapop()
@@ -267,6 +286,7 @@ class Hq implements Bean {
     }
     
     /**
+     * Bonus usable by the palace
      * @return bool
      */
     public function getIsPalaceBonus()

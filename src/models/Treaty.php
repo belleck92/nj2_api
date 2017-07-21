@@ -12,51 +12,61 @@ use Fr\Nj2\Api\models\business\TreatyBusiness;
 class Treaty implements Bean {
 
     /**
+     * Primary key
      * @var int
      */
     protected $idTreaty;
 
     /**
+     * 
      * @var int
      */
     protected $idTypeTreaty = 0;
 
     /**
+     * The player who asks for the treaty
      * @var int
      */
     protected $idPlayer1 = 0;
 
     /**
+     * The player who answer to the demand of treaty
      * @var int
      */
     protected $idPlayer2 = 0;
 
     /**
+     * The alliance who asks for the treaty
      * @var int
      */
     protected $idAlliance1 = 0;
 
     /**
+     * The alliance who answer to the demand of treaty
      * @var int
      */
     protected $idAlliance2 = 0;
 
     /**
+     * 0 : currently not accepted (proposed). 1 : accepted
      * @var bool
      */
     protected $state = false;
 
     /**
+     * The turn from when the treaty is active
      * @var int
      */
     protected $startingTurn = 0;
 
     /**
+     * In case of a tribute, amount by turn. The player 2 pays to player one
      * @var int
      */
     protected $amount = 0;
 
     /**
+     * Number of turns left for the tribute
      * @var int
      */
     protected $turnsLeft = 0;
@@ -67,6 +77,7 @@ class Treaty implements Bean {
     protected $extendedData = false;
 
     /**
+     * Primary key
      * @return int
      */
     public function getIdTreaty()
@@ -83,6 +94,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * 
      * @return int
      */
     public function getIdTypeTreaty()
@@ -107,6 +119,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * The player who asks for the treaty
      * @return int
      */
     public function getIdPlayer1()
@@ -131,6 +144,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * The player who answer to the demand of treaty
      * @return int
      */
     public function getIdPlayer2()
@@ -155,6 +169,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * The alliance who asks for the treaty
      * @return int
      */
     public function getIdAlliance1()
@@ -179,6 +194,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * The alliance who answer to the demand of treaty
      * @return int
      */
     public function getIdAlliance2()
@@ -203,6 +219,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * 0 : currently not accepted (proposed). 1 : accepted
      * @return bool
      */
     public function getState()
@@ -219,6 +236,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * The turn from when the treaty is active
      * @return int
      */
     public function getStartingTurn()
@@ -243,6 +261,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * In case of a tribute, amount by turn. The player 2 pays to player one
      * @return int
      */
     public function getAmount()
@@ -267,6 +286,7 @@ class Treaty implements Bean {
     }
     
     /**
+     * Number of turns left for the tribute
      * @return int
      */
     public function getTurnsLeft()
