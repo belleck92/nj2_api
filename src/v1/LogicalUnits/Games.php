@@ -58,7 +58,7 @@ class Games extends LogicalUnit
         return $this->filterCollection($ret);
     }
 
-    public function creates($queryString, $parameters, $queryBody)
+    public function create($queryString, $parameters, $queryBody)
     {
         $segments = explode('/', $queryString);
         if(empty($segments[0])) {
@@ -84,7 +84,7 @@ class Games extends LogicalUnit
             }
             if($segments[1] == "players") {
                 foreach ($queryBody as &$player) {
-                    $player['idGame'] = $segments[0]; 
+                    $player['idGame'] = $segments[0];
                 }
                 $unit = new Players();
                 return $unit->create('', $parameters, $queryBody);

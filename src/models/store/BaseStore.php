@@ -43,6 +43,7 @@ use Fr\Nj2\Api\models\business\TypeUnitBusiness;
 use Fr\Nj2\Api\models\business\TypeUnitMissionBusiness;
 use Fr\Nj2\Api\models\business\UnitBusiness;
 use Fr\Nj2\Api\models\business\UserBusiness;
+use Fr\Nj2\Api\models\business\VisibilityBusiness;
 
 abstract class BaseStore {
 

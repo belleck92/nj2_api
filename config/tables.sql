@@ -588,3 +588,14 @@ INSERT INTO parameter(value, description, fctId) VALUES
 ,(50,"Malus de conquête (en %)",'CONQUEST_MALUS')
 ,(5,"Décroissance malus de conquête par tour",'CONQUEST_MALUS_DECREASE')
 ,(20,"Probabilité qu'un segment de rivière soit un gué (/100)",'PROBA_FORD');
+
+DROP TABLE IF EXISTS visibility;
+CREATE TABLE visibility
+(
+  idVisibility INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Primary key'
+  ,idPlayer INT(11) DEFAULT 0 COMMENT 'Visibility for player'
+  ,idHexa INT(11) DEFAULT 0 COMMENT 'Visibility for hexa'
+  ,level INT(11) DEFAULT 0 COMMENT '0 : invisible, 1 : explored, 2 : visible'
+)  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
+CREATE INDEX visibility_idPlayer_pk ON visibility (idPlayer);
+CREATE INDEX visibility_idHexa_pk ON visibility (idHexa);
