@@ -282,7 +282,10 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
         if($this->extendedData) {
             $ret['typeClimate'] = $this->getTypeClimate()->getName();
             for($i=0;$i<=5;$i++) {
-                if(!is_null($this->getVoisin($i))) $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
+                if(!is_null($this->getVoisin($i))) {
+                    $ret['idNeighbor'.$i] = $this->getVoisin($i)->getId();
+                    if($this->getVoisin($i)->getIdTerritory() != $this->getIdTerritory()) $ret['fronteer'.$i] = true;
+                }
             }
             $ret['rivers'] = $this->getRivers()->getAsArray();
             $ret['resources'] = $this->getResources()->getAsArray();
