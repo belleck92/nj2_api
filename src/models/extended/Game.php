@@ -446,9 +446,6 @@ class Game extends \Fr\Nj2\Api\models\Game
          * Get beginning of rivers
          */
         $beginingCandidates = [];
-        foreach($this->dots as $index=>$dot) {
-            if(is_null($dot)) echo $index."\n";
-        }
         foreach ($this->dots as $dot) {
             if($dot->canBeginRiver()) $beginingCandidates[] = $dot;
         }
@@ -478,7 +475,6 @@ class Game extends \Fr\Nj2\Api\models\Game
                 $river->setFord($ford);
                 $river->save();
             }
-            echo $line."\n";
         }
         
     }

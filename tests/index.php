@@ -3,7 +3,7 @@
 $token = '';
 
 // Demande de token
-/*$ch = curl_init("http://api.nj2.gruik.fr/v1/authenticate");
+$ch = curl_init("http://api.nj2.gruik.fr/v1/authenticate");
 curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -15,7 +15,7 @@ echo $ret;
 echo "\n";
 $returnedData = json_decode(explode("\r\n\r\n", $ret)[1], true);
 if(isset($returnedData['token']) && !empty($returnedData['token'])) $token = $returnedData['token'];
-*/
+
 
 // Requête MAP
 /*$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=600&width=10&height=10");
@@ -49,7 +49,7 @@ if(isset($returnedData['token']) && !empty($returnedData['token'])) $token = $re
 
 */
 // connection à la partie n°1
-/*$ch = curl_init("http://api.nj2.gruik.fr/v1/authenticate/connectToGame");
+$ch = curl_init("http://api.nj2.gruik.fr/v1/authenticate/connectToGame");
 curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -64,11 +64,11 @@ echo $ret;
 echo "\n";
 $returnedData = json_decode(explode("\r\n\r\n", $ret)[1], true);
 if(isset($returnedData['token']) && !empty($returnedData['token'])) $token = $returnedData['token'];
-*/
-$token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJyaXBlbWQzMjAifQ==.eyJpZFVzZXIiOiIyIiwicm9sZSI6IjEiLCJleHAiOjE1MDA3MjI5MTEsImlkR2FtZSI6IjEiLCJpZFBsYXllciI6IjIiLCJpZENhcGl0YWxDaXR5IjoiNjc3In0=.23d82e0cbf1380098ab680c0f70c3c09eac1eb59028a51c6583600e76540af1d178eaf5bca109ee1';
+
+//$token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJyaXBlbWQzMjAifQ==.eyJpZFVzZXIiOiIyIiwicm9sZSI6IjEiLCJleHAiOjE1MDA3MjI5MTEsImlkR2FtZSI6IjEiLCJpZFBsYXllciI6IjIiLCJpZENhcGl0YWxDaXR5IjoiNjc3In0=.23d82e0cbf1380098ab680c0f70c3c09eac1eb59028a51c6583600e76540af1d178eaf5bca109ee1';
 
 // MAP
-$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=677&width=10&height=10");
+$ch = curl_init("http://api.nj2.gruik.fr/v1/map?idCenter=230&width=10&height=10");
 curl_setopt($ch,CURLOPT_HTTPHEADER,[
     "Authorization: Bearer ".$token
 ]);

@@ -289,6 +289,10 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
         return Visibility::UNEXPLORED;
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function getAsArray()
     {
         $ret = parent::getAsArray();
@@ -304,6 +308,7 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
             $ret['resources'] = $this->getResources()->getAsArray();
             $ret['foodProduction'] = $this->foodProduction();
             $ret['defenseBonus'] = $this->defenseBonus();
+            $ret['visibility'] = $this->getCurrentVisibility();
         }
         return $ret;
     }

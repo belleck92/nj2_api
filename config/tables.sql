@@ -582,6 +582,7 @@ INSERT INTO parameter(value, description, fctId) VALUES
 ,(2,"Nombre de bonus donnés par le palais",'NB_BONUS_PALACE')
 ,(1,"Nombre de niveaux d'entrepôts dans la ville sans le bâtiment entrepôt",'FREE_WAREHOUSE_SLOT')
 ,(2,"Rayon de la zone d'une ville",'CITY_RADIUS')
+,(4,"Rayon de vision d'une ville",'CITY_VISIBILITY_RADIUS')
 ,(7,"Nombre d'unités par expert",'EXPERT_NB_UNITS')
 ,(3,"Nombre de niveaux de bâtiments par expert",'EXPERT_NB_BUILDINGS')
 ,(10,"Nombre de tours de bonus par expert",'EXPERT_NB_TURNS')

@@ -91,6 +91,7 @@ class Authenticate extends LogicalUnit
             $token['idGame'] = $selectedPlayer->getIdGame();
             $token['idPlayer'] = $selectedPlayer->getId();
             $token['idCapitalCity'] = $selectedPlayer->getCapitalCity();
+            $token['role'] = API::ROLE_PLAYER;
             API::getInstance()->setToken($token);
             API::getInstance()->setJwtToken($this->encodeToken());
             return [];

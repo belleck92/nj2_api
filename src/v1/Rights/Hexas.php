@@ -8,7 +8,10 @@
 
 namespace Fr\Nj2\Api\v1\Rights;
 
+use Fr\Nj2\Api\API;
 use Fr\Nj2\Api\models\Bean;
+use Fr\Nj2\Api\models\extended\Hexa;
+use Fr\Nj2\Api\models\extended\Visibility;
 use Fr\Nj2\Api\v1\Right;
 
 class Hexas extends Right
@@ -20,35 +23,87 @@ class Hexas extends Right
 
     public static function readableFields(Bean $bean)
     {
-        return array_intersect_key($bean->getAsArray(),array_flip([
-            'idHexa'
-            ,'idGame'
-            ,'idPlayer'
-            ,'idTerritory'
-            ,'idTypeClimate'
-            ,'X'
-            ,'Y'
-            ,'name'
-            ,'population'
-            ,'malusConquest'
-            ,'typeClimate'
-            ,'idNeighbor0'
-            ,'idNeighbor1'
-            ,'idNeighbor2'
-            ,'idNeighbor3' 
-            ,'idNeighbor4'
-            ,'idNeighbor5'
-            ,'fronteer0'
-            ,'fronteer1'
-            ,'fronteer2'
-            ,'fronteer3'
-            ,'fronteer4'
-            ,'fronteer5'
-            ,'resources'
-            ,'rivers'
-            ,'foodProduction'
-            ,'defenseBonus'
-        ]));
+        /** @var Hexa $bean */
+        if(API::getInstance()->getToken()['role'] == API::ROLE_ADMIN) {
+            return array_intersect_key($bean->getAsArray(), array_flip([
+                'idHexa'
+                , 'idGame'
+                , 'idPlayer'
+                , 'idTerritory'
+                , 'idTypeClimate'
+                , 'X'
+                , 'Y'
+                , 'name'
+                , 'population'
+                , 'malusConquest'
+                , 'typeClimate'
+                , 'idNeighbor0'
+                , 'idNeighbor1'
+                , 'idNeighbor2'
+                , 'idNeighbor3'
+                , 'idNeighbor4'
+                , 'idNeighbor5'
+                , 'fronteer0'
+                , 'fronteer1'
+                , 'fronteer2'
+                , 'fronteer3'
+                , 'fronteer4'
+                , 'fronteer5'
+                , 'resources'
+                , 'rivers'
+                , 'foodProduction'
+                , 'defenseBonus'
+                , 'visibility'
+            ]));
+        } elseif (API::getInstance()->getToken()['role'] == API::ROLE_PLAYER) {
+            if($bean->getCurrentVisibility() == Visibility::UNEXPLORED) {
+                return array_intersect_key($bean->getAsArray(), array_flip([
+                    'idHexa'
+                    , 'idGame'
+                    , 'X'
+                    , 'Y'
+                    , 'idNeighbor0'
+                    , 'idNeighbor1'
+                    , 'idNeighbor2'
+                    , 'idNeighbor3'
+                    , 'idNeighbor4'
+                    , 'idNeighbor5'
+                    , 'visibility'
+                ]));
+            } else {
+                return array_intersect_key($bean->getAsArray(), array_flip([
+                    'idHexa'
+                    , 'idGame'
+                    , 'idPlayer'
+                    , 'idTerritory'
+                    , 'idTypeClimate'
+                    , 'X'
+                    , 'Y'
+                    , 'name'
+                    , 'population'
+                    , 'malusConquest'
+                    , 'typeClimate'
+                    , 'idNeighbor0'
+                    , 'idNeighbor1'
+                    , 'idNeighbor2'
+                    , 'idNeighbor3'
+                    , 'idNeighbor4'
+                    , 'idNeighbor5'
+                    , 'fronteer0'
+                    , 'fronteer1'
+                    , 'fronteer2'
+                    , 'fronteer3'
+                    , 'fronteer4'
+                    , 'fronteer5'
+                    , 'resources'
+                    , 'rivers'
+                    , 'foodProduction'
+                    , 'defenseBonus'
+                    , 'visibility'
+                ]));
+            }
+        }
+        return [];
     }
 
     public static function canWrite($data)

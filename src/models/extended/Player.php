@@ -10,6 +10,7 @@ namespace Fr\Nj2\Api\models\extended;
 
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\DbHandler;
+use Fr\Nj2\Api\models\store\HexaStore;
 
 class Player extends \Fr\Nj2\Api\models\Player
 {
@@ -46,5 +47,16 @@ class Player extends \Fr\Nj2\Api\models\Player
         return $this->cacheCities;
     }
 
+    /**
+     * Creates the visibilities records for the player
+     */
+    public function initAllVisibilities()
+    {
+        $req = "INSERT INTO visibility(idPlayer, idHexa, level) SELECT ".$this->getId().", idHexa, ".Visibility::UNEXPLORED." FROM hexa WHERE idGame = ".$this->getIdGame().";";
+        DbHandler::query($req);
+
+        $req = "UPDATE visibility SET level = ".Visibility::VISIBLE." WHERE idPlayer = ".$this->getId()." AND idHexa IN (".HexaStore::getById($this->getCapitalCity())->getCouronnePleine(Parameter::val(Parameter::CITY_VISIBILITY_RADIUS))->getIdsStr().") ;";
+        DbHandler::query($req);
+    }
 
 }

@@ -3,9 +3,11 @@
 
 namespace Fr\Nj2\Api\Cli;
 
+use Fr\Nj2\Api\API;
 use Fr\Nj2\Api\Config\Config;
 use Fr\Nj2\Api\models\DbHandler;
 use Fr\Nj2\Api\models\extended\Game;
+use Fr\Nj2\Api\v1\Extended\Games;
 
 if(php_sapi_name() !== 'cli') exit();
 
@@ -18,6 +20,8 @@ try {
     DbHandler::query('TRUNCATE hexa;');
     DbHandler::query('TRUNCATE resource;');
     DbHandler::query('TRUNCATE river;');
+    DbHandler::query('TRUNCATE visibility;');
+    DbHandler::query('TRUNCATE player;');
 
     $game = new Game();
     $game->setWidth(30);
@@ -34,6 +38,14 @@ try {
     $game->setRandForet(mt_rand(1,1000));
     $game->save();
     $game->genererHexas();
+
+    API::getInstance()->setToken(['idUser'=>1]);
+    $api = new Games();
+    $api->create('1/players', '', [['idGame'=>1, 'name'=>'aymeric', 'color'=>'FF0']]);
+
+    API::getInstance()->setToken(['idUser'=>2]);
+    $api = new Games();
+    $api->create('1/players', '', [['idGame'=>1, 'name'=>'manu', 'color'=>'F00']]);
 
 } catch (\Throwable $e) {
     echo $e->getMessage()."\n";

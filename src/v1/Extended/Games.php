@@ -102,6 +102,12 @@ class Games extends \Fr\Nj2\Api\v1\LogicalUnits\Games
                     $h->setIdTerritory($player->getId());
                     $h->save();
                 }
+
+                /*
+                 * Creation of visibility
+                 */
+                $player->initAllVisibilities();
+                
                 return $player->getAsArray();
             }
         }
