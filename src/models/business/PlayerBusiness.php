@@ -11,6 +11,7 @@ use Fr\Nj2\Api\models\collection\GameCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\collection\UserCollection;
 use Fr\Nj2\Api\models\extended\User;
+use Fr\Nj2\Api\models\collection\VisibilityCollection;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 
 
@@ -95,6 +96,18 @@ class PlayerBusiness extends BaseBusiness {
     }
     
     
+    /**
+     * Renvoie les Players liés à une collection de Visibilitys
+     * @param VisibilityCollection $visibilitys
+     * @return PlayerCollection|Player[]
+     */
+    public static function getFromVisibilitys(VisibilityCollection $visibilitys){
+        $ids = $visibilitys->getIdPlayerStr();
+        if(!$ids) return new PlayerCollection();
+        $req = "SELECT * FROM player WHERE idPlayer IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Player', 'PlayerCollection');
+    }
+
     /**
      * Renvoie les Players liés à une collection de Hexas
      * @param HexaCollection $hexas

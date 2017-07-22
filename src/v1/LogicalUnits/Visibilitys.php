@@ -13,6 +13,8 @@ use Fr\Nj2\Api\models\extended\Visibility;
 use Fr\Nj2\Api\models\store\VisibilityStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Visibilitys as Right;
+use Fr\Nj2\Api\v1\Extended\Hexas;
+use Fr\Nj2\Api\v1\Extended\Players;
 
 class Visibilitys extends LogicalUnit
 {
@@ -28,6 +30,15 @@ class Visibilitys extends LogicalUnit
 
     public function get($queryString, $parameters)
     {
+        $segments = explode('/', $queryString);
+        if(count($segments) > 1) {
+            switch ($segments[1]) {
+                case 'hexas':
+                    return Hexas::filterCollection(VisibilityStore::getByIds($segments[0])->getHexas());
+            
+                case 'players':
+                    return Players::filterCollection(VisibilityStore::getByIds($segments[0])->getPlayers());
+            }}
         return parent::get($queryString, $parameters);
     }
 
@@ -55,6 +66,8 @@ class Visibilitys extends LogicalUnit
             $ret = new VisibilityCollection();
             foreach ($queryBody as $visibilityData) {
                 if (isset($visibilityData['idVisibility'])) continue;
+                if (!isset($visibilityData['idHexa'])) continue;
+                if (!isset($visibilityData['idPlayer'])) continue;
                 if (Right::canWrite($visibilityData)) {
                     $visibility = new Visibility();
                     $visibility->edit(Right::writeableFields($visibilityData));

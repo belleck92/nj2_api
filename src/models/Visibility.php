@@ -7,6 +7,8 @@ namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\VisibilityBusiness;
+use Fr\Nj2\Api\models\store\HexaStore;
+use Fr\Nj2\Api\models\store\PlayerStore;
 
 
 class Visibility implements Bean {
@@ -132,6 +134,44 @@ class Visibility implements Bean {
         $this->setLevel($this->getLevel() + $increment);
     }
     
+
+    /**
+     * Renvoie le hexa lié
+     * @return extended\Hexa
+     */
+    public function getHexa()
+    {
+        return HexaStore::getById($this->getIdHexa());
+    }
+
+    /**
+     * Links the idHexa of the Hexa object
+     * @param int $idHexa
+    */
+    public function setIdHexaRef(&$idHexa)
+    {
+        $this->idHexa = $idHexa;
+    }
+
+
+    /**
+     * Renvoie le player lié
+     * @return extended\Player
+     */
+    public function getPlayer()
+    {
+        return PlayerStore::getById($this->getIdPlayer());
+    }
+
+    /**
+     * Links the idPlayer of the Player object
+     * @param int $idPlayer
+    */
+    public function setIdPlayerRef(&$idPlayer)
+    {
+        $this->idPlayer = $idPlayer;
+    }
+
     /**
      * @return void
      */

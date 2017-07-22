@@ -14,6 +14,8 @@ use Fr\Nj2\Api\models\business\PlayerBusiness;
 use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\extended\Resource;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
+use Fr\Nj2\Api\models\extended\Visibility;
+use Fr\Nj2\Api\models\business\VisibilityBusiness;
 use Fr\Nj2\Api\models\extended\River;
 use Fr\Nj2\Api\models\business\RiverBusiness;
 
@@ -23,6 +25,10 @@ class HexaCollection extends BaseCollection {
      * @var ResourceCollection|Resource[]
      */
     private $cacheResources = null;
+    /**
+     * @var VisibilityCollection|Visibility[]
+     */
+    private $cacheVisibilitys = null;
     /**
      * @var RiverCollection|River[]
      */
@@ -109,6 +115,52 @@ class HexaCollection extends BaseCollection {
             foreach($resources as $resource) {/** @var Resource $resource */
                 if($resource->getIdHexa() == $hexa->getIdHexa()) {
                     $coll->ajout($resource);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Renvoie les Visibilitys liés aux Hexas de cette collection
+     * @return VisibilityCollection
+     */
+    public function getVisibilitys() {
+        if(is_null($this->cacheVisibilitys)) {
+            $this->cacheVisibilitys = VisibilityBusiness::getFromHexas($this);
+            $this->cacheVisibilitys->store();
+        }
+        return $this->cacheVisibilitys;
+    }
+
+    /**
+    * Force la collection de visibilitys de this
+    * @param VisibilityCollection $visibilitys
+    */
+    public function setVisibilitys(VisibilityCollection $visibilitys)
+    {
+        $this->cacheVisibilitys = $visibilitys;
+    }
+
+    /**
+    * Remet à null le cache des visibilitys liés à this
+    */
+    public function resetCacheVisibilitys() {
+        $this->cacheVisibilitys = null;
+    }
+
+    /**
+    * Distribue les Visibilitys fournis en paramètre à chaque Hexa de la collection si le Visibility correspond.
+    * @param VisibilityCollection $visibilitys
+    */
+    public function fillVisibilitys(VisibilityCollection $visibilitys)
+    {
+        foreach($this as $hexa) {/** @var Hexa $hexa */
+            $hexa->resetCacheVisibilitys();
+            $coll = new VisibilityCollection();
+            $hexa->setVisibilitys($coll);
+            foreach($visibilitys as $visibility) {/** @var Visibility $visibility */
+                if($visibility->getIdHexa() == $hexa->getIdHexa()) {
+                    $coll->ajout($visibility);
                 }
             }
         }

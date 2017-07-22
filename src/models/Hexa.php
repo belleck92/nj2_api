@@ -10,6 +10,9 @@ use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
 use Fr\Nj2\Api\models\business\ResourceBusiness;
 use Fr\Nj2\Api\models\extended\Resource;
+use Fr\Nj2\Api\models\collection\VisibilityCollection;
+use Fr\Nj2\Api\models\business\VisibilityBusiness;
+use Fr\Nj2\Api\models\extended\Visibility;
 use Fr\Nj2\Api\models\collection\RiverCollection;
 use Fr\Nj2\Api\models\business\RiverBusiness;
 use Fr\Nj2\Api\models\extended\River;
@@ -89,6 +92,11 @@ class Hexa implements Bean {
      * @var ResourceCollection|Resource[]
      */
     protected $cacheResources = null;
+
+    /**
+     * @var VisibilityCollection|Visibility[]
+     */
+    protected $cacheVisibilitys = null;
 
     /**
      * @var RiverCollection|River[]
@@ -422,6 +430,44 @@ class Hexa implements Bean {
         $resource = new extended\Resource();
         $resource->setIdHexaRef($this->idHexa);
         return $resource;
+    }
+
+    /**
+     * Remet à null le cache des visibilitys liés à this
+     */
+    public function resetCacheVisibilitys() {
+        $this->cacheVisibilitys = null;
+    }
+
+    /**
+    * Force la collection de visibilitys de this
+    * @param VisibilityCollection $visibilitys
+    */
+    public function setVisibilitys(VisibilityCollection $visibilitys)
+    {
+        $this->cacheVisibilitys = $visibilitys;
+    }
+
+    /**
+     * Renvoie les visibilitys liés à ce Hexa
+     * @return VisibilityCollection|Visibility[]
+     */
+    public function getVisibilitys() {
+        if(is_null($this->cacheVisibilitys)) {
+            $this->cacheVisibilitys = VisibilityBusiness::getByHexa($this);
+            $this->cacheVisibilitys->store();
+        }
+        return $this->cacheVisibilitys;
+    }
+
+    /**
+     * Crée un visibility lié à ce Hexa
+     * @return extended\Visibility
+     */
+    public function createVisibility(){
+        $visibility = new extended\Visibility();
+        $visibility->setIdHexaRef($this->idHexa);
+        return $visibility;
     }
 
     /**

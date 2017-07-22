@@ -15,6 +15,7 @@ use Fr\Nj2\Api\v1\LogicalUnit;
 use Fr\Nj2\Api\v1\Rights\Players as Right;
 use Fr\Nj2\Api\v1\Extended\Games;
 use Fr\Nj2\Api\v1\Extended\Users;
+use Fr\Nj2\Api\v1\Extended\Visibilitys;
 use Fr\Nj2\Api\v1\Extended\Hexas;
 
 class Players extends LogicalUnit
@@ -40,6 +41,9 @@ class Players extends LogicalUnit
                 case 'users':
                     return Users::filterCollection(PlayerStore::getByIds($segments[0])->getUsers());
             
+                case 'visibilitys':
+                    return Visibilitys::filterCollection(PlayerStore::getByIds($segments[0])->getVisibilitys());
+        
                 case 'hexas':
                     return Hexas::filterCollection(PlayerStore::getByIds($segments[0])->getHexas());
         }}
@@ -81,6 +85,13 @@ class Players extends LogicalUnit
             }
             return $this->filterCollection($ret);
         } elseif (preg_match('#^[0-9]+$#', $segments[0])) {
+            if($segments[1] == "visibilitys") {
+                foreach ($queryBody as &$visibility) {
+                    $visibility['idPlayer'] = $segments[0];
+                }
+                $unit = new Visibilitys();
+                return $unit->create('', $parameters, $queryBody);
+            }
             if($segments[1] == "hexas") {
                 foreach ($queryBody as &$hexa) {
                     $hexa['idPlayer'] = $segments[0];

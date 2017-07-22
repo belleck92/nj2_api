@@ -17,6 +17,7 @@ use Fr\Nj2\Api\v1\Extended\Games;
 use Fr\Nj2\Api\v1\Extended\TypeClimates;
 use Fr\Nj2\Api\v1\Extended\Players;
 use Fr\Nj2\Api\v1\Extended\Resources;
+use Fr\Nj2\Api\v1\Extended\Visibilitys;
 use Fr\Nj2\Api\v1\Extended\Rivers;
 
 class Hexas extends LogicalUnit
@@ -47,6 +48,9 @@ class Hexas extends LogicalUnit
             
                 case 'resources':
                     return Resources::filterCollection(HexaStore::getByIds($segments[0])->getResources());
+        
+                case 'visibilitys':
+                    return Visibilitys::filterCollection(HexaStore::getByIds($segments[0])->getVisibilitys());
         
                 case 'rivers':
                     return Rivers::filterCollection(HexaStore::getByIds($segments[0])->getRivers());
@@ -95,6 +99,13 @@ class Hexas extends LogicalUnit
                     $resource['idHexa'] = $segments[0];
                 }
                 $unit = new Resources();
+                return $unit->create('', $parameters, $queryBody);
+            }
+            if($segments[1] == "visibilitys") {
+                foreach ($queryBody as &$visibility) {
+                    $visibility['idHexa'] = $segments[0];
+                }
+                $unit = new Visibilitys();
                 return $unit->create('', $parameters, $queryBody);
             }
             if($segments[1] == "rivers") {

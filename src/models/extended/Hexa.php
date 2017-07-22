@@ -8,6 +8,7 @@
 
 namespace Fr\Nj2\Api\models\extended;
 
+use Exception;
 use Fr\Nj2\Api\mapGeneration\Dot;
 use Fr\Nj2\Api\mapGeneration\Line;
 use Fr\Nj2\Api\models\collection\HexaCollection;
@@ -274,6 +275,18 @@ class Hexa extends \Fr\Nj2\Api\models\Hexa
                 $yVoisin=$yBase;
         }
         return array($xVoisin, $yVoisin);
+    }
+
+    /**
+     * Returns the level of visibility. The hexa must have it's visibilitys initialized
+     * @return int
+     * @throws Exception
+     */
+    public function getCurrentVisibility()
+    {
+        if(is_null($this->cacheVisibilitys)) throw new Exception("Visibilitys not initialized");
+        foreach($this->cacheVisibilitys as $visibility) return $visibility->getLevel();
+        return Visibility::UNEXPLORED;
     }
 
     public function getAsArray()

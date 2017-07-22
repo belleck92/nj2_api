@@ -10,11 +10,17 @@ use Fr\Nj2\Api\models\business\GameBusiness;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\business\UserBusiness;
 use Fr\Nj2\Api\models\extended\User;
+use Fr\Nj2\Api\models\extended\Visibility;
+use Fr\Nj2\Api\models\business\VisibilityBusiness;
 use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 
 class PlayerCollection extends BaseCollection {
 
+    /**
+     * @var VisibilityCollection|Visibility[]
+     */
+    private $cacheVisibilitys = null;
     /**
      * @var HexaCollection|Hexa[]
      */
@@ -52,6 +58,52 @@ class PlayerCollection extends BaseCollection {
         unset($offset);
         foreach($replaces as $offset=>$player) {
             $this->offsetSet($offset, PlayerStore::getById($player->getId()));
+        }
+    }
+    
+    /**
+     * Renvoie les Visibilitys liés aux Players de cette collection
+     * @return VisibilityCollection
+     */
+    public function getVisibilitys() {
+        if(is_null($this->cacheVisibilitys)) {
+            $this->cacheVisibilitys = VisibilityBusiness::getFromPlayers($this);
+            $this->cacheVisibilitys->store();
+        }
+        return $this->cacheVisibilitys;
+    }
+
+    /**
+    * Force la collection de visibilitys de this
+    * @param VisibilityCollection $visibilitys
+    */
+    public function setVisibilitys(VisibilityCollection $visibilitys)
+    {
+        $this->cacheVisibilitys = $visibilitys;
+    }
+
+    /**
+    * Remet à null le cache des visibilitys liés à this
+    */
+    public function resetCacheVisibilitys() {
+        $this->cacheVisibilitys = null;
+    }
+
+    /**
+    * Distribue les Visibilitys fournis en paramètre à chaque Player de la collection si le Visibility correspond.
+    * @param VisibilityCollection $visibilitys
+    */
+    public function fillVisibilitys(VisibilityCollection $visibilitys)
+    {
+        foreach($this as $player) {/** @var Player $player */
+            $player->resetCacheVisibilitys();
+            $coll = new VisibilityCollection();
+            $player->setVisibilitys($coll);
+            foreach($visibilitys as $visibility) {/** @var Visibility $visibility */
+                if($visibility->getIdPlayer() == $player->getIdPlayer()) {
+                    $coll->ajout($visibility);
+                }
+            }
         }
     }
     

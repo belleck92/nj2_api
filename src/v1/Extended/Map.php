@@ -11,10 +11,12 @@ namespace Fr\Nj2\Api\v1\Extended;
 use Fr\Nj2\Api\API;
 use Fr\Nj2\Api\models\Bean;
 use Fr\Nj2\Api\models\collection\HexaCollection;
+use Fr\Nj2\Api\models\collection\PlayerCollection;
 use Fr\Nj2\Api\models\extended\Game;
 use Fr\Nj2\Api\models\extended\Hexa;
 use Fr\Nj2\Api\models\store\GameStore;
 use Fr\Nj2\Api\models\store\HexaStore;
+use Fr\Nj2\Api\models\store\PlayerStore;
 use Fr\Nj2\Api\v1\LogicalUnit;
 
 class Map extends LogicalUnit
@@ -124,6 +126,12 @@ class Map extends LogicalUnit
             $res->setExtendedData(true);
         }
         $this->hexas->fillResources($resources);
+
+        /*
+         * Visibility
+         */
+        $player = PlayerStore::getById(API::getInstance()->getToken()['idPlayer']);
+        $this->hexas->fillVisibilitys($player->getVisibilitys());
 
         $ret = ['squares'=>Hexas::filterCollection($this->hexas)];
 

@@ -14,6 +14,7 @@ use Fr\Nj2\Api\models\extended\TypeClimate;
 use Fr\Nj2\Api\models\collection\PlayerCollection;
 use Fr\Nj2\Api\models\extended\Player;
 use Fr\Nj2\Api\models\collection\ResourceCollection;
+use Fr\Nj2\Api\models\collection\VisibilityCollection;
 use Fr\Nj2\Api\models\collection\RiverCollection;
 
 
@@ -127,6 +128,18 @@ class HexaBusiness extends BaseBusiness {
      */
     public static function getFromResources(ResourceCollection $resources){
         $ids = $resources->getIdHexaStr();
+        if(!$ids) return new HexaCollection();
+        $req = "SELECT * FROM hexa WHERE idHexa IN (".$ids.");";
+        return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');
+    }
+
+    /**
+     * Renvoie les Hexas liés à une collection de Visibilitys
+     * @param VisibilityCollection $visibilitys
+     * @return HexaCollection|Hexa[]
+     */
+    public static function getFromVisibilitys(VisibilityCollection $visibilitys){
+        $ids = $visibilitys->getIdHexaStr();
         if(!$ids) return new HexaCollection();
         $req = "SELECT * FROM hexa WHERE idHexa IN (".$ids.");";
         return DbHandler::collFromQuery($req, 'Hexa', 'HexaCollection');

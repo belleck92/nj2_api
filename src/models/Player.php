@@ -7,6 +7,9 @@ namespace Fr\Nj2\Api\models;
 
 use Fr\Nj2\Api\models\business\BaseBusiness;
 use Fr\Nj2\Api\models\business\PlayerBusiness;
+use Fr\Nj2\Api\models\collection\VisibilityCollection;
+use Fr\Nj2\Api\models\business\VisibilityBusiness;
+use Fr\Nj2\Api\models\extended\Visibility;
 use Fr\Nj2\Api\models\collection\HexaCollection;
 use Fr\Nj2\Api\models\business\HexaBusiness;
 use Fr\Nj2\Api\models\extended\Hexa;
@@ -80,6 +83,11 @@ class Player implements Bean {
      * @var bool
      */
     protected $extendedData = false;
+
+    /**
+     * @var VisibilityCollection|Visibility[]
+     */
+    protected $cacheVisibilitys = null;
 
     /**
      * @var HexaCollection|Hexa[]
@@ -340,6 +348,44 @@ class Player implements Bean {
     public function setIdUserRef(&$idUser)
     {
         $this->idUser = $idUser;
+    }
+
+    /**
+     * Remet à null le cache des visibilitys liés à this
+     */
+    public function resetCacheVisibilitys() {
+        $this->cacheVisibilitys = null;
+    }
+
+    /**
+    * Force la collection de visibilitys de this
+    * @param VisibilityCollection $visibilitys
+    */
+    public function setVisibilitys(VisibilityCollection $visibilitys)
+    {
+        $this->cacheVisibilitys = $visibilitys;
+    }
+
+    /**
+     * Renvoie les visibilitys liés à ce Player
+     * @return VisibilityCollection|Visibility[]
+     */
+    public function getVisibilitys() {
+        if(is_null($this->cacheVisibilitys)) {
+            $this->cacheVisibilitys = VisibilityBusiness::getByPlayer($this);
+            $this->cacheVisibilitys->store();
+        }
+        return $this->cacheVisibilitys;
+    }
+
+    /**
+     * Crée un visibility lié à ce Player
+     * @return extended\Visibility
+     */
+    public function createVisibility(){
+        $visibility = new extended\Visibility();
+        $visibility->setIdPlayerRef($this->idPlayer);
+        return $visibility;
     }
 
     /**
