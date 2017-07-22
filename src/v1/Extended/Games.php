@@ -27,10 +27,10 @@ class Games extends \Fr\Nj2\Api\v1\LogicalUnits\Games
                     API::getInstance()->setError('No player object');
                     API::getInstance()->sendResponse(400);
                 }
-
-                if(!isset($queryBody[0]['idGame']) || !isset($queryBody[0]['idUser']) || !isset($queryBody[0]['name']) || !isset($queryBody[0]['color'])) {
+                print_r($queryBody);
+                if(!isset($queryBody[0]['idGame']) || !isset($queryBody[0]['name']) || !isset($queryBody[0]['color'])) {
                     API::getInstance()->setErrorCode(2);
-                    API::getInstance()->setError('idGame, idUser, name and color fields are mandatory');
+                    API::getInstance()->setError('idGame,  name and color fields are mandatory');
                     API::getInstance()->sendResponse(400);
                 }
 
@@ -41,7 +41,8 @@ class Games extends \Fr\Nj2\Api\v1\LogicalUnits\Games
                     API::getInstance()->sendResponse(400);
                 }
                 $user = UserStore::getById(API::getInstance()->getToken()['idUser']);
-
+                var_dump(API::getInstance()->getToken()['idUser']);
+                print_r($user);
                 if($user->hasPlayerOn($game)){
                     API::getInstance()->setErrorCode(4);
                     API::getInstance()->setError('User has already a player on game '.$queryBody[0]['idGame']);

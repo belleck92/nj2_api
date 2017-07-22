@@ -14,6 +14,9 @@ CREATE TABLE user
   ,role INT(11) DEFAULT 0 COMMENT ''
 )  ENGINE='InnoDB' DEFAULT CHARSET=utf8;
 CREATE UNIQUE INDEX user_email_password_pk ON user (email, password);
+INSERT INTO user(email, password, role) VALUES
+  ('aymeric.burgaud@gmail.com', PASSWORD('123456'), 1)
+  ,('eleparquier@gmail.com', PASSWORD('123456'), 1);
 
 DROP TABLE IF EXISTS game;
 CREATE TABLE game

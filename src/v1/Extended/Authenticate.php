@@ -88,6 +88,7 @@ class Authenticate extends LogicalUnit
                 API::getInstance()->setError('User not in this game');
                 API::getInstance()->sendResponse(404);
             }
+            $token['idGame'] = $selectedPlayer->getIdGame();
             $token['idPlayer'] = $selectedPlayer->getId();
             $token['idCapitalCity'] = $selectedPlayer->getCapitalCity();
             API::getInstance()->setToken($token);
